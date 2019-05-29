@@ -2,6 +2,7 @@ package com.drk3931.platplus;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Shape2D;
 
 class GameLoader{
 
@@ -19,11 +20,9 @@ class GameLoader{
         gameWorld.worldCharacters[0] = gameWorld.getPlayer().characterEntity;
 
 
-        gameMap.mapPolies = new Polygon[10];
+        gameMap.mapPolies = new Shape2D[10];
     
-        gameMap.mapPolies[0] = gameMap.genTriangle(0, 0, 32);
-
-        for(int i = 1; i < gameMap.mapPolies.length; i++)
+        for(int i = 0; i < gameMap.mapPolies.length; i++)
         {
 
             gameMap.mapPolies[i] = gameMap.genRect(i * 32, 0, 32, 32);

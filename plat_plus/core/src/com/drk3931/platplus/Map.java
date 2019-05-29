@@ -1,11 +1,15 @@
 package com.drk3931.platplus;
 
+
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Shape2D;
 
 
 class Map{
 
-    public Polygon[] mapPolies;
+    public Shape2D[] mapPolies;
     
 
     public Map()
@@ -14,19 +18,25 @@ class Map{
         
     }
 
-    public Polygon genRect(int x,int y, int w, int h)
+    public Shape2D genRect(int x,int y, int w, int h)
     {
+
+
+        return new Rectangle(x, y, w, h);
+
+        /*
         return new Polygon(new float[]{
             x,y,x,y+h,x+w,y+h,x+w,y
         });
+        */
     }
 
 
-    public Polygon genTriangle(int x,int y, int leg)
+    public Shape2D genCircle(int x,int y, int radius)
     {
-        return new Polygon(new float[]{
-            x,y,x,y+leg,x+leg,y
-        });
+
+        return new Circle(x, y, radius);
+        
     }
     
     

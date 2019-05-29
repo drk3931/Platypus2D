@@ -36,7 +36,7 @@ class Renderer{
     }
 
 
-    public void draw(Polygon[] mapTiles,CharacterEntity[] entities)
+    public void draw(Shape2D[] mapTiles,CharacterEntity[] entities)
     {
         gl.glClearColor(0, 0, 0, 1.0f);
         gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -56,14 +56,20 @@ class Renderer{
 
     }
 
-    private void drawMap(Polygon[] mapTiles)
+    private void drawMap(Shape2D[] mapTiles)
     {
 
         shapeRenderer.setColor(Color.WHITE);
         for(int i =0; i < mapTiles.length; i++)
         {
 
-            shapeRenderer.polygon(mapTiles[i].getVertices());
+            Shape2D s = mapTiles[i];
+            if(s.getClass() == Rectangle.class)
+            {
+                Rectangle r = (Rectangle)s;
+                shapeRenderer.rect(r.x, r.y, r.width, r.height);
+
+            }
         
         }
         
