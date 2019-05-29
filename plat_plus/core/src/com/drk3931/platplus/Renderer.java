@@ -8,6 +8,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
@@ -18,9 +22,14 @@ class Renderer{
 
     private OrthographicCamera camera;
     private ShapeRenderer shapeRenderer;
+    private TiledMapRenderer tiledMapRenderer;
 
 
-    public Renderer()
+
+   
+
+
+    public Renderer(TiledMap map)
     {
 
         shapeRenderer = new ShapeRenderer();
@@ -30,6 +39,8 @@ class Renderer{
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
         camera.setToOrtho(false, 800, 480);
+
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 
 
 
@@ -42,9 +53,11 @@ class Renderer{
         gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();
+        tiledMapRenderer.setView(camera);
+        tiledMapRenderer.render();
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin();
-        shapeRenderer.set(ShapeType.Line);
+        shapeRenderer.set(ShapeType.Filled);
 
 
         drawMap(mapTiles);
@@ -68,6 +81,12 @@ class Renderer{
             {
                 Rectangle r = (Rectangle)s;
                 shapeRenderer.rect(r.x, r.y, r.width, r.height);
+
+            }
+            if(s.getClass() == Circle.class)
+            {
+                Circle c = (Circle)s;
+                shapeRenderer.circle(c.x , c.y, c.radius);
 
             }
         

@@ -1,6 +1,8 @@
 package com.drk3931.platplus;
 
 
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
@@ -10,12 +12,12 @@ import com.badlogic.gdx.math.Shape2D;
 class Map{
 
     public Shape2D[] mapPolies;
-    
+    public TiledMap tiledMap;
 
     public Map()
     {
        
-        
+        tiledMap = new TmxMapLoader().load("testMap.tmx");
     }
 
     public Shape2D genRect(int x,int y, int w, int h)

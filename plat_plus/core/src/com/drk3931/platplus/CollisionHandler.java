@@ -7,6 +7,7 @@ class CollisionHandler{
 
     public CollisionHandler(Shape2D[] mapPolies, Entity[] gameEntities)
     {
+        
 
     }
 
