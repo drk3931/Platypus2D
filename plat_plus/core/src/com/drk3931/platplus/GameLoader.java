@@ -1,6 +1,8 @@
 package com.drk3931.platplus;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Shape2D;
 
@@ -15,26 +17,13 @@ class GameLoader{
     {
 
         gameMap = new Map();
-        gameMap.mapPolies = new Shape2D[10];
+        TiledMap map = gameMap.tiledMap;
+
+        TiledMapTileLayer collLayer = (TiledMapTileLayer)map.getLayers().get("Blocked");
+
+        int numTiles = collLayer.getObjects().getCount();
+
         
-    
-        for(int i = 0; i < gameMap.mapPolies.length; i++)
-        {
-
-            boolean random = Math.random() * 50 > 25? true: false;
-
-            if(random)
-            {
-                gameMap.mapPolies[i] = gameMap.genRect(i * 32, 0, 32, 32);
-
-            }
-            else{
-                gameMap.mapPolies[i] = gameMap.genCircle((i * 32) + 16, 16, 16);
-
-            }
-            
-        }
-
     }
 
     public GameLoader()
