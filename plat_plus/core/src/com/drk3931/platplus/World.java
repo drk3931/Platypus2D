@@ -15,7 +15,7 @@ class World{
     public World()
     {
 
-        player = new Player(50, 50, 32, 32, Color.BLUE);
+        player = new Player(0, 70, 35, 70, Color.BLUE);
        
         
     }

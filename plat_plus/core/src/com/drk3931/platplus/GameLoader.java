@@ -1,6 +1,7 @@
 package com.drk3931.platplus;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Polygon;
@@ -16,12 +17,30 @@ class GameLoader{
     private void loadMap()
     {
 
-        gameMap = new Map();
-        TiledMap map = gameMap.tiledMap;
+        // = new Map();
+        //TiledMap map = gameMap.tiledMap;
 
-        TiledMapTileLayer collLayer = (TiledMapTileLayer)map.getLayers().get("Blocked");
+        //TiledMapTileLayer collLayer = (TiledMapTileLayer)map.getLayers().get("Blocked");
 
-        int numTiles = collLayer.getObjects().getCount();
+        //int numTiles = collLayer.getObjects().getCount();
+
+        gameWorld = new World();
+        gameMap = new Map("plat_plus_l1.tmx");
+
+        gameWorld.worldCharacters = new CharacterEntity[1];
+        gameWorld.worldCharacters[0] = gameWorld.getPlayer().characterEntity;
+
+
+        gameMap.mapPolies = new Shape2D[40];
+
+
+
+        for(int i = 0; i < gameMap.mapPolies.length; i++)
+        {
+
+
+            
+        }
 
         
     }
@@ -29,17 +48,8 @@ class GameLoader{
     public GameLoader()
     {
 
-        gameWorld = new World();
-
         loadMap();
 
-        gameWorld.worldCharacters = new CharacterEntity[1];
-        gameWorld.worldCharacters[0] = gameWorld.getPlayer().characterEntity;
-
-
-      
-
-        
 
     }
 

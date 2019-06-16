@@ -57,7 +57,7 @@ class Renderer{
         tiledMapRenderer.render();
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin();
-        shapeRenderer.set(ShapeType.Filled);
+        shapeRenderer.set(ShapeType.Line);
 
 
         drawMap(mapTiles);
@@ -73,10 +73,15 @@ class Renderer{
     {
 
         shapeRenderer.setColor(Color.WHITE);
+        shapeRenderer.set(ShapeType.Line);
         for(int i =0; i < mapTiles.length; i++)
         {
 
             Shape2D s = mapTiles[i];
+            if(s == null)
+            {
+                return;
+            }
             if(s.getClass() == Rectangle.class)
             {
                 Rectangle r = (Rectangle)s;
@@ -97,12 +102,8 @@ class Renderer{
 
     private void drawCharacters(CharacterEntity[] entities)
     {
-
-    
-        if(entities == null)
-        {
-            return;
-        }
+        
+        shapeRenderer.set(ShapeType.Filled);
 
         for(int i = 0; i < entities.length; i++)
         {
