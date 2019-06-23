@@ -16,13 +16,7 @@ class GameLoader{
 
     private void loadMap()
     {
-
-        // = new Map();
-        //TiledMap map = gameMap.tiledMap;
-
-        //TiledMapTileLayer collLayer = (TiledMapTileLayer)map.getLayers().get("Blocked");
-
-        //int numTiles = collLayer.getObjects().getCount();
+;
 
         gameWorld = new World();
         gameMap = new Map("plat_plus_l1.tmx");
@@ -31,17 +25,8 @@ class GameLoader{
         gameWorld.worldCharacters[0] = gameWorld.getPlayer().characterEntity;
 
 
-        gameMap.mapPolies = new Shape2D[40];
 
-
-
-        for(int i = 0; i < gameMap.mapPolies.length; i++)
-        {
-
-
-            
-        }
-
+      
         
     }
 

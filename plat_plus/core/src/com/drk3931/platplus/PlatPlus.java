@@ -23,10 +23,10 @@ public class PlatPlus extends ApplicationAdapter {
 		world= gameLoader.getLoadedWorld();
 		map = gameLoader.getLoadedMap();
 
-		renderer = new Renderer(map.tiledMap);
+		renderer = new Renderer(map.getTiledMap());
 
 		
-		collisionHandler = new  CollisionHandler(map.mapPolies, world.worldCharacters);
+		collisionHandler = new  CollisionHandler(map.getMapPolies(), world.worldCharacters);
 		
 	}
 
@@ -35,7 +35,7 @@ public class PlatPlus extends ApplicationAdapter {
 		float delta = Gdx.graphics.getDeltaTime();
 		world.update(delta);
 		collisionHandler.update(delta);
-		renderer.draw(map.mapPolies, world.worldCharacters);
+		renderer.draw(map.getMapPolies(), world.worldCharacters);
 	}
 	
 	@Override

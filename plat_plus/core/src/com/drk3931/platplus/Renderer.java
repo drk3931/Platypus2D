@@ -2,6 +2,8 @@ package com.drk3931.platplus;
 
 import static com.badlogic.gdx.Gdx.*;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -47,7 +49,7 @@ class Renderer{
     }
 
 
-    public void draw(Shape2D[] mapTiles,CharacterEntity[] entities)
+    public void draw(ArrayList<Shape2D> mapPolies,CharacterEntity[] entities)
     {
         gl.glClearColor(0, 0, 0, 1.0f);
         gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -60,7 +62,7 @@ class Renderer{
         shapeRenderer.set(ShapeType.Line);
 
 
-        drawMap(mapTiles);
+        drawMap(mapPolies);
         drawCharacters(entities);
 
         shapeRenderer.end();
@@ -69,15 +71,15 @@ class Renderer{
 
     }
 
-    private void drawMap(Shape2D[] mapTiles)
+    private void drawMap(ArrayList<Shape2D> mapTiles)
     {
 
         shapeRenderer.setColor(Color.WHITE);
         shapeRenderer.set(ShapeType.Line);
-        for(int i =0; i < mapTiles.length; i++)
+        for(int i =0; i < mapTiles.size(); i++)
         {
 
-            Shape2D s = mapTiles[i];
+            Shape2D s = mapTiles.get(i);
             if(s == null)
             {
                 return;
