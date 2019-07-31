@@ -16,15 +16,12 @@ class GameLoader{
 
     private void loadMap()
     {
-;
 
-        gameWorld = new World();
         gameMap = new Map("plat_plus_l1.tmx");
 
-        gameWorld.worldCharacters = new CharacterEntity[1];
-        gameWorld.worldCharacters[0] = gameWorld.getPlayer().characterEntity;
-
-
+        /*
+            parse characters from map and put them in the world
+        */
 
       
         
@@ -32,6 +29,9 @@ class GameLoader{
 
     public GameLoader()
     {
+
+        gameWorld = new World();
+
 
         loadMap();
 

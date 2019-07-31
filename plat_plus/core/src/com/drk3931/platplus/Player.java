@@ -9,7 +9,7 @@ class Player{
     public CharacterEntity characterEntity;
 
 
-    final int X_SPEED = 34,Y_SPEED=34;
+    int xVelocity = 100,yVelocity=100;
 
 
     public Player(int x,int y, int w, int h,Color c)
@@ -24,22 +24,25 @@ class Player{
                 //this.translate(dx, dy, delta);
                 if(Gdx.input.isKeyPressed(Keys.LEFT))
                 {
-                    this.translate(X_SPEED * -1, 0, delta);
+                    xVelocity = Math.abs(xVelocity) * -1; 
+                    this.translate(xVelocity * delta, 0);
 
                 }
                 if(Gdx.input.isKeyPressed(Keys.RIGHT))
                 {
-                    this.translate(X_SPEED , 0, delta);
+                    xVelocity = Math.abs(xVelocity);
+                    this.translate(xVelocity * delta , 0);
 
                 }
                 if(Gdx.input.isKeyPressed(Keys.UP))
-                {
-                    this.translate(0 , Y_SPEED, delta);
+                {   yVelocity = Math.abs(yVelocity);
+                    this.translate(0 , yVelocity * delta);
 
                 }
                 if(Gdx.input.isKeyPressed(Keys.DOWN))
                 {
-                    this.translate(0 , Y_SPEED * -1, delta);
+                    yVelocity = Math.abs(yVelocity) * -1;
+                    this.translate(0 , yVelocity* delta);
 
                 }
 

@@ -29,10 +29,10 @@ class CharacterEntity extends Entity{
         this.rectangleRepresentation.height = h;
 
     }
-    public void translate(int dx,int dy,float delta)
+    public void translate(float dx,float dy)
     {
-        this.rectangleRepresentation.x += delta * dx;
-        this.rectangleRepresentation.y += delta * dy;
+        this.rectangleRepresentation.x +=   dx ;
+        this.rectangleRepresentation.y +=   dy ;
 
     }
 

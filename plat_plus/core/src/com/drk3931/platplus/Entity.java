@@ -15,5 +15,5 @@ abstract class Entity{
 
     public abstract void setXY(int x,int y);
     public abstract void setWH(int w,int h);
-    public abstract void translate(int dx,int dy,float delta);
+    public abstract void translate(float dx,float dy);
 }

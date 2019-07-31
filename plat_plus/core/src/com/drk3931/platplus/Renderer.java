@@ -4,6 +4,7 @@ import static com.badlogic.gdx.Gdx.*;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -23,47 +24,66 @@ class Renderer{
 
 
     private OrthographicCamera camera;
-    private ShapeRenderer shapeRenderer;
+    public ShapeRenderer shapeRenderer;
     private TiledMapRenderer tiledMapRenderer;
 
+    private World world;
+    private Map map; 
+    private CollisionHandler collisionHandler;
+
+    public Renderer(Map map, World world, CollisionHandler collisionHandler)
+    {   
+
+        this.collisionHandler = collisionHandler;
 
 
-   
-
-
-    public Renderer(TiledMap map)
-    {
-
+        this.world = world;
+        this.map = map;
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
-
+        
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
-        camera.setToOrtho(false, 800, 480);
 
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap());
+
 
 
 
     }
 
 
-    public void draw(ArrayList<Shape2D> mapPolies,CharacterEntity[] entities)
+    private void cameraUpdate()
+    {
+
+        camera.setToOrtho(false, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        tiledMapRenderer.setView(camera);
+        camera.update();
+
+    
+
+    }
+
+
+    public void draw()
     {
         gl.glClearColor(0, 0, 0, 1.0f);
         gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        camera.update();
-        tiledMapRenderer.setView(camera);
+        cameraUpdate();
+
         tiledMapRenderer.render();
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin();
         shapeRenderer.set(ShapeType.Line);
 
+        map.draw(this);
+        world.draw(this);
+        collisionHandler.draw(this);
 
-        drawMap(mapPolies);
-        drawCharacters(entities);
+
+       
 
         shapeRenderer.end();
 
@@ -71,55 +91,9 @@ class Renderer{
 
     }
 
-    private void drawMap(ArrayList<Shape2D> mapTiles)
-    {
-
-        shapeRenderer.setColor(Color.WHITE);
-        shapeRenderer.set(ShapeType.Line);
-        for(int i =0; i < mapTiles.size(); i++)
-        {
-
-            Shape2D s = mapTiles.get(i);
-            if(s == null)
-            {
-                return;
-            }
-            if(s.getClass() == Rectangle.class)
-            {
-                Rectangle r = (Rectangle)s;
-                shapeRenderer.rect(r.x, r.y, r.width, r.height);
-
-            }
-            if(s.getClass() == Circle.class)
-            {
-                Circle c = (Circle)s;
-                shapeRenderer.circle(c.x , c.y, c.radius);
-
-            }
-        
-        }
-        
-
-    }
-
-    private void drawCharacters(CharacterEntity[] entities)
-    {
-        
-        shapeRenderer.set(ShapeType.Filled);
-
-        for(int i = 0; i < entities.length; i++)
-        {
-            CharacterEntity entity = entities[i];
-            Rectangle entityRect = entity.rectangleRepresentation;
-
-            shapeRenderer.setColor(entity.color);
-            shapeRenderer.rect(entityRect.x, entityRect.y, entityRect.width, entityRect.height);
-
-        }
-        
 
 
-    }
+  
 
 
 
