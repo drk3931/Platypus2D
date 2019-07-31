@@ -8,12 +8,19 @@ class CharacterEntity extends Entity{
 
 
     public Rectangle rectangleRepresentation;
+    private boolean gravityEnabled;
+    private boolean canJump;
 
-    public CharacterEntity(float x,float y, float w, float h, Color c)
+
+
+    int xVelocity = 0,yVelocity=0, yVelocityCap = 335;
+
+    public CharacterEntity(float x,float y, float w, float h, Color c, boolean gravityEnabled)
     {
         super(c);
         this.shapeRepresentation = new Rectangle(x,y,w,h);
         this.rectangleRepresentation = (Rectangle)this.shapeRepresentation;
+        this.gravityEnabled = gravityEnabled;
 
     }
 
@@ -36,6 +43,23 @@ class CharacterEntity extends Entity{
 
     }
 
-    public void update(float delta){}
+    public boolean getCanJump()
+    {
+        return this.canJump;
+    }
+
+    public void update(float delta){
+
+        if(gravityEnabled && this.yVelocity > yVelocityCap * -1)
+        {
+            this.yVelocity += World.gravityAcceleration;
+        }
+        translate(0, this.yVelocity * delta);
+    }
+
+    public void setCanJump(boolean canJump)
+    {
+        this.canJump = canJump; 
+    }
 
 }

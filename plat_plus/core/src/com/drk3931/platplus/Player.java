@@ -4,47 +4,39 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 
-class Player{
+class Player {
 
     public CharacterEntity characterEntity;
 
+    final int jumpAcceleration = 500;
 
-    int xVelocity = 100,yVelocity=100;
+    final int initialXVelocity = 333;
 
-
-    public Player(int x,int y, int w, int h,Color c)
-    {
-        characterEntity = new CharacterEntity(x, y, w, h, c)
-        {
+    public Player(int x, int y, int w, int h, Color c) {
+        characterEntity = new CharacterEntity(x, y, w, h, c, true) {
             @Override
-            public void update(float delta)
-            {
+            public void update(float delta) {
 
-                //we can translate based on the input controls
-                //this.translate(dx, dy, delta);
-                if(Gdx.input.isKeyPressed(Keys.LEFT))
-                {
-                    xVelocity = Math.abs(xVelocity) * -1; 
-                    this.translate(xVelocity * delta, 0);
+                super.update(delta);
 
-                }
-                if(Gdx.input.isKeyPressed(Keys.RIGHT))
-                {
-                    xVelocity = Math.abs(xVelocity);
-                    this.translate(xVelocity * delta , 0);
+                // we can translate based on the input controls
+                // this.translate(dx, dy, delta);
 
-                }
-                if(Gdx.input.isKeyPressed(Keys.UP))
-                {   yVelocity = Math.abs(yVelocity);
-                    this.translate(0 , yVelocity * delta);
+                xVelocity = 0;
+                if (Gdx.input.isKeyPressed(Keys.A)) {
+                    xVelocity = initialXVelocity * -1;
+                } 
+
+                if (Gdx.input.isKeyPressed(Keys.D)) {
+                    xVelocity = initialXVelocity;
+                }   
+                
+                if (Gdx.input.isKeyPressed(Keys.W) && characterEntity.yVelocity == World.gravityAcceleration) {
+                    this.yVelocity = jumpAcceleration;
 
                 }
-                if(Gdx.input.isKeyPressed(Keys.DOWN))
-                {
-                    yVelocity = Math.abs(yVelocity) * -1;
-                    this.translate(0 , yVelocity* delta);
 
-                }
+                this.translate(xVelocity * delta, yVelocity * delta);
 
             }
 
@@ -52,5 +44,4 @@ class Player{
 
     }
 
-   
 }

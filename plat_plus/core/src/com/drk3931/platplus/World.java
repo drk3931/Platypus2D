@@ -11,6 +11,8 @@ class World implements DrawableComponent {
     public Entity[] gameEntities;
     private Player player;
 
+
+    final public static float gravityAcceleration = -19f;
     public Player getPlayer() {
         return player;
     }
@@ -21,10 +23,6 @@ class World implements DrawableComponent {
         characters = new CharacterEntity[0];
 
     }
-
-
-
-
 
     public void update(float delta) {
         player.characterEntity.update(delta);

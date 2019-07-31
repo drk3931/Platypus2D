@@ -78,25 +78,41 @@ class CollisionHandler implements DrawableComponent {
 
         }
 
+        narrowPhase(player, delta);
+
+    }
+
+    private void narrowPhase(Player player, float delta) {
+
         for (int i = 0; i < broadPhase.length; i++) {
             Rectangle r = (Rectangle) broadPhase[i];
+            Rectangle playerRect = player.characterEntity.rectangleRepresentation;
 
-            if (Intersector.intersectRectangles(playerRect, r, tmpRectangle)) {
-                
-                /*
-                int oppositeXVelocity = player.xVelocity * -1;
-                int oppositeYVelocity = player.yVelocity * -1;
-                */
+            if (playerRect.overlaps(r)) {
 
-                if (tmpRectangle.getWidth() > tmpRectangle.getHeight()) {
-                    player.characterEntity.translate(0, tmpRectangle.getHeight() * Math.signum(player.yVelocity) * -1);
-                } else {
-                    player.characterEntity.translate(tmpRectangle.getWidth() * Math.signum(player.xVelocity) * -1, 0);
+                int oppositeXVelocity = player.characterEntity.xVelocity * -1;
+                int oppositeYVelocity = player.characterEntity.yVelocity * -1;
+
+                // translate back a step
+                player.characterEntity.translate(delta * oppositeXVelocity, delta * oppositeYVelocity);
+
+                // try to move Y;
+                player.characterEntity.translate(0, delta * oppositeYVelocity * -1);
+                if (Intersector.intersectRectangles(playerRect, r, tmpRectangle)) {
+                    player.characterEntity.translate(0, tmpRectangle.getHeight() * Math.signum(oppositeYVelocity));
+                    player.characterEntity.yVelocity = 0;
+
                 }
+                // try to move X;
+                player.characterEntity.translate(delta * oppositeXVelocity * -1, 0);
+                if (Intersector.intersectRectangles(playerRect, r, tmpRectangle)) {
+                    player.characterEntity.translate(tmpRectangle.getWidth() * Math.signum(oppositeXVelocity), 0);
+                    player.characterEntity.xVelocity = 0;
+                }
+
             }
 
         }
-
     }
 
 }
