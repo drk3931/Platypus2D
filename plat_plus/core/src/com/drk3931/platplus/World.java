@@ -35,16 +35,17 @@ class World implements DrawableComponent {
 
     }
 
-    public void draw(Renderer r) {
 
-        ShapeRenderer shapeRenderer = r.shapeRenderer;
+    public void drawSpritebatch(Spritebatch b)
+    {
+        player.drawSpritebatch();
+    }
 
-        shapeRenderer.set(ShapeType.Filled);
+    public void drawShapeRenderer(ShapeRenderer r) {
 
-        shapeRenderer.setColor(player.characterEntity.color);
-        shapeRenderer.rect(player.characterEntity.rectangleRepresentation.x,
-                player.characterEntity.rectangleRepresentation.y, player.characterEntity.rectangleRepresentation.width,
-                player.characterEntity.rectangleRepresentation.height);
+       player.characterEntity.drawShapeRenderer(r);
+
+       ShapeRenderer shapeRenderer = r.shapeRenderer;
 
         for (int i = 0; i < characters.length; i++) {
 

@@ -19,12 +19,15 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.utils.compression.lzma.Base;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 class Renderer{
 
 
-    private OrthographicCamera camera;
+    public OrthographicCamera camera;
     public ShapeRenderer shapeRenderer;
+    public SpriteBatch spriteBatch; 
     private TiledMapRenderer tiledMapRenderer;
 
     private World world;
@@ -41,14 +44,13 @@ class Renderer{
         this.map = map;
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
-        
+        spriteBatch = new SpriteBatch();
 
         camera = new OrthographicCamera();
-        camera.setToOrtho(false);
-
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap());
+        camera.setToOrtho(false, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 
-
+        cameraUpdate();
 
 
     }
@@ -57,8 +59,15 @@ class Renderer{
     private void cameraUpdate()
     {
 
-        camera.setToOrtho(false, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-        tiledMapRenderer.setView(camera);
+
+        Player p = this.world.getPlayer();
+
+
+        
+
+        camera.position.x = p.characterEntity.rectangleRepresentation.x;
+        camera.position.y = p.characterEntity.rectangleRepresentation.y;
+
         camera.update();
 
     
@@ -71,20 +80,26 @@ class Renderer{
         gl.glClearColor(0, 0, 0, 1.0f);
         gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
         cameraUpdate();
 
+
         tiledMapRenderer.render();
+
+
+        //set render views
+        spriteBatch.setProjectionMatrix(camera.combined);
         shapeRenderer.setProjectionMatrix(camera.combined);
+        tiledMapRenderer.setView(camera);
+
+        spriteBatch.begin();
+
+        spriteBatch.end();
+
         shapeRenderer.begin();
-        shapeRenderer.set(ShapeType.Line);
-
-        map.draw(this);
-        world.draw(this);
-        collisionHandler.draw(this);
-
-
-       
-
+            map.drawShapeRenderer(this.shapeRenderer);
+            world.drawShapeRenderer(this.shapeRenderer);
+            collisionHandler.draw(this.shapeRenderer);
         shapeRenderer.end();
 
 
