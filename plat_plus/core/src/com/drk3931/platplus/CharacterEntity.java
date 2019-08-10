@@ -2,18 +2,20 @@ package com.drk3931.platplus;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 
-abstract class CharacterEntity extends Entity implements DrawableComponent{
+abstract class CharacterEntity extends Entity implements DrawableComponent, UpdateableEntity{
 
 
 
     public Rectangle rectangleRepresentation;
     private boolean gravityEnabled;
-    private boolean canJump;
     public TextureRegion characterTexture;
+    private CharacterRoutine characterRoutine; 
 
 
 
@@ -29,6 +31,11 @@ abstract class CharacterEntity extends Entity implements DrawableComponent{
 
     }
 
+
+    public void setCharacterRoutine(CharacterRoutine routine)
+    {
+        this.characterRoutine = routine;
+    }
 
     public void setTexture(TextureRegion texture)
     {
@@ -58,14 +65,39 @@ abstract class CharacterEntity extends Entity implements DrawableComponent{
     {
         return yVelocity == World.gravityAcceleration;
     }
-
+    
     public void update(float delta){
 
+
+        characterRoutine.routine(delta,this);
         if(gravityEnabled && this.yVelocity > yVelocityCap * -1)
         {
             this.yVelocity += World.gravityAcceleration;
         }
         translate(0, this.yVelocity * delta);
+
+    }
+
+
+    public void drawShapeRenderer(ShapeRenderer shapeRenderer)
+    {
+        shapeRenderer.set(ShapeType.Filled);
+
+        Rectangle rectRep = this.rectangleRepresentation;
+
+        shapeRenderer.rect(rectRep.x, rectRep.y, rectRep.width, rectRep.height);
+
+    }
+
+    public void drawSpriteBatch(SpriteBatch spriteBatch)
+    {   
+
+        if (this.characterTexture != null) {
+            Rectangle rectRep = this.rectangleRepresentation;
+            spriteBatch.draw(this.characterTexture, rectRep.x, rectRep.y, rectRep.width, rectRep.height);
+
+        }
+   
     }
 
 

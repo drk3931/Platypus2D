@@ -6,5 +6,5 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 interface DrawableComponent{
     public void drawShapeRenderer(ShapeRenderer r);
-    public void drawSpriteBatch(SpriteBatch b)
+    public void drawSpriteBatch(SpriteBatch b);
 }

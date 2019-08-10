@@ -1,11 +1,5 @@
 package com.drk3931.platplus;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Shape2D;
 
 class GameLoader{
 

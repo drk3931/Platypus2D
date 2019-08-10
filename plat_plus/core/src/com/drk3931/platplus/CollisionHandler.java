@@ -1,29 +1,34 @@
 package com.drk3931.platplus;
 
-import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
-import com.badlogic.gdx.physics.box2d.Shape;
 
 class CollisionHandler implements DrawableComponent {
 
     private World world;
     private Map map;
 
-    public void draw(Renderer r) {
-        r.shapeRenderer.set(ShapeType.Line);
-        r.shapeRenderer.setColor(Color.RED);
+    public void drawShapeRenderer(ShapeRenderer shapeRenderer) {
+        shapeRenderer.set(ShapeType.Line);
+        shapeRenderer.setColor(Color.RED);
         for (int i = 0; i < broadPhase.length; i++) {
             Rectangle re = (Rectangle) broadPhase[i];
 
-            r.shapeRenderer.rect(re.getX(), re.getY(), re.getWidth(), re.getHeight());
+            shapeRenderer.rect(re.getX(), re.getY(), re.getWidth(), re.getHeight());
         }
+
+    }
+
+    
+    public void drawSpriteBatch(SpriteBatch r) {
+       
 
     }
 

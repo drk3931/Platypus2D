@@ -1,8 +1,8 @@
 package com.drk3931.platplus;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 
 class World implements DrawableComponent {
@@ -36,16 +36,9 @@ class World implements DrawableComponent {
     }
 
 
-    public void drawSpritebatch(Spritebatch b)
-    {
-        player.drawSpritebatch();
-    }
+    public void drawShapeRenderer(ShapeRenderer shapeRenderer) {
 
-    public void drawShapeRenderer(ShapeRenderer r) {
-
-       player.characterEntity.drawShapeRenderer(r);
-
-       ShapeRenderer shapeRenderer = r.shapeRenderer;
+       player.characterEntity.drawShapeRenderer(shapeRenderer);
 
         for (int i = 0; i < characters.length; i++) {
 
@@ -58,4 +51,11 @@ class World implements DrawableComponent {
         }
 
     }
+
+    @Override
+    public void drawSpriteBatch(SpriteBatch b) {
+
+        player.characterEntity.drawSpriteBatch(b);
+
+	}
 }

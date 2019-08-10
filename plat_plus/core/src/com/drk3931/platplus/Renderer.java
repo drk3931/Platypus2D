@@ -2,25 +2,15 @@ package com.drk3931.platplus;
 
 import static com.badlogic.gdx.Gdx.*;
 
-import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Shape2D;
-import com.badlogic.gdx.utils.compression.lzma.Base;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 
 class Renderer{
 
@@ -84,23 +74,30 @@ class Renderer{
         cameraUpdate();
 
 
-        tiledMapRenderer.render();
 
 
         //set render views
+        tiledMapRenderer.setView(camera);
         spriteBatch.setProjectionMatrix(camera.combined);
         shapeRenderer.setProjectionMatrix(camera.combined);
-        tiledMapRenderer.setView(camera);
+
+
+
+        tiledMapRenderer.render();
 
         spriteBatch.begin();
+
+            world.drawSpriteBatch(spriteBatch);
 
         spriteBatch.end();
 
         shapeRenderer.begin();
             map.drawShapeRenderer(this.shapeRenderer);
             world.drawShapeRenderer(this.shapeRenderer);
-            collisionHandler.draw(this.shapeRenderer);
+            collisionHandler.drawShapeRenderer(this.shapeRenderer);
         shapeRenderer.end();
+
+
 
 
 

@@ -4,19 +4,17 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Polyline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
-import com.badlogic.gdx.utils.Logger;
 
 class Map implements DrawableComponent{
 
@@ -89,11 +87,8 @@ class Map implements DrawableComponent{
     }
 
 
-
-    public void draw(Renderer renderer) {
-
-
-        ShapeRenderer shapeRenderer = renderer.shapeRenderer; 
+    @Override
+    public void drawShapeRenderer(ShapeRenderer shapeRenderer){
 
         shapeRenderer.setColor(Color.WHITE);
         shapeRenderer.set(ShapeType.Line);
@@ -117,5 +112,10 @@ class Map implements DrawableComponent{
         }
 
     }
+
+    @Override
+    public void drawSpriteBatch(SpriteBatch b) {
+
+	}
 
 }
