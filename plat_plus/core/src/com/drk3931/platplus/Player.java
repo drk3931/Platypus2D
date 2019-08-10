@@ -30,18 +30,6 @@ class Player {
 
             }
 
-            @Override
-            public void drawSpriteBatch(SpriteBatch batch) {
-
-                super.drawSpriteBatch(batch);
-
-            }
-
-            @Override
-            public void drawShapeRenderer(ShapeRenderer shapeRenderer) {
-
-                super.drawShapeRenderer(shapeRenderer);
-            }
         };
 
 

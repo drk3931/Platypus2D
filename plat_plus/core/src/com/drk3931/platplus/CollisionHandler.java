@@ -98,6 +98,8 @@ class CollisionHandler implements DrawableComponent {
                 int oppositeXVelocity = player.characterEntity.xVelocity * -1;
                 int oppositeYVelocity = player.characterEntity.yVelocity * -1;
 
+                player.characterEntity.setCoordinatesBeforeCollisionResolution();
+
                 // translate back a step
                 player.characterEntity.translate(delta * oppositeXVelocity, delta * oppositeYVelocity);
 
@@ -106,7 +108,7 @@ class CollisionHandler implements DrawableComponent {
                 if (Intersector.intersectRectangles(playerRect, r, tmpRectangle)) {
                     player.characterEntity.translate(0, (1 + tmpRectangle.getHeight()) * Math.signum(oppositeYVelocity));
                     player.characterEntity.yVelocity = 0;
-
+                    
                 }
                 // try to move X;
                 player.characterEntity.translate(delta * oppositeXVelocity * -1, 0);

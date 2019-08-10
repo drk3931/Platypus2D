@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 
-abstract class CharacterEntity extends Entity implements DrawableComponent, UpdateableEntity{
+public abstract class CharacterEntity extends Entity implements DrawableComponent, UpdateableEntity{
 
 
 
@@ -20,6 +20,7 @@ abstract class CharacterEntity extends Entity implements DrawableComponent, Upda
 
 
     public int xVelocity = 0,yVelocity=0, yVelocityCap = 335;
+    private float lastX,lastY;
 
     public CharacterEntity(float x,float y, float w, float h, Color c, boolean gravityEnabled, TextureRegion texture)
     {
@@ -69,19 +70,29 @@ abstract class CharacterEntity extends Entity implements DrawableComponent, Upda
     public void update(float delta){
 
 
+
         characterRoutine.routine(delta,this);
         if(gravityEnabled && this.yVelocity > yVelocityCap * -1)
         {
             this.yVelocity += World.gravityAcceleration;
         }
-        translate(0, this.yVelocity * delta);
+        translate(0, this.yVelocity * delta);   
 
+        
+
+
+    }
+
+    public void setCoordinatesBeforeCollisionResolution()
+    {
+        this.lastX = rectangleRepresentation.x;
+        this.lastY = rectangleRepresentation.y;
     }
 
 
     public void drawShapeRenderer(ShapeRenderer shapeRenderer)
     {
-        shapeRenderer.set(ShapeType.Filled);
+        shapeRenderer.set(ShapeType.Line);
 
         Rectangle rectRep = this.rectangleRepresentation;
 

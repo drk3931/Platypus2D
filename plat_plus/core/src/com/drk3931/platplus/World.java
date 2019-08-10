@@ -43,11 +43,7 @@ class World implements DrawableComponent {
         for (int i = 0; i < characters.length; i++) {
 
             CharacterEntity entity = characters[i];
-            Rectangle entityRect = entity.rectangleRepresentation;
-
-            shapeRenderer.setColor(entity.color);
-            shapeRenderer.rect(entityRect.x, entityRect.y, entityRect.width, entityRect.height);
-
+            entity.drawShapeRenderer(shapeRenderer);
         }
 
     }
@@ -56,6 +52,12 @@ class World implements DrawableComponent {
     public void drawSpriteBatch(SpriteBatch b) {
 
         player.characterEntity.drawSpriteBatch(b);
+
+        for (int i = 0; i < characters.length; i++) {
+
+            CharacterEntity entity = characters[i];
+            entity.drawSpriteBatch(b);
+        }
 
 	}
 }

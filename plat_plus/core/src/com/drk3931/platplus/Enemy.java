@@ -1,11 +1,14 @@
 package com.drk3931.platplus;
 
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.drk3931.platplus.characterroutines.PatrolRoutine;
 
 class Enemy {
 
+    
     private CharacterEntity characterEntity;
 
     public Enemy(int x, int y, int w, int h, Color c, boolean gravityEnabled)
@@ -31,16 +34,7 @@ class Enemy {
         };
 
 
-        this.characterEntity.setCharacterRoutine(new CharacterRoutine(){
-        
-            @Override
-            public void routine(float delta, CharacterEntity cEntity) {
-
-                    System.out.println("calling routine on ENEMY");
-
-                
-            }
-        });
+        this.characterEntity.setCharacterRoutine(new PatrolRoutine());
 
     }
 
