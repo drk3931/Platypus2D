@@ -92,7 +92,6 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
 
     public void drawShapeRenderer(ShapeRenderer shapeRenderer)
     {
-        shapeRenderer.set(ShapeType.Line);
 
         Rectangle rectRep = this.rectangleRepresentation;
 

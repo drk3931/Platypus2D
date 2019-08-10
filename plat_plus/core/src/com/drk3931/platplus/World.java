@@ -9,12 +9,12 @@ import com.badlogic.gdx.math.Rectangle;
 
 class World implements DrawableComponent {
 
-    public ArrayList<CharacterEntity> characters;
+    public ArrayList<Enemy> characters;
     public Entity[] gameEntities;
     private Player player;
 
-
     final public static float gravityAcceleration = -19f;
+
     public Player getPlayer() {
         return player;
     }
@@ -22,33 +22,26 @@ class World implements DrawableComponent {
     public World() {
 
         player = new Player(0, 72, 64, 64, Color.BLUE);
-        characters = new ArrayList<CharacterEntity>();
+        characters = new ArrayList<Enemy>();
 
     }
 
     public void update(float delta) {
         player.characterEntity.update(delta);
 
-
-        for(CharacterEntity character: characters)
-        {
-                character.update(delta);
+        for (Enemy enemy : characters) {
+            enemy.characterEntity.update(delta);
         }
-
-     
 
     }
 
-
     public void drawShapeRenderer(ShapeRenderer shapeRenderer) {
 
-       player.characterEntity.drawShapeRenderer(shapeRenderer);
+        player.characterEntity.drawShapeRenderer(shapeRenderer);
 
-       
-       for(CharacterEntity character: characters)
-       {
-               character.drawShapeRenderer(shapeRenderer);
-       }
+        for (Enemy enemy : characters) {
+            enemy.characterEntity.drawShapeRenderer(shapeRenderer);
+        }
 
     }
 
@@ -56,10 +49,17 @@ class World implements DrawableComponent {
     public void drawSpriteBatch(SpriteBatch b) {
 
         player.characterEntity.drawSpriteBatch(b);
-        for(CharacterEntity character: characters)
-        {
-                character.drawSpriteBatch(b);
+        for (Enemy enemy : characters) {
+            enemy.characterEntity.drawSpriteBatch(b);
         }
 
-	}
+    }
+
+
+    public void addEnemy(int x, int y)
+    {
+        this.characters.add(
+            new Enemy(x, y, 64, 64, Color.GOLD, false)
+        );
+    }
 }

@@ -76,6 +76,13 @@ class Map implements DrawableComponent{
 
 
 
+      
+
+    }
+
+
+    public void parseMapEnemies(World gameWorld)
+    {
         MapLayer enemiesLayer = tiledMap.getLayers().get("Enemies");
         MapObjects objects = enemiesLayer.getObjects();
 
@@ -94,13 +101,12 @@ class Map implements DrawableComponent{
             float enemyX = Float.parseFloat(objProps.get("x").toString());
             float enemyY = Float.parseFloat(objProps.get("y").toString());
 
-            enemyY = (CELL_H * MAP_H) - enemyY;
+           // enemyY = (CELL_H * MAP_H) - enemyY;
 
 
-
+            gameWorld.addEnemy((int)enemyX, (int)enemyY);
         
         }
-
     }
 
     public Shape2D genRect(int x, int y, int w, int h) {

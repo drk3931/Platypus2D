@@ -4,12 +4,13 @@ package com.drk3931.platplus;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.drk3931.platplus.characterroutines.PatrolRoutine;
 
 class Enemy {
 
     
-    private CharacterEntity characterEntity;
+    public CharacterEntity characterEntity;
 
     public Enemy(int x, int y, int w, int h, Color c, boolean gravityEnabled)
     {
@@ -29,6 +30,7 @@ class Enemy {
         
             @Override
             public void drawShapeRenderer(ShapeRenderer r) {
+                r.set(ShapeType.Filled);
                 super.drawShapeRenderer(r);
             }
         };
