@@ -1,5 +1,7 @@
 package com.drk3931.platplus;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -7,7 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 class World implements DrawableComponent {
 
-    public CharacterEntity[] characters;
+    public ArrayList<CharacterEntity> characters;
     public Entity[] gameEntities;
     private Player player;
 
@@ -20,18 +22,20 @@ class World implements DrawableComponent {
     public World() {
 
         player = new Player(0, 72, 64, 64, Color.BLUE);
-        characters = new CharacterEntity[0];
+        characters = new ArrayList<CharacterEntity>();
 
     }
 
     public void update(float delta) {
         player.characterEntity.update(delta);
 
-        for (int i = 0; i < characters.length; i++) {
 
-            characters[i].update(delta);
-
+        for(CharacterEntity character: characters)
+        {
+                character.update(delta);
         }
+
+     
 
     }
 
@@ -40,11 +44,11 @@ class World implements DrawableComponent {
 
        player.characterEntity.drawShapeRenderer(shapeRenderer);
 
-        for (int i = 0; i < characters.length; i++) {
-
-            CharacterEntity entity = characters[i];
-            entity.drawShapeRenderer(shapeRenderer);
-        }
+       
+       for(CharacterEntity character: characters)
+       {
+               character.drawShapeRenderer(shapeRenderer);
+       }
 
     }
 
@@ -52,11 +56,9 @@ class World implements DrawableComponent {
     public void drawSpriteBatch(SpriteBatch b) {
 
         player.characterEntity.drawSpriteBatch(b);
-
-        for (int i = 0; i < characters.length; i++) {
-
-            CharacterEntity entity = characters[i];
-            entity.drawSpriteBatch(b);
+        for(CharacterEntity character: characters)
+        {
+                character.drawSpriteBatch(b);
         }
 
 	}

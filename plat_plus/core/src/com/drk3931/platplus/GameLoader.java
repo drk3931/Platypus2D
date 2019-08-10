@@ -13,6 +13,7 @@ class GameLoader{
 
         gameMap = new Map("plat_plus_l1.tmx");
 
+        
         /*
             parse characters from map and put them in the world
         */
