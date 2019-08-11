@@ -27,31 +27,37 @@ class World implements DrawableComponent {
     }
 
     public void update(float delta) {
-        player.characterEntity.update(delta);
 
         for (Enemy enemy : characters) {
             enemy.characterEntity.update(delta);
         }
 
+        player.characterEntity.update(delta);
+
+
     }
 
     public void drawShapeRenderer(ShapeRenderer shapeRenderer) {
 
-        player.characterEntity.drawShapeRenderer(shapeRenderer);
 
         for (Enemy enemy : characters) {
             enemy.characterEntity.drawShapeRenderer(shapeRenderer);
         }
+
+        player.characterEntity.drawShapeRenderer(shapeRenderer);
+
 
     }
 
     @Override
     public void drawSpriteBatch(SpriteBatch b) {
 
-        player.characterEntity.drawSpriteBatch(b);
         for (Enemy enemy : characters) {
             enemy.characterEntity.drawSpriteBatch(b);
         }
+
+        player.characterEntity.drawSpriteBatch(b);
+
 
     }
 

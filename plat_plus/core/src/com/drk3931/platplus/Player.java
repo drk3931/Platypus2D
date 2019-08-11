@@ -5,17 +5,15 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.drk3931.platplus.characterroutines.PlayerRoutine;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-class Player {
+public class Player {
 
     public CharacterEntity characterEntity;
 
-    final int jumpAcceleration = 500;
-
-    final int initialXVelocity = 333;
 
     public Player(int x, int y, int w, int h, Color c) {
 
@@ -33,29 +31,7 @@ class Player {
         };
 
 
-        this.characterEntity.setCharacterRoutine(new CharacterRoutine(){
-        
-            @Override
-            public void routine(float delta, CharacterEntity cEntity) {
-                
-                cEntity.xVelocity  = 0;
-                if (Gdx.input.isKeyPressed(Keys.A)) {
-                    cEntity.xVelocity  = initialXVelocity * -1;
-                }
-
-                if (Gdx.input.isKeyPressed(Keys.D)) {
-                    cEntity.xVelocity  = initialXVelocity;
-                }
-
-                if (Gdx.input.isKeyPressed(Keys.W) && characterEntity.canJump()) {
-                    cEntity.yVelocity = jumpAcceleration;
-
-                }
-
-                cEntity.translate(cEntity.xVelocity * delta, cEntity.yVelocity * delta);
-
-            }
-        });
+        this.characterEntity.setCharacterRoutine(new PlayerRoutine(this));
 
     }
 

@@ -16,12 +16,6 @@ class Enemy {
     {
 
         this.characterEntity = new CharacterEntity(x,y,w,h,c,gravityEnabled,null){
-
-            @Override
-            public void update(float delta)
-            {
-                super.update(delta);
-            }
         
             @Override
             public void drawSpriteBatch(SpriteBatch b) {
@@ -36,7 +30,7 @@ class Enemy {
         };
 
 
-        this.characterEntity.setCharacterRoutine(new PatrolRoutine());
+        this.characterEntity.setCharacterRoutine(new PatrolRoutine(this.characterEntity));
 
     }
 

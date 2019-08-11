@@ -2,7 +2,8 @@ package com.drk3931.platplus;
 
 public interface CharacterRoutine{
 
-    public void routine(float delta, CharacterEntity cEntity);
+
+    public void routine(float delta);
 
 
 }

@@ -1,6 +1,5 @@
 package com.drk3931.platplus;
 
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -15,7 +14,10 @@ class CollisionHandler implements DrawableComponent {
     private World world;
     private Map map;
 
+    
     public void drawShapeRenderer(ShapeRenderer shapeRenderer) {
+
+        /*
         shapeRenderer.set(ShapeType.Line);
         shapeRenderer.setColor(Color.RED);
         for (int i = 0; i < broadPhase.length; i++) {
@@ -23,12 +25,11 @@ class CollisionHandler implements DrawableComponent {
 
             shapeRenderer.rect(re.getX(), re.getY(), re.getWidth(), re.getHeight());
         }
+        */
 
     }
 
-    
     public void drawSpriteBatch(SpriteBatch r) {
-       
 
     }
 
@@ -50,15 +51,39 @@ class CollisionHandler implements DrawableComponent {
 
     public void update(float delta) {
 
+
+
+      
+
+        for (Enemy e : world.characters) {
+
+            broadPhase(e.characterEntity);
+            narrowPhase(e.characterEntity, delta);
+        }
+
+
         Player player = world.getPlayer();
 
-        Rectangle playerRect = player.characterEntity.rectangleRepresentation;
+        broadPhase(player.characterEntity);
+        narrowPhase(player.characterEntity, delta);
+     
 
-        int xStart = (int) (playerRect.getX() - (playerRect.getX() % map.CELL_W));
+    }
+
+    private void broadPhase(CharacterEntity cEntity) {
+
+        Rectangle rect = cEntity.rectangleRepresentation;
+
+        for(int i = 0; i < broadPhase.length; i++)
+        {
+            ((Rectangle) broadPhase[i]).set(0, 0, 0, 0);
+        }
+
+        int xStart = (int) (rect.getX() - (rect.getX() % map.CELL_W));
         xStart -= map.CELL_W;
         int xEnd = xStart + (map.CELL_W * 3);
 
-        int yStart = (int) (playerRect.getY() - (playerRect.getY() % map.CELL_H));
+        int yStart = (int) (rect.getY() - (rect.getY() % map.CELL_H));
         yStart -= map.CELL_H;
         int yEnd = yStart + (map.CELL_H * 3);
 
@@ -73,8 +98,6 @@ class CollisionHandler implements DrawableComponent {
                 if (c != null) {
                     ((Rectangle) broadPhase[rectCounter]).set(x, y, map.CELL_W, map.CELL_H);
 
-                } else {
-                    ((Rectangle) broadPhase[rectCounter]).set(0, 0, 0, 0);
                 }
 
                 rectCounter++;
@@ -83,38 +106,39 @@ class CollisionHandler implements DrawableComponent {
 
         }
 
-        narrowPhase(player, delta);
-
     }
 
-    private void narrowPhase(Player player, float delta) {
+    private void narrowPhase(CharacterEntity characterEntity, float delta) {
 
         for (int i = 0; i < broadPhase.length; i++) {
             Rectangle r = (Rectangle) broadPhase[i];
-            Rectangle playerRect = player.characterEntity.rectangleRepresentation;
 
-            if (playerRect.overlaps(r)) {
+            Rectangle characterRect = characterEntity.rectangleRepresentation;
 
-                int oppositeXVelocity = player.characterEntity.xVelocity * -1;
-                int oppositeYVelocity = player.characterEntity.yVelocity * -1;
+            if (r.width != 0 && characterRect.overlaps(r)) {
 
-                player.characterEntity.setCoordinatesBeforeCollisionResolution();
+                int oppositeXVelocity = characterEntity.xVelocity * -1;
+                int oppositeYVelocity = characterEntity.yVelocity * -1;
+
+                characterEntity.setCoordinatesBeforeCollisionResolution();
 
                 // translate back a step
-                player.characterEntity.translate(delta * oppositeXVelocity, delta * oppositeYVelocity);
+                characterEntity.translate(delta * oppositeXVelocity, delta * oppositeYVelocity);
+
+                
 
                 // try to move Y;
-                player.characterEntity.translate(0, delta * oppositeYVelocity * -1);
-                if (Intersector.intersectRectangles(playerRect, r, tmpRectangle)) {
-                    player.characterEntity.translate(0, (1 + tmpRectangle.getHeight()) * Math.signum(oppositeYVelocity));
-                    player.characterEntity.yVelocity = 0;
-                    
+                characterEntity.translate(0, delta * oppositeYVelocity * -1);
+                if (Intersector.intersectRectangles(characterRect, r, tmpRectangle)) {
+                    characterEntity.translate(0, (1 + tmpRectangle.getHeight()) * Math.signum(oppositeYVelocity));
+                    characterEntity.yVelocity = 0;
+
                 }
                 // try to move X;
-                player.characterEntity.translate(delta * oppositeXVelocity * -1, 0);
-                if (Intersector.intersectRectangles(playerRect, r, tmpRectangle)) {
-                    player.characterEntity.translate((1 + tmpRectangle.getWidth()) * Math.signum(oppositeXVelocity), 0);
-                    player.characterEntity.xVelocity = 0;
+                characterEntity.translate(delta * oppositeXVelocity * -1, 0);
+                if (Intersector.intersectRectangles(characterRect, r, tmpRectangle)) {
+                    characterEntity.translate((1 + tmpRectangle.getWidth()) * Math.signum(oppositeXVelocity), 0);
+                    characterEntity.xVelocity = 0;
                 }
 
             }

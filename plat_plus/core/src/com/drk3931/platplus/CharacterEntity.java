@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 
 public abstract class CharacterEntity extends Entity implements DrawableComponent, UpdateableEntity{
@@ -20,7 +19,7 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
 
 
     public int xVelocity = 0,yVelocity=0, yVelocityCap = 335;
-    private float lastX,lastY;
+    public float lastX,lastY;
 
     public CharacterEntity(float x,float y, float w, float h, Color c, boolean gravityEnabled, TextureRegion texture)
     {
@@ -71,16 +70,28 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
 
 
 
-        characterRoutine.routine(delta,this);
-        if(gravityEnabled && this.yVelocity > yVelocityCap * -1)
+        if(gravityEnabled && this.yVelocity > (yVelocityCap * -1))
         {
             this.yVelocity += World.gravityAcceleration;
         }
-        translate(0, this.yVelocity * delta);   
+        characterRoutine.routine(delta);
+        translate(xVelocity * delta, yVelocity * delta);
+
+ 
 
         
 
 
+    }
+
+    public int dx()
+    {
+        return (int)(this.rectangleRepresentation.x - this.lastX);
+    }
+
+    public int dy()
+    {
+        return  (int)(this.rectangleRepresentation.x - this.lastX);
     }
 
     public void setCoordinatesBeforeCollisionResolution()
