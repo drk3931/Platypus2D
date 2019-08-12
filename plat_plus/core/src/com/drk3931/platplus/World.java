@@ -65,7 +65,7 @@ class World implements DrawableComponent {
     public void addEnemy(int x, int y)
     {
         this.characters.add(
-            new Enemy(x, y, 64, 64, Color.GOLD, false)
+            new Enemy(x, y, 64, 64, Color.GOLD, true)
         );
     }
 }
