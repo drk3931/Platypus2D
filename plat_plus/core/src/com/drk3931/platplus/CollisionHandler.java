@@ -110,6 +110,8 @@ class CollisionHandler implements DrawableComponent {
 
     private void narrowPhase(CharacterEntity characterEntity, float delta) {
 
+
+
         for (int i = 0; i < broadPhase.length; i++) {
             Rectangle r = (Rectangle) broadPhase[i];
 
@@ -126,20 +128,30 @@ class CollisionHandler implements DrawableComponent {
                 // translate back a step
                 characterEntity.translate(delta * oppositeXVelocity, delta * oppositeYVelocity);
 
+                 // try to move Y;
+                 characterEntity.translate(0, delta * oppositeYVelocity * -1);
+                 if (Intersector.intersectRectangles(characterRect, r, tmpRectangle)) {
+
+                    if(tmpRectangle.height < tmpRectangle.width)
+                    {
+                        characterEntity.translate(0, ( tmpRectangle.getHeight()) * Math.signum(oppositeYVelocity));
+                        characterEntity.yVelocity = 0;
+                    }
+                 }
+ 
+
                  // try to move X;
                  characterEntity.translate(delta * oppositeXVelocity * -1, 0);
                  if (Intersector.intersectRectangles(characterRect, r, tmpRectangle)) {
+
+                    if(tmpRectangle.width < tmpRectangle.height)
+                    {
                      characterEntity.translate((tmpRectangle.getWidth()) * Math.signum(oppositeXVelocity), 0);
                      characterEntity.xVelocity = 0;
+                    }
                  }
 
-                // try to move Y;
-                characterEntity.translate(0, delta * oppositeYVelocity * -1);
-                if (Intersector.intersectRectangles(characterRect, r, tmpRectangle)) {
-                    characterEntity.translate(0, (tmpRectangle.getHeight()) * Math.signum(oppositeYVelocity));
-                    characterEntity.yVelocity = 0;
-                }
-
+               
             
                
 

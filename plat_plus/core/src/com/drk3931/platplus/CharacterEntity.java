@@ -64,7 +64,8 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
 
     public boolean canJump()
     {
-        return yVelocity == World.gravityAcceleration;
+        return true;
+        //return yVelocity == World.gravityAcceleration;
     }
     
     public void update(float delta){
