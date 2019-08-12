@@ -115,31 +115,33 @@ class CollisionHandler implements DrawableComponent {
 
             Rectangle characterRect = characterEntity.rectangleRepresentation;
 
-            if (r.width != 0 && characterRect.overlaps(r)) {
+            if (Intersector.intersectRectangles(characterRect, r, tmpRectangle)) {
 
                 int oppositeXVelocity = characterEntity.xVelocity * -1;
                 int oppositeYVelocity = characterEntity.yVelocity * -1;
 
-                characterEntity.setCoordinatesBeforeCollisionResolution();
+
+                //characterEntity.setCoordinatesBeforeCollisionResolution();
 
                 // translate back a step
                 characterEntity.translate(delta * oppositeXVelocity, delta * oppositeYVelocity);
 
-                
+                 // try to move X;
+                 characterEntity.translate(delta * oppositeXVelocity * -1, 0);
+                 if (Intersector.intersectRectangles(characterRect, r, tmpRectangle)) {
+                     characterEntity.translate((tmpRectangle.getWidth()) * Math.signum(oppositeXVelocity), 0);
+                     characterEntity.xVelocity = 0;
+                 }
 
                 // try to move Y;
                 characterEntity.translate(0, delta * oppositeYVelocity * -1);
                 if (Intersector.intersectRectangles(characterRect, r, tmpRectangle)) {
-                    characterEntity.translate(0, (1 + tmpRectangle.getHeight()) * Math.signum(oppositeYVelocity));
+                    characterEntity.translate(0, (tmpRectangle.getHeight()) * Math.signum(oppositeYVelocity));
                     characterEntity.yVelocity = 0;
+                }
 
-                }
-                // try to move X;
-                characterEntity.translate(delta * oppositeXVelocity * -1, 0);
-                if (Intersector.intersectRectangles(characterRect, r, tmpRectangle)) {
-                    characterEntity.translate((1 + tmpRectangle.getWidth()) * Math.signum(oppositeXVelocity), 0);
-                    characterEntity.xVelocity = 0;
-                }
+            
+               
 
             }
 

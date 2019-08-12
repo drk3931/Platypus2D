@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 
 public abstract class CharacterEntity extends Entity implements DrawableComponent, UpdateableEntity{
@@ -105,7 +106,7 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
     {
 
         Rectangle rectRep = this.rectangleRepresentation;
-
+        shapeRenderer.setColor(this.color);
         shapeRenderer.rect(rectRep.x, rectRep.y, rectRep.width, rectRep.height);
 
     }
@@ -113,9 +114,12 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
     public void drawSpriteBatch(SpriteBatch spriteBatch)
     {   
 
+
+
         if (this.characterTexture != null) {
             Rectangle rectRep = this.rectangleRepresentation;
             spriteBatch.draw(this.characterTexture, rectRep.x, rectRep.y, rectRep.width, rectRep.height);
+            
 
         }
    

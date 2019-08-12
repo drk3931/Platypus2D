@@ -12,9 +12,9 @@ public class PlayerRoutine implements CharacterRoutine{
     private CharacterEntity cEntity;
 
     
-    final int jumpAcceleration = 500;
+    final int jumpAcceleration = 685;
 
-    final int initialXVelocity = 333;
+    final int initialXVelocity = 375;
 
     
     public PlayerRoutine(Player player)
