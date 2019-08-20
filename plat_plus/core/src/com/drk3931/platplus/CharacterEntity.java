@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 
-public abstract class CharacterEntity extends Entity implements DrawableComponent, UpdateableEntity{
+public abstract class CharacterEntity extends Entity implements DrawableComponent, Updateable{
 
 
 

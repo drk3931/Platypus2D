@@ -78,11 +78,9 @@ class World implements DrawableComponent,Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        System.out.println(o.getClass());
         if(o instanceof EntityStats)
         {
             EntityStats entityStats = (EntityStats)o;
-            System.out.println(entityStats.getHealth());
         }
 	}
 }
