@@ -16,12 +16,6 @@ class Enemy {
     {
 
         this.characterEntity = new CharacterEntity(x,y,w,h,c,gravityEnabled,null,100){
-        
-            @Override
-            public void drawSpriteBatch(SpriteBatch b) {
-                super.drawSpriteBatch(b);
-            }
-        
             @Override
             public void drawShapeRenderer(ShapeRenderer r) {
                 r.set(ShapeType.Filled);

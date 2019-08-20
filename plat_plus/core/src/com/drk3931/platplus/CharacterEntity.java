@@ -15,18 +15,20 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
     private boolean gravityEnabled;
     public TextureRegion characterTexture;
     private CharacterRoutine characterRoutine; 
-
+    
 
     public int xVelocity = 0,yVelocity=0, yVelocityCap = 335;
     public float lastX,lastY;
 
     public CharacterEntity(float x,float y, float w, float h, Color c, boolean gravityEnabled, TextureRegion texture, int health)
     {
-        super(c,health);
-        this.shapeRepresentation = new Rectangle(x,y,w,h);
-        this.rectangleRepresentation = (Rectangle)this.shapeRepresentation;
+        this.geometricRepresentation = new GeometricRepresentation();
+        this.geometricRepresentation.shapeRepresentation = new Rectangle(x,y,w,h);
+        this.geometricRepresentation.color = c;
+        this.rectangleRepresentation = (Rectangle)this.geometricRepresentation.shapeRepresentation;
         this.gravityEnabled = gravityEnabled;
         this.characterTexture = texture;
+        this.entityStats = new EntityStats(health);
 
     }
 
@@ -91,12 +93,12 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
 
     public int dx()
     {
-        return (int)(this.rectangleRepresentation.x - this.lastX);
+        return  (int)Math.abs((this.rectangleRepresentation.x - this.lastX));
     }
 
     public int dy()
     {
-        return  (int)(this.rectangleRepresentation.x - this.lastX);
+        return  (int)Math.abs((this.rectangleRepresentation.y - this.lastY));
     }
 
     public void setCoordinatesBeforeCollisionResolution()
@@ -110,7 +112,7 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
     {
 
         Rectangle rectRep = this.rectangleRepresentation;
-        shapeRenderer.setColor(this.color);
+        shapeRenderer.setColor(this.getGeometricRepresentation().color);
         shapeRenderer.rect(rectRep.x, rectRep.y, rectRep.width, rectRep.height);
 
     }

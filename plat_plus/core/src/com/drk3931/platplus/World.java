@@ -69,7 +69,10 @@ class World implements DrawableComponent,Observer {
     {
 
         Enemy e = new Enemy(x, y, 64, 64, Color.RED, true);
+        
         e.characterEntity.entityStats.addObserver(this);
+
+        
         this.characters.add( e );
     }
 
