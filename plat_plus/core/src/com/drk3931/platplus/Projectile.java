@@ -9,18 +9,38 @@ public class Projectile extends Item {
     int radius = 15;
     Color bulletColor = Color.WHITE;
 
-    public int xDir, yDir;
+    public int xVel,yVel;
+    public Circle circleRep;
 
-    public Projectile(int x, int y) {
+    public Projectile() {
         
         super();
-        setShape(new Circle(x,y,radius));
+        setShape(circleRep);
         setColor(bulletColor);
-	}
+    
+    }
+    
+    public void setTrajectory(int xStart, int yStart, int xVel, int yVel)
+    {
+        this.xVel = xVel;
+        this.yVel = yVel;
+        circleRep = new Circle(xStart,yStart,radius);
+        
+
+    }
 
 	@Override
     public GameEvent onCollision(Entity e) {
         return null;
     }
 
+
+    @Override
+    public void update(float delta)
+    {
+        
+        circleRep.x += delta * this.xVel;
+        circleRep.y += delta * this.yVel;
+
+    }
 }

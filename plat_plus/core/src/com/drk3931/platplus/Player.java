@@ -14,6 +14,8 @@ public class Player {
 
     public CharacterEntity characterEntity;
 
+    public ProjectileWeapon weapon;
+
 
     public Player(int x, int y, int w, int h, Color c) {
 
@@ -22,13 +24,19 @@ public class Player {
         characterEntity = new CharacterEntity(x, y, w, h, c, true, pTex,100) {
             @Override
             public void update(float delta) {
-
                 super.update(delta);
-
-
+                weapon.update(delta);
+            }
+            @Override
+            public void drawShapeRenderer(ShapeRenderer shapeRenderer){
+                super.drawShapeRenderer(shapeRenderer);
+                weapon.drawShapeRenderer(shapeRenderer);
             }
 
         };
+
+        weapon = new ProjectileWeapon(this.characterEntity);
+
 
 
         this.characterEntity.setCharacterRoutine(new PlayerRoutine(this));

@@ -26,6 +26,7 @@ abstract class Item extends Observable implements Updateable
     
     public Item()
     {
+        this.geometricRepresentation = new GeometricRepresentation();
 
     }
 
@@ -40,16 +41,7 @@ abstract class Item extends Observable implements Updateable
         this.geometricRepresentation.color = c;
     }
 
-    
 
-    @Override
-    public void update(float delta)
-    {
-        Circle c  = (Circle)geometricRepresentation.shapeRepresentation;
-        c.x += delta * this.xVelocity;
-        c.y += delta * this.yVelocity;
-
-    }
 
 
     public GeometricRepresentation geometricRepresentation;

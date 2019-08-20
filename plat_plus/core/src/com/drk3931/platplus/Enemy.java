@@ -12,6 +12,8 @@ class Enemy {
     
     public CharacterEntity characterEntity;
 
+    
+
     public Enemy(int x, int y, int w, int h, Color c, boolean gravityEnabled)
     {
 
