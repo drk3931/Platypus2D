@@ -130,11 +130,12 @@ class CollisionHandler implements DrawableComponent {
 
                  // try to move Y;
                  characterEntity.translate(0, delta * oppositeYVelocity * -1);
+
                  if (Intersector.intersectRectangles(characterRect, r, tmpRectangle)) {
 
                     if(tmpRectangle.height < tmpRectangle.width)
                     {
-                        characterEntity.translate(0, ( tmpRectangle.getHeight()) * Math.signum(oppositeYVelocity));
+                        characterEntity.translate(0, (tmpRectangle.getHeight()) * Math.signum(oppositeYVelocity));
                         characterEntity.yVelocity = 0;
                     }
                  }

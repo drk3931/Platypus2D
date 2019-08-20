@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 
 public abstract class CharacterEntity extends Entity implements DrawableComponent, UpdateableEntity{
@@ -18,19 +17,20 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
     private CharacterRoutine characterRoutine; 
 
 
-
     public int xVelocity = 0,yVelocity=0, yVelocityCap = 335;
     public float lastX,lastY;
 
-    public CharacterEntity(float x,float y, float w, float h, Color c, boolean gravityEnabled, TextureRegion texture)
+    public CharacterEntity(float x,float y, float w, float h, Color c, boolean gravityEnabled, TextureRegion texture, int health)
     {
-        super(c);
+        super(c,health);
         this.shapeRepresentation = new Rectangle(x,y,w,h);
         this.rectangleRepresentation = (Rectangle)this.shapeRepresentation;
         this.gravityEnabled = gravityEnabled;
         this.characterTexture = texture;
 
     }
+
+
 
 
     public void setCharacterRoutine(CharacterRoutine routine)
@@ -64,8 +64,10 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
 
     public boolean canJump()
     {
-        return true;
-        //return yVelocity == World.gravityAcceleration;
+
+        //you can jump the frame after a collision resolution sets yVelocity = 0
+        //and accelaration due to gravity is added for one frame. 
+        return yVelocity == World.gravityAcceleration;
     }
     
     public void update(float delta){
@@ -80,6 +82,7 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
         translate(xVelocity * delta, yVelocity * delta);
 
  
+        
 
         
 

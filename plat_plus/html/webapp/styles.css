@@ -3,8 +3,32 @@ canvas {
     outline: none;
 }
 
-body {
-    background-color: #222222;
+html,body{
+    margin: 0 !important;
+    padding: 0 !important;
+    max-height: 100vh !important;
+
+    background: rgba(0, 32, 63, 1);
+    background: -webkit-linear-gradient(top, rgba(0, 32, 63, 1) 0%, rgba(0, 10, 20, 1) 100%);
+    background: linear-gradient(to bottom, rgba(0, 32, 63, 1) 0%, rgba(0, 10, 20, 1) 100%);
+    font-family: 'Lexend Deca', sans-serif;
+
+}
+
+
+
+#embed-html{
+    max-height: 100% !important;
+    
+}
+
+
+#gameTitle{
+    text-align: center;
+    text-decoration: underline;
+    -moz-text-decoration-color: red;
+    color:white;
+    max-height: 10vh !important;
 }
 
 .superdev {

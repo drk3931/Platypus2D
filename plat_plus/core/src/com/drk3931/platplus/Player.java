@@ -19,7 +19,7 @@ public class Player {
 
         TextureRegion pTex = new TextureRegion(new Texture(Gdx.files.internal("gPast.jpeg")));
 
-        characterEntity = new CharacterEntity(x, y, w, h, c, true, pTex) {
+        characterEntity = new CharacterEntity(x, y, w, h, c, true, pTex,100) {
             @Override
             public void update(float delta) {
 
