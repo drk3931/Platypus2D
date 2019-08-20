@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Vector2;
 
 public class ProjectileWeapon extends EquipableItem implements DrawableComponent,Updateable{
 
@@ -19,7 +20,7 @@ public class ProjectileWeapon extends EquipableItem implements DrawableComponent
         super(c);
         this.mag = new Stack<Projectile>();
         poppedProjectiles = new LinkedList<Projectile>();
-        reload(25);
+        reload(500);
 
     }
 
@@ -34,10 +35,15 @@ public class ProjectileWeapon extends EquipableItem implements DrawableComponent
             Projectile p = this.mag.pop();
 
 
-            int xComputed = xDir - boundX;
-            int yComputed =(Gdx.graphics.getHeight() - yDir) - boundY;
+            int xComputed = xDir - Gdx.graphics.getWidth()/2;
+            int yComputed = (Gdx.graphics.getHeight() - yDir) - (Gdx.graphics.getHeight()/2);
 
-            p.setTrajectory(boundX, boundY, xComputed, yComputed);
+            Vector2 fireDir = new Vector2(xComputed,yComputed).nor();
+
+            fireDir.setLength(500);
+
+
+            p.setTrajectory(boundX, boundY, (int)fireDir.x, (int)fireDir.y);
             
             this.poppedProjectiles.add(p);
 
