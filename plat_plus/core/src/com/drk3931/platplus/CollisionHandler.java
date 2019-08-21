@@ -194,12 +194,12 @@ class CollisionHandler implements DrawableComponent {
         for (int i = 0; i < broadPhase.length; i++) {
             Rectangle r = (Rectangle) broadPhase[i];
 
-            Rectangle characterRect = characterEntity.rectangleRepresentation;
+            Rectangle characterRect = (Rectangle)characterEntity.geometricRepresentation.getShape();
 
             if (Intersector.intersectRectangles(characterRect, r, tmpRectangle)) {
 
-                int oppositeXVelocity = characterEntity.xVelocity * -1;
-                int oppositeYVelocity = characterEntity.yVelocity * -1;
+                float oppositeXVelocity = characterEntity.xVelocity * -1;
+                float oppositeYVelocity = characterEntity.yVelocity * -1;
 
                 // characterEntity.setCoordinatesBeforeCollisionResolution();
 

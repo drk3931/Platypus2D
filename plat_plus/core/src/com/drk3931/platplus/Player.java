@@ -29,9 +29,19 @@ public class Player {
             }
             @Override
             public void drawShapeRenderer(ShapeRenderer shapeRenderer){
+
+                shapeRenderer.set(ShapeType.Line);
                 super.drawShapeRenderer(shapeRenderer);
                 weapon.drawShapeRenderer(shapeRenderer);
             }
+
+            @Override
+            public GameEvent onCollision(Entity e){
+
+               return null;
+    
+            }
+
 
         };
 

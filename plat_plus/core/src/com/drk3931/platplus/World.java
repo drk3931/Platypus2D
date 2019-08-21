@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-class World implements DrawableComponent {
+class World implements DrawableComponent,Updateable {
 
     public ArrayList<Enemy> characters;
     public Entity[] gameEntities;
@@ -30,7 +30,6 @@ class World implements DrawableComponent {
     public void update(float delta) {
 
         for (Enemy enemy : characters) {
-            enemy.characterEntity.entityStats.subHealth(10);
             enemy.characterEntity.update(delta);
         }
 

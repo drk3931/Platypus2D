@@ -15,14 +15,14 @@ public class ProjectileWeapon extends EquipableItem implements DrawableComponent
     Stack<Projectile> mag;
     LinkedList<Projectile> poppedProjectiles;
     float timeSinceLastFire = 0;
-    final int FIRE_RATE_PER_SECOND = 1;
+    final float fireRate =  1;
 
     public ProjectileWeapon(CharacterEntity c) {
 
         super(c);
         this.mag = new Stack<Projectile>();
         poppedProjectiles = new LinkedList<Projectile>();
-        reload(500);
+        reload(50000);
 
     }
 
@@ -33,6 +33,11 @@ public class ProjectileWeapon extends EquipableItem implements DrawableComponent
     }
 
     public void fire(int xDir, int yDir) {
+
+        if(timeSinceLastFire < fireRate)
+        {
+            return;
+        }
         try {
 
 
@@ -47,6 +52,7 @@ public class ProjectileWeapon extends EquipableItem implements DrawableComponent
             p.setTrajectory(boundX, boundY, (int)xComputed, (int)yComputed);
             
             this.poppedProjectiles.add(p);
+            timeSinceLastFire = 0;
 
         } catch (Exception e) {
             Gdx.app.log("PROJECTILE WEAPON", "Out of ammo!");
@@ -58,10 +64,11 @@ public class ProjectileWeapon extends EquipableItem implements DrawableComponent
 
         r.set(ShapeType.Filled);
         Iterator i = poppedProjectiles.iterator();
+
         while(i.hasNext())
         {
             Projectile p = (Projectile)i.next();
-            r.circle(p.circleRep.x, p.circleRep.y, p.radius);
+            p.drawShapeRenderer(r);
 
         }
         
@@ -73,6 +80,7 @@ public class ProjectileWeapon extends EquipableItem implements DrawableComponent
     {
         super.update(delta);
         this.timeSinceLastFire+=delta;
+
         Iterator i = poppedProjectiles.iterator();
         while(i.hasNext())
         {

@@ -13,13 +13,13 @@ public class PlayerRoutine implements CharacterRoutine {
     private Player player;
 
     final int jumpAcceleration = 685;
-
     final int initialXVelocity = 375;
 
     public PlayerRoutine(Player player) {
 
         this.playerEntity = player.characterEntity;
         this.player = player;
+        
     }
 
     public void routine(float delta) {
@@ -41,7 +41,7 @@ public class PlayerRoutine implements CharacterRoutine {
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
             int yPos = Gdx.input.getY();
             int xPos = Gdx.input.getX();
-
+            
             this.player.weapon.fire(xPos, Gdx.graphics.getHeight() - yPos);
         }
 

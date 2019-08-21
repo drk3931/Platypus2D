@@ -32,7 +32,6 @@ public class EntityStats {
 
     public EntityStats()
     {
-        this.entityState = STATE.SPECIAL;
     }
 
     public void subHealth(int amount)

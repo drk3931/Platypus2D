@@ -23,7 +23,6 @@ public class PlatPlus extends ApplicationAdapter {
 
 		
 		collisionHandler = new  CollisionHandler(map, world);
-		
 		renderer = new Renderer(map,world,collisionHandler);
 
 	}

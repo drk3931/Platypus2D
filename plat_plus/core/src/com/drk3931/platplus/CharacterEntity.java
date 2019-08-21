@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 
-public abstract class CharacterEntity extends Entity implements DrawableComponent, Updateable{
+public abstract class CharacterEntity extends Entity implements DrawableComponent{
 
 
 
@@ -18,7 +18,7 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
     private CharacterRoutine characterRoutine; 
     
 
-    public int xVelocity = 0,yVelocity=0, yVelocityCap = 335;
+    public int yVelocityCap = 335;
     public float lastX,lastY;
 
     public CharacterEntity(float x,float y, float w, float h, Color c, boolean gravityEnabled, TextureRegion texture, int health)
@@ -46,22 +46,10 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
         this.characterTexture = texture;
     }
 
-    public  void setXY(int x,int y)
-    {
-        this.rectangleRepresentation.x = x;
-        this.rectangleRepresentation.y = y;
-
-    }
-    public  void setWH(int w,int h)
-    {
-        this.rectangleRepresentation.width = w;
-        this.rectangleRepresentation.height = h;
-
-    }
+   
     public void translate(float dx,float dy)
     {
-        this.rectangleRepresentation.x +=   dx ;
-        this.rectangleRepresentation.y +=   dy ;
+      this.geometricRepresentation.translate(dx, dy);
 
     }
 
@@ -75,71 +63,49 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
     
     public void update(float delta){
 
-
-
-        if(gravityEnabled && this.yVelocity > (yVelocityCap * -1))
+        if(gravityEnabled)
         {
+
             this.yVelocity += World.gravityAcceleration;
+
+            if(this.yVelocity < (yVelocityCap * -1))
+            {
+                this.yVelocity = yVelocityCap * -1;
+            }
+         
         }
         characterRoutine.routine(delta);
-        translate(xVelocity * delta, yVelocity * delta);
-
- 
-        
-
-        
-
+        move(delta);
 
     }
 
     public int dx()
     {
-        return  (int)Math.abs((this.rectangleRepresentation.x - this.lastX));
+        return  (int)Math.abs((this.geometricRepresentation.getX() - this.lastX));
     }
 
     public int dy()
     {
-        return  (int)Math.abs((this.rectangleRepresentation.y - this.lastY));
+        return  (int)Math.abs((this.geometricRepresentation.getY() - this.lastY));
     }
 
     public void setCoordinatesBeforeCollisionResolution()
     {
-        this.lastX = rectangleRepresentation.x;
-        this.lastY = rectangleRepresentation.y;
+        this.lastX = geometricRepresentation.getX();
+        this.lastY = geometricRepresentation.getY();
     }
 
 
     public void drawShapeRenderer(ShapeRenderer shapeRenderer)
     {
 
-        Rectangle rectRep = this.rectangleRepresentation;
-        shapeRenderer.set(ShapeType.Line);
+        Rectangle rectRep = (Rectangle)this.geometricRepresentation.shapeRepresentation;
         shapeRenderer.setColor(this.getGeometricRepresentation().color);
         shapeRenderer.rect(rectRep.x, rectRep.y, rectRep.width, rectRep.height);
 
     }
 
-    public int getX()
-    {
-        return (int)this.rectangleRepresentation.getX();
-    }
-
-    public int getY()
-    {
-        return (int)this.rectangleRepresentation.getY();
-
-    }
-
-    public int getWidth()
-    {
-        return (int)this.rectangleRepresentation.getWidth();
-    }
-
-    public int getHeight()
-    {
-        return (int)this.rectangleRepresentation.getHeight();
-
-    }
+   
 
     public void drawSpriteBatch(SpriteBatch spriteBatch)
     {   
@@ -147,7 +113,7 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
 
 
         if (this.characterTexture != null) {
-            Rectangle rectRep = this.rectangleRepresentation;
+            Rectangle rectRep = (Rectangle)this.geometricRepresentation.shapeRepresentation;
             spriteBatch.draw(this.characterTexture, rectRep.x, rectRep.y, rectRep.width, rectRep.height);
             
 

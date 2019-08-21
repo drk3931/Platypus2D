@@ -22,7 +22,14 @@ class Enemy {
             public void drawShapeRenderer(ShapeRenderer r) {
                 r.set(ShapeType.Filled);
                 super.drawShapeRenderer(r);
+
             }
+
+            @Override
+            public GameEvent onCollision(Entity e) {
+                return null;
+            }
+        
         };
 
 
