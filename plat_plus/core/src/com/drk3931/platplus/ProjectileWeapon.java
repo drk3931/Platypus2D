@@ -14,6 +14,8 @@ public class ProjectileWeapon extends EquipableItem implements DrawableComponent
 
     Stack<Projectile> mag;
     LinkedList<Projectile> poppedProjectiles;
+    float timeSinceLastFire = 0;
+    final int FIRE_RATE_PER_SECOND = 1;
 
     public ProjectileWeapon(CharacterEntity c) {
 
@@ -32,18 +34,17 @@ public class ProjectileWeapon extends EquipableItem implements DrawableComponent
 
     public void fire(int xDir, int yDir) {
         try {
+
+
+
             Projectile p = this.mag.pop();
 
 
             int xComputed = xDir - Gdx.graphics.getWidth()/2;
-            int yComputed = (Gdx.graphics.getHeight() - yDir) - (Gdx.graphics.getHeight()/2);
+            int yComputed = yDir - (Gdx.graphics.getHeight()/2);
 
-            Vector2 fireDir = new Vector2(xComputed,yComputed).nor();
-
-            fireDir.setLength(500);
-
-
-            p.setTrajectory(boundX, boundY, (int)fireDir.x, (int)fireDir.y);
+    
+            p.setTrajectory(boundX, boundY, (int)xComputed, (int)yComputed);
             
             this.poppedProjectiles.add(p);
 
@@ -71,6 +72,7 @@ public class ProjectileWeapon extends EquipableItem implements DrawableComponent
     public void update(float delta)
     {
         super.update(delta);
+        this.timeSinceLastFire+=delta;
         Iterator i = poppedProjectiles.iterator();
         while(i.hasNext())
         {
