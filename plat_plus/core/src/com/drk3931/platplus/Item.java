@@ -1,12 +1,11 @@
 package com.drk3931.platplus;
 
-import java.util.Observable;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Shape2D;
 
-abstract class Item extends Observable implements Updateable
+abstract class Item implements Updateable
 {
 
     public int xVelocity,yVelocity; 

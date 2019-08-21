@@ -1,8 +1,7 @@
 package com.drk3931.platplus;
 
-import java.util.Observable;
 
-public class EntityStats extends Observable{
+public class EntityStats {
 
     enum STATE{
         ALIVE,
@@ -48,8 +47,7 @@ public class EntityStats extends Observable{
         {
             health = 0; 
         }
-        setChanged();
-        notifyObservers();
+        
     }
 
     public void incHealth(int amount)
@@ -66,8 +64,7 @@ public class EntityStats extends Observable{
         {
             health = maxHealth; 
         }
-        setChanged();
-        notifyObservers();
+     
     }
 
 

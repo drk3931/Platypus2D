@@ -133,8 +133,6 @@ class CollisionHandler implements DrawableComponent {
 
         } else {
         
-           System.out.println(shape.getClass());
-           System.exit(0);
         }
 
         int xStart = (int) (shapeX - (shapeX % map.CELL_W));

@@ -2,14 +2,13 @@ package com.drk3931.platplus;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Observable;
 import java.util.Observer;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-class World implements DrawableComponent,Observer {
+class World implements DrawableComponent {
 
     public ArrayList<Enemy> characters;
     public Entity[] gameEntities;
@@ -70,17 +69,10 @@ class World implements DrawableComponent,Observer {
 
         Enemy e = new Enemy(x, y, 64, 64, Color.RED, true);
         
-        e.characterEntity.entityStats.addObserver(this);
 
         
         this.characters.add( e );
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        if(o instanceof EntityStats)
-        {
-            EntityStats entityStats = (EntityStats)o;
-        }
-	}
+  
 }
