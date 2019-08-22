@@ -5,9 +5,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.drk3931.platplus.Entity.Identity;
 import com.drk3931.platplus.characterroutines.PatrolRoutine;
 
-class Enemy {
+public class Enemy {
 
     
     public CharacterEntity characterEntity;
@@ -18,6 +19,9 @@ class Enemy {
     {
 
         this.characterEntity = new CharacterEntity(x,y,w,h,c,gravityEnabled,null,100){
+            
+
+            
             @Override
             public void drawShapeRenderer(ShapeRenderer r) {
                 r.set(ShapeType.Filled);
@@ -31,6 +35,8 @@ class Enemy {
             }
         
         };
+
+    this.characterEntity.setIdentity(Identity.ENEMY);
 
 
         this.characterEntity.setCharacterRoutine(new PatrolRoutine(this.characterEntity));

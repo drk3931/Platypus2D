@@ -8,13 +8,30 @@ abstract class Entity implements Updateable{
     public EntityStats entityStats;
     abstract public GameEvent onCollision(Entity e);
     public float xVelocity, yVelocity;
+  
+    enum Identity{
+        ENEMY,
+        PLAYER,
+        PROJECTILE
+    }
 
+    private Identity identity;
 
 
     public Entity()
     {
         this.geometricRepresentation = new GeometricRepresentation();
         this.entityStats = new EntityStats();
+    }
+
+    public void setIdentity(Identity ident)
+    {
+        this.identity = ident;
+    }
+
+    public Identity getIdentity()
+    {
+        return this.identity;
     }
 
     public GeometricRepresentation getGeometricRepresentation()

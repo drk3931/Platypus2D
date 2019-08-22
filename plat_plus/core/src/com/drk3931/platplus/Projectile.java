@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
+import com.drk3931.platplus.Enemy;
 
 public class Projectile extends Entity implements DrawableComponent {
 
@@ -32,7 +33,18 @@ public class Projectile extends Entity implements DrawableComponent {
 
 	@Override
     public GameEvent onCollision(Entity e) {
-       return null;
+        
+        if(e.getIdentity() == Identity.ENEMY)
+        {
+            return new GameEvent(){
+            
+                @Override
+                public void action() {
+                   
+                }
+            };
+        }
+        return null;
     }
 
 

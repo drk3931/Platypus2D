@@ -37,7 +37,6 @@ class CollisionHandler implements DrawableComponent {
         this.world = world;
         this.map = map;
         this.tmpRectangle = new Rectangle();
-
     }
 
     Shape2D[] broadPhase = new Shape2D[9];
@@ -64,13 +63,14 @@ class CollisionHandler implements DrawableComponent {
 
         Iterator i = player.weapon.poppedProjectiles.iterator();
 
-        while (i.hasNext()) {
+        while (i.hasNext()) {u
             Projectile p = (Projectile) i.next();
             simpleBroadPhase(p.geometricRepresentation.shapeRepresentation);
            
             boolean collision = simpleNarrowPhase(p.geometricRepresentation.shapeRepresentation);
             if (collision) {
                 i.remove();
+                
             }
         }
 

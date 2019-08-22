@@ -1,8 +1,9 @@
 package com.drk3931.platplus;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Observer;
+import java.util.Stack;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,6 +14,8 @@ class World implements DrawableComponent,Updateable {
     public ArrayList<Enemy> characters;
     public Entity[] gameEntities;
     private Player player;
+    public static Stack<GameEvent> gameEvents;
+
 
     final public static float gravityAcceleration = -19f;
 
@@ -24,10 +27,18 @@ class World implements DrawableComponent,Updateable {
 
         player = new Player(0, 72, 64, 64, Color.BLUE);
         characters = new ArrayList<Enemy>();
-
+        gameEvents = new Stack<GameEvent>();
     }
 
     public void update(float delta) {
+
+        Iterator i = gameEvents.iterator();
+        while(i.hasNext())
+        {
+            GameEvent e = (GameEvent)i.next();
+            e.action();
+        }
+
 
         for (Enemy enemy : characters) {
             enemy.characterEntity.update(delta);
