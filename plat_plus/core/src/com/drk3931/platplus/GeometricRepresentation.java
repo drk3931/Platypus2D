@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
 
-class GeometricRepresentation {
+public class GeometricRepresentation {
 
     public Shape2D shapeRepresentation;
     public Color color;

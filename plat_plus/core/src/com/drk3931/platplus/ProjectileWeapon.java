@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 
-public class ProjectileWeapon extends EquipableItem implements DrawableComponent,Updateable{
+public class ProjectileWeapon extends EquipableItem {
 
     Stack<Projectile> mag;
     LinkedList<Projectile> poppedProjectiles;

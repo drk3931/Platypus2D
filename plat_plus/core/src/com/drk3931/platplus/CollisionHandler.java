@@ -63,7 +63,7 @@ class CollisionHandler implements DrawableComponent {
 
         Iterator i = player.weapon.poppedProjectiles.iterator();
 
-        while (i.hasNext()) {u
+        while (i.hasNext()) {
             Projectile p = (Projectile) i.next();
             simpleBroadPhase(p.geometricRepresentation.shapeRepresentation);
            

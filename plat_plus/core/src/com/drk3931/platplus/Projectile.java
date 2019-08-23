@@ -36,13 +36,12 @@ public class Projectile extends Entity implements DrawableComponent {
         
         if(e.getIdentity() == Identity.ENEMY)
         {
-            return new GameEvent(){
-            
-                @Override
-                public void action() {
-                   
-                }
-            };
+           
+        }
+
+        if(e.getIdentity() == Identity.FRIEND)
+        {
+
         }
         return null;
     }

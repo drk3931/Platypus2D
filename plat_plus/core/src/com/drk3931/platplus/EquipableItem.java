@@ -1,10 +1,11 @@
 package com.drk3931.platplus;
 
-class EquipableItem implements Updateable
+abstract class EquipableItem implements DrawableComponent,Updateable
 {
 
     protected int boundX, boundY;
     protected CharacterEntity boundEntity;
+    public GeometricRepresentation geoRep;
     
     public EquipableItem(CharacterEntity c)
     {

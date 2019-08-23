@@ -12,6 +12,7 @@ abstract class Entity implements Updateable{
     enum Identity{
         ENEMY,
         PLAYER,
+        FRIEND,
         PROJECTILE
     }
 
