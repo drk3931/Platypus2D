@@ -2,7 +2,6 @@ package com.drk3931.platplus;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Stack;
 
 import com.badlogic.gdx.graphics.Color;
@@ -11,7 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 class World implements DrawableComponent,Updateable {
 
-    public ArrayList<Enemy> characters;
+    public ArrayList<Enemy> enemies;
     public Entity[] gameEntities;
     private Player player;
     public static Stack<GameEvent> gameEvents;
@@ -26,25 +25,34 @@ class World implements DrawableComponent,Updateable {
     public World() {
 
         player = new Player(0, 72, 64, 64, Color.BLUE);
-        characters = new ArrayList<Enemy>();
+        enemies = new ArrayList<Enemy>();
         gameEvents = new Stack<GameEvent>();
     }
 
     public void update(float delta) {
 
-        Iterator i = gameEvents.iterator();
+        Iterator<GameEvent> i = gameEvents.iterator();
         while(i.hasNext())
         {
             GameEvent e = (GameEvent)i.next();
             e.action();
+            i.remove();
         }
 
 
-        for (Enemy enemy : characters) {
-            enemy.characterEntity.update(delta);
+        Iterator<Enemy> charIter = enemies.iterator();
+        while(charIter.hasNext())
+        {
+            Enemy e = charIter.next();
+            e.update(delta);
+            if(e.readyToBeDestroyed())
+            {
+                charIter.remove();
+            }
+
         }
 
-        player.characterEntity.update(delta);
+        player.update(delta);
 
 
     }
@@ -52,11 +60,11 @@ class World implements DrawableComponent,Updateable {
     public void drawShapeRenderer(ShapeRenderer shapeRenderer) {
 
 
-        for (Enemy enemy : characters) {
+        for (Enemy enemy : enemies) {
             enemy.characterEntity.drawShapeRenderer(shapeRenderer);
         }
 
-        player.characterEntity.drawShapeRenderer(shapeRenderer);
+        player.drawShapeRenderer(shapeRenderer);
 
 
     }
@@ -64,11 +72,11 @@ class World implements DrawableComponent,Updateable {
     @Override
     public void drawSpriteBatch(SpriteBatch b) {
 
-        for (Enemy enemy : characters) {
+        for (Enemy enemy : enemies) {
             enemy.characterEntity.drawSpriteBatch(b);
         }
 
-        player.characterEntity.drawSpriteBatch(b);
+        player.drawSpriteBatch(b);
 
 
     }
@@ -79,9 +87,7 @@ class World implements DrawableComponent,Updateable {
 
         Enemy e = new Enemy(x, y, 64, 64, Color.RED, true);
         
-
-        
-        this.characters.add( e );
+        this.enemies.add( e );
     }
 
   

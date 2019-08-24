@@ -2,10 +2,8 @@ package com.drk3931.platplus;
 
 import java.util.Iterator;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
@@ -50,7 +48,7 @@ class CollisionHandler implements DrawableComponent {
 
     public void update(float delta) {
 
-        for (Enemy e : world.characters) {
+        for (Enemy e : world.enemies) {
 
             broadPhase(e.characterEntity);
             narrowPhase(e.characterEntity, delta);
@@ -61,19 +59,34 @@ class CollisionHandler implements DrawableComponent {
         broadPhase(player.characterEntity);
         narrowPhase(player.characterEntity, delta);
 
-        Iterator i = player.weapon.poppedProjectiles.iterator();
+        Iterator<Projectile> i = player.weapon.poppedProjectiles.iterator();
 
         while (i.hasNext()) {
             Projectile p = (Projectile) i.next();
             simpleBroadPhase(p.geometricRepresentation.shapeRepresentation);
-           
             boolean collision = simpleNarrowPhase(p.geometricRepresentation.shapeRepresentation);
-            if (collision) {
+            if (collision || projectileEnemyIntersect(p)) {
                 i.remove();
                 
             }
+          
         }
 
+    }
+
+    private boolean projectileEnemyIntersect(Projectile p)
+    {
+
+        Circle c = p.circleRep;
+        for(Enemy e: world.enemies)
+        {
+            Rectangle enemyShape = (Rectangle)e.characterEntity.geometricRepresentation.getShape();
+            if(Intersector.overlaps(c,enemyShape)){
+                p.onCollision(e.characterEntity);
+                return true;
+            }
+        }
+        return false;
     }
 
     private void broadPhase(CharacterEntity cEntity) {

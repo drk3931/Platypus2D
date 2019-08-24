@@ -88,7 +88,7 @@ class Map implements DrawableComponent{
 
 
 
-        Iterator objectsIter = objects.iterator();
+        Iterator<MapObject> objectsIter = objects.iterator();
 
 
         while(objectsIter.hasNext())

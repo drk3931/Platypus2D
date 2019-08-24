@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 
 public abstract class CharacterEntity extends Entity implements DrawableComponent{
@@ -16,7 +15,8 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
     private boolean gravityEnabled;
     public TextureRegion characterTexture;
     private CharacterRoutine characterRoutine; 
-    
+    private CharacterStats characterStats;
+
 
     public int yVelocityCap = 335;
     public float lastX,lastY;
@@ -29,10 +29,15 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
         this.rectangleRepresentation = (Rectangle)this.geometricRepresentation.shapeRepresentation;
         this.gravityEnabled = gravityEnabled;
         this.characterTexture = texture;
-        this.entityStats = new EntityStats(health);
+        this.characterStats = new CharacterStats(health);
+        loadStats(characterStats);
 
     }
 
+    public CharacterStats getStats()
+    {
+        return this.characterStats;
+    }
 
 
 

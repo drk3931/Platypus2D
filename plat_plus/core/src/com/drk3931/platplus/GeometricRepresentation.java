@@ -37,6 +37,7 @@ public class GeometricRepresentation {
             Rectangle asRect = (Rectangle) shapeRepresentation;
             asRect.x = x;
             asRect.y = y;
+            return;
         }
 
         
@@ -44,6 +45,7 @@ public class GeometricRepresentation {
             Circle asCircle = (Circle) shapeRepresentation;
             asCircle.x=x;
             asCircle.y=y;
+            return;
         }
     }
 

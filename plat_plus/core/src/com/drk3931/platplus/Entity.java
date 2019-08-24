@@ -6,8 +6,14 @@ abstract class Entity implements Updateable{
 
     public GeometricRepresentation geometricRepresentation;
     public EntityStats entityStats;
-    abstract public GameEvent onCollision(Entity e);
+    abstract public void onCollision(Entity e);
     public float xVelocity, yVelocity;
+
+
+    protected void loadStats(EntityStats eStats)
+    {
+        this.entityStats = eStats;
+    }
   
     enum Identity{
         ENEMY,
@@ -52,6 +58,7 @@ abstract class Entity implements Updateable{
         geometricRepresentation.translate(delta * xVelocity, delta * yVelocity);        
     
     }
+
 
 
     

@@ -8,14 +8,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Vector2;
 
 public class ProjectileWeapon extends EquipableItem {
 
     Stack<Projectile> mag;
     LinkedList<Projectile> poppedProjectiles;
     float timeSinceLastFire = 0;
-    final float fireRate =  1;
+    final float fireRate =  0.22f;
 
     public ProjectileWeapon(CharacterEntity c) {
 
@@ -28,7 +27,7 @@ public class ProjectileWeapon extends EquipableItem {
 
     public void reload(int numProj) {
         for (int i = 0; i < numProj; i++) {
-            this.mag.push(new Projectile());
+            this.mag.push(new Projectile(this));
         }
     }
 
@@ -62,8 +61,8 @@ public class ProjectileWeapon extends EquipableItem {
     @Override
     public void drawShapeRenderer(ShapeRenderer r) {
 
-        r.set(ShapeType.Filled);
-        Iterator i = poppedProjectiles.iterator();
+        Iterator<Projectile> i = poppedProjectiles.iterator();
+
 
         while(i.hasNext())
         {
@@ -81,7 +80,7 @@ public class ProjectileWeapon extends EquipableItem {
         super.update(delta);
         this.timeSinceLastFire+=delta;
 
-        Iterator i = poppedProjectiles.iterator();
+        Iterator<Projectile> i = poppedProjectiles.iterator();
         while(i.hasNext())
         {
             Projectile p = (Projectile)i.next();
