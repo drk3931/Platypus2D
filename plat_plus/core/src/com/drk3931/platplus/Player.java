@@ -30,6 +30,12 @@ public class Player implements Updateable,DrawableComponent{
     
             }
 
+            @Override
+            public void onDestroyRoutine()
+            {
+                
+            }
+
 
         };
 

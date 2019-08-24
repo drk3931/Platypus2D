@@ -45,7 +45,7 @@ class World implements DrawableComponent,Updateable {
         {
             Enemy e = charIter.next();
             e.update(delta);
-            if(e.readyToBeDestroyed())
+            if(e.characterEntity.readyToBeDestroyed)
             {
                 charIter.remove();
             }

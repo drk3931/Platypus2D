@@ -27,7 +27,13 @@ public class Enemy implements Updateable {
 
             }
 
-        };
+            @Override
+            public void onDestroyRoutine() {
+                geometricRepresentation.setColor(Color.WHITE);
+
+            }
+
+        }.setDeathTime(2.0f);
 
         this.characterEntity.setIdentity(Identity.ENEMY);
 
@@ -35,32 +41,12 @@ public class Enemy implements Updateable {
 
     }
 
-    float destructionTimer = 0;
-    float deathTime = 2f;
-    boolean readyToBeDestroyed = false;
 
     @Override
     public void update(float delta) {
 
-        if(!readyToBeDestroyed)
-        {
-            characterEntity.update(delta);
-        }
-        if (!characterEntity.getStats().markedForRemoval()) {
-            readyToBeDestroyed = false;
-        } else {
-            destructionTimer += delta;
-            characterEntity.geometricRepresentation.setColor(Color.WHITE);
-            if (destructionTimer > deathTime) {
-                readyToBeDestroyed = true;
-            }
+       characterEntity.update(delta);
 
-        }
-
-    }
-
-    public boolean readyToBeDestroyed() {
-        return this.readyToBeDestroyed;
     }
 
 }

@@ -31,9 +31,10 @@ abstract class Entity implements Updateable{
         this.entityStats = new EntityStats();
     }
 
-    public void setIdentity(Identity ident)
+    public Entity setIdentity(Identity ident)
     {
         this.identity = ident;
+        return this;
     }
 
     public Identity getIdentity()

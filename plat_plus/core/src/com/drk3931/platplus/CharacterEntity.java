@@ -16,6 +16,8 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
     public TextureRegion characterTexture;
     private CharacterRoutine characterRoutine; 
     private CharacterStats characterStats;
+    boolean readyToBeDestroyed = false;
+
 
 
     public int yVelocityCap = 335;
@@ -41,9 +43,10 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
 
 
 
-    public void setCharacterRoutine(CharacterRoutine routine)
+    public CharacterEntity setCharacterRoutine(CharacterRoutine routine)
     {
         this.characterRoutine = routine;
+        return this;
     }
 
     public void setTexture(TextureRegion texture)
@@ -65,8 +68,35 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
         //and accelaration due to gravity is added for one frame. 
         return yVelocity == World.gravityAcceleration;
     }
+
+
+    
+    private float destructionTimer = 0;
+    float deathTime = 0;
+
+    public CharacterEntity setDeathTime(float deathTime)
+    {
+        this.deathTime = deathTime;
+        return this;
+    } 
     
     public void update(float delta){
+
+        if(readyToBeDestroyed)
+        {
+            return;
+        }
+
+        if (!getStats().markedForRemoval()) {
+            readyToBeDestroyed = false;
+        } else {
+            destructionTimer += delta;
+            onDestroyRoutine();
+            if (destructionTimer > deathTime) {
+                readyToBeDestroyed = true;
+            }
+
+        }
 
         if(gravityEnabled)
         {
@@ -125,6 +155,12 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
         }
    
     }
+
+    public abstract void onDestroyRoutine();
+
+
+
+    
 
 
 }
