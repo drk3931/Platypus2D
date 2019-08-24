@@ -3,7 +3,7 @@ package com.drk3931.platplus;
 public class CharacterStats extends EntityStats
 {
     private int health; 
-    private int maxHealth = 100;
+    private int maxHealth;
     private boolean markedForRemoval = false;
 
     public boolean markedForRemoval()
@@ -11,17 +11,23 @@ public class CharacterStats extends EntityStats
         return markedForRemoval;
     }
 
-    public CharacterStats(int maxHealth)
-    {
-        //set health to max initially
-        this.maxHealth = health;
-        this.health= this.maxHealth; 
-    }
+  
 
 
     public int getHealth()
     {
         return health;
+    }
+
+
+    public void setHealth(int h)
+    {
+        this.health = h;
+    }
+
+    public void setMaxHealth(int h)
+    {
+        this.maxHealth = h;
     }
     
 
@@ -32,6 +38,7 @@ public class CharacterStats extends EntityStats
             return;
         }
 
+        System.out.println(this.health);
         this.health -= amount;
         if(health < 0)
         {

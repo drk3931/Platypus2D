@@ -64,10 +64,9 @@ class CollisionHandler implements DrawableComponent {
         while (i.hasNext()) {
             Projectile p = (Projectile) i.next();
             simpleBroadPhase(p.geometricRepresentation.shapeRepresentation);
-            boolean collision = simpleNarrowPhase(p.geometricRepresentation.shapeRepresentation);
-            if (collision || projectileEnemyIntersect(p)) {
+            boolean terrainCollision = simpleNarrowPhase(p.geometricRepresentation.shapeRepresentation);
+            if (terrainCollision || projectileEnemyIntersect(p)) {
                 i.remove();
-                
             }
           
         }
