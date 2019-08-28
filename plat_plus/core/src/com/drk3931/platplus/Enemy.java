@@ -39,8 +39,8 @@ public class Enemy implements Updateable {
 
         this.characterEntity.setCharacterRoutine(new PatrolRoutine(this.characterEntity));
 
-        this.characterEntity.getStats().setHealth(100);
-        this.characterEntity.getStats().setMaxHealth(100);
+        this.characterEntity.getCharacterStats().setHealth(100);
+        this.characterEntity.getCharacterStats().setMaxHealth(100);
 
 
     }

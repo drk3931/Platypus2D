@@ -12,26 +12,19 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
     private boolean gravityEnabled;
     public TextureRegion characterTexture;
     private CharacterRoutine characterRoutine;
-    private CharacterStats characterStats;
-    boolean readyToBeDestroyed = false;
+    private boolean readyToBeDestroyed = false;
 
     public int yVelocityCap = 335;
     public float lastX, lastY;
 
     public CharacterEntity(float x, float y, float w, float h, Color c, boolean gravityEnabled, TextureRegion texture) {
         this.geometricRepresentation = new GeometricRepresentation();
-        this.geometricRepresentation.shapeRepresentation = new Rectangle(x, y, w, h);
-        this.geometricRepresentation.color = c;
-        this.rectangleRepresentation = (Rectangle) this.geometricRepresentation.shapeRepresentation;
+        this.geometricRepresentation.setShape(new Rectangle(x, y, w, h));
+        this.geometricRepresentation.setColor(c);
         this.gravityEnabled = gravityEnabled;
         this.characterTexture = texture;
-        this.characterStats = new CharacterStats();
-        loadStats(characterStats);
+        loadStats(new CharacterStats());
 
-    }
-
-    public CharacterStats getStats() {
-        return this.characterStats;
     }
 
     public CharacterEntity setCharacterRoutine(CharacterRoutine routine) {
@@ -63,18 +56,21 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
         return this;
     }
 
+    public boolean isReadyToBeDestroyed()
+    {
+        return this.readyToBeDestroyed;
+    }
+
     public void update(float delta) {
 
-        if (getStats().markedForRemoval()) {
+        if (getCharacterStats().markedForRemoval()) {
             destructionTimer += delta;
             onDestroyRoutine();
             if (destructionTimer > deathTime) {
                 readyToBeDestroyed = true;
             }
             return;
-        } else {
-            readyToBeDestroyed = false;
-        }
+        } 
 
         if (gravityEnabled) {
 
@@ -106,7 +102,7 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
     public void drawShapeRenderer(ShapeRenderer shapeRenderer) {
 
         Rectangle rectRep = (Rectangle) this.geometricRepresentation.shapeRepresentation;
-        shapeRenderer.setColor(this.getGeometricRepresentation().color);
+        shapeRenderer.setColor(this.geometricRepresentation.color);
         shapeRenderer.rect(rectRep.x, rectRep.y, rectRep.width, rectRep.height);
 
     }
@@ -122,5 +118,10 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
     }
 
     public abstract void onDestroyRoutine();
+
+    public CharacterStats getCharacterStats()
+    {
+        return (CharacterStats)this.entityStats;
+    }
 
 }

@@ -90,7 +90,7 @@ class CollisionHandler implements DrawableComponent {
 
     private void broadPhase(CharacterEntity cEntity) {
 
-        Rectangle rect = cEntity.rectangleRepresentation;
+        Rectangle rect = (Rectangle)cEntity.geometricRepresentation.shapeRepresentation;
 
         for (int i = 0; i < broadPhase.length; i++) {
             ((Rectangle) broadPhase[i]).set(0, 0, 0, 0);

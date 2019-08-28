@@ -11,8 +11,6 @@ public class CharacterStats extends EntityStats
         return markedForRemoval;
     }
 
-  
-
 
     public int getHealth()
     {
@@ -38,7 +36,6 @@ public class CharacterStats extends EntityStats
             return;
         }
 
-        System.out.println(this.health);
         this.health -= amount;
         if(health < 0)
         {

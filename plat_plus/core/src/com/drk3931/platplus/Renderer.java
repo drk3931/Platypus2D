@@ -42,9 +42,10 @@ class Renderer {
     private void cameraUpdate() {
 
         Player p = this.world.getPlayer();
-
-        camera.position.x = p.characterEntity.rectangleRepresentation.x;
-        camera.position.y = p.characterEntity.rectangleRepresentation.y;
+        GeometricRepresentation pGeoRep = p.characterEntity.geometricRepresentation;
+        
+        camera.position.x = pGeoRep.getX();
+        camera.position.y = pGeoRep.getY();
 
         camera.update();
 

@@ -1,11 +1,11 @@
 package com.drk3931.platplus;
 
 
-abstract class Entity implements Updateable{
+public abstract class Entity implements Updateable{
 
 
     public GeometricRepresentation geometricRepresentation;
-    public EntityStats entityStats;
+    protected EntityStats entityStats;
     abstract public void onCollision(Entity e);
     public float xVelocity, yVelocity;
 
@@ -13,6 +13,10 @@ abstract class Entity implements Updateable{
     protected void loadStats(EntityStats eStats)
     {
         this.entityStats = eStats;
+    }
+
+    public EntityStats getStats() {
+        return this.entityStats;
     }
   
     enum Identity{
@@ -42,10 +46,6 @@ abstract class Entity implements Updateable{
         return this.identity;
     }
 
-    public GeometricRepresentation getGeometricRepresentation()
-    {
-        return this.geometricRepresentation;
-    }
 
     public void setVelocity(float xVelocity, float yVelocity)
     {

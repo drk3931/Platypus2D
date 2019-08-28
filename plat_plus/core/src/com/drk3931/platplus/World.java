@@ -7,13 +7,15 @@ import java.util.Stack;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.drk3931.platplus.GameEvents.GameEvent;
 
 class World implements DrawableComponent,Updateable {
 
     public ArrayList<Enemy> enemies;
     public Entity[] gameEntities;
     private Player player;
-    public static Stack<GameEvent> gameEvents;
+    private static Stack<GameEvent> gameEvents = new Stack<GameEvent>();
+
 
 
     final public static float gravityAcceleration = -19f;
@@ -24,28 +26,33 @@ class World implements DrawableComponent,Updateable {
 
     public World() {
 
-        player = new Player(0, 72, 64, 64, Color.BLUE);
+        player = new Player(0, 72, 64, 64);
         enemies = new ArrayList<Enemy>();
-        gameEvents = new Stack<GameEvent>();
+    }
+
+    public static void pushEvent(GameEvent e)
+    {
+        gameEvents.push(e);
     }
 
     public void update(float delta) {
 
+
+        
         Iterator<GameEvent> i = gameEvents.iterator();
         while(i.hasNext())
         {
             GameEvent e = (GameEvent)i.next();
-            e.action();
+            e.action(delta);
             i.remove();
         }
-
 
         Iterator<Enemy> charIter = enemies.iterator();
         while(charIter.hasNext())
         {
             Enemy e = charIter.next();
             e.update(delta);
-            if(e.characterEntity.readyToBeDestroyed)
+            if(e.characterEntity.isReadyToBeDestroyed())
             {
                 charIter.remove();
             }

@@ -17,11 +17,11 @@ public class Player implements Updateable,DrawableComponent{
     public ProjectileWeapon weapon;
 
 
-    public Player(int x, int y, int w, int h, Color c) {
+    public Player(int x, int y, int w, int h) {
 
         TextureRegion pTex = new TextureRegion(new Texture(Gdx.files.internal("gPast.jpeg")));
 
-        characterEntity = new CharacterEntity(x, y, w, h, c, true, pTex) {
+        characterEntity = new CharacterEntity(x, y, w, h, Color.BLUE, true, pTex) {
          
         
             @Override
@@ -45,9 +45,8 @@ public class Player implements Updateable,DrawableComponent{
 
 
         this.characterEntity.setCharacterRoutine(new PlayerRoutine(this));
-        
-        this.characterEntity.getStats().setHealth(100);
-        this.characterEntity.getStats().setMaxHealth(100);
+        this.characterEntity.getCharacterStats().setHealth(100);
+        this.characterEntity.getCharacterStats().setMaxHealth(100);
 
     }
 

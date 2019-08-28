@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
+import com.drk3931.platplus.GameEvents.CharacterEntityHealthEvent;
 
 public class Projectile extends Entity implements DrawableComponent {
 
@@ -51,16 +52,17 @@ public class Projectile extends Entity implements DrawableComponent {
         }
         if(e.getIdentity() == Identity.ENEMY && this.firedFrom.boundEntity.getIdentity() == Identity.PLAYER)
         {
-            CharacterStats eStat = (CharacterStats)e.entityStats;
-            eStat.subHealth(this.projectileStats.damage);
-            collisionOccured = true;
+         
+
+            CharacterEntity enemy = (CharacterEntity)e;
+            World.pushEvent(new CharacterEntityHealthEvent(getProjectiletStats().damage,this,enemy));
+            
         }
 
         if(e.getIdentity() == Identity.PLAYER && this.firedFrom.boundEntity.getIdentity() == Identity.ENEMY)
         {
-            CharacterStats pStat = (CharacterStats)e.entityStats;
-            pStat.subHealth(this.projectileStats.damage);
-            collisionOccured = true;
+          
+
         }
     }
 
@@ -88,7 +90,13 @@ public class Projectile extends Entity implements DrawableComponent {
     @Override
     public void drawSpriteBatch(SpriteBatch b) {
 		
-	}
+    }
+    
+    
+    public ProjectileStats getProjectiletStats()
+    {
+        return (ProjectileStats)super.getStats();
+    }
 
    
 }
