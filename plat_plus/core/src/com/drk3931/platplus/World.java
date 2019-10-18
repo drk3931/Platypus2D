@@ -11,14 +11,16 @@ import com.drk3931.platplus.GameEvents.GameEvent;
 
 class World implements DrawableComponent,Updateable {
 
-    public ArrayList<Enemy> enemies;
-    public Entity[] gameEntities;
-    private Player player;
+    
     private static Stack<GameEvent> gameEvents = new Stack<GameEvent>();
-
-
-
     final public static float gravityAcceleration = -19f;
+
+
+    private Player player;
+    public ArrayList<Character> characters;
+    public Entity[] gameEntities;    
+
+
 
     public Player getPlayer() {
         return player;
@@ -27,7 +29,7 @@ class World implements DrawableComponent,Updateable {
     public World() {
 
         player = new Player(0, 72, 64, 64);
-        enemies = new ArrayList<Enemy>();
+        characters = new ArrayList<Character>();
     }
 
     public static void pushEvent(GameEvent e)
@@ -44,15 +46,14 @@ class World implements DrawableComponent,Updateable {
         {
             GameEvent e = (GameEvent)i.next();
             e.action(delta);
-            i.remove();
         }
 
-        Iterator<Enemy> charIter = enemies.iterator();
+        Iterator<Character> charIter = characters.iterator();
         while(charIter.hasNext())
         {
-            Enemy e = charIter.next();
-            e.update(delta);
-            if(e.characterEntity.isReadyToBeDestroyed())
+            Character c = charIter.next();
+            c.update(delta);
+            if(c.isMarkedForRemoval())
             {
                 charIter.remove();
             }
@@ -64,11 +65,12 @@ class World implements DrawableComponent,Updateable {
 
     }
 
+    @Override
     public void drawShapeRenderer(ShapeRenderer shapeRenderer) {
 
 
-        for (Enemy enemy : enemies) {
-            enemy.characterEntity.drawShapeRenderer(shapeRenderer);
+        for (Character c: characters) {
+            c.getCharacterEntity().drawShapeRenderer(shapeRenderer);
         }
 
         player.drawShapeRenderer(shapeRenderer);
@@ -79,8 +81,8 @@ class World implements DrawableComponent,Updateable {
     @Override
     public void drawSpriteBatch(SpriteBatch b) {
 
-        for (Enemy enemy : enemies) {
-            enemy.characterEntity.drawSpriteBatch(b);
+       for (Character c: characters) {
+            c.getCharacterEntity().drawSpriteBatch(b);
         }
 
         player.drawSpriteBatch(b);
@@ -94,7 +96,7 @@ class World implements DrawableComponent,Updateable {
 
         Enemy e = new Enemy(x, y, 64, 64, Color.RED, true);
         
-        this.enemies.add( e );
+        this.characters.add(e);
     }
 
   

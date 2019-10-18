@@ -48,10 +48,10 @@ class CollisionHandler implements DrawableComponent {
 
     public void update(float delta) {
 
-        for (Enemy e : world.enemies) {
+        for (Character c : world.characters) {
 
-            broadPhase(e.characterEntity);
-            narrowPhase(e.characterEntity, delta);
+            broadPhase(c.getCharacterEntity());
+            narrowPhase(c.getCharacterEntity(), delta);
         }
 
         Player player = world.getPlayer();
@@ -77,11 +77,11 @@ class CollisionHandler implements DrawableComponent {
     {
 
         Circle c = p.circleRep;
-        for(Enemy e: world.enemies)
+        for(Character character: world.characters)
         {
-            Rectangle enemyShape = (Rectangle)e.characterEntity.geometricRepresentation.getShape();
+            Rectangle enemyShape = (Rectangle)character.getCharacterEntity().geometricRepresentation.getShape();
             if(Intersector.overlaps(c,enemyShape)){
-                p.onCollision(e.characterEntity);
+                p.onCollision(character.getCharacterEntity());
                 return true;
             }
         }

@@ -1,13 +1,12 @@
 package com.drk3931.platplus;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.drk3931.platplus.Entity.Identity;
 import com.drk3931.platplus.characterroutines.PatrolRoutine;
 
-public class Enemy implements Updateable {
+public class Enemy extends Character {
 
     public CharacterEntity characterEntity;
 
@@ -51,6 +50,11 @@ public class Enemy implements Updateable {
 
        characterEntity.update(delta);
 
+    }
+
+    @Override
+    public CharacterEntity getCharacterEntity() {
+        return characterEntity;
     }
 
 }

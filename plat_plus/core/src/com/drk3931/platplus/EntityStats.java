@@ -1,9 +1,9 @@
 package com.drk3931.platplus;
 
-public class EntityStats {
+public abstract class EntityStats implements Updateable{
 
     enum STATE {
-        ALIVE, DEAD, SPECIAL
+        NORMAL, DEAD, SPECIAL, DAMAGED
     };
 
     protected STATE entityState;
@@ -12,9 +12,23 @@ public class EntityStats {
         return entityState;
     }
 
+    private float stateTimer = 0; 
+
+    public void setState(STATE s)
+    {
+        this.entityState = s;
+    }
+
     public EntityStats() {
 
     }
+
+    public void update(float delta)
+    {
+        this.stateTimer+=delta;
+    }
+
+
 
  
 

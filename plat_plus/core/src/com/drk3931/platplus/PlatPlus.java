@@ -18,11 +18,10 @@ public class PlatPlus extends ApplicationAdapter {
 
 		gameLoader = new GameLoader();
 
-		world= gameLoader.getLoadedWorld();
-		map = gameLoader.getLoadedMap();
+		map = gameLoader.loadMap();
+		world= gameLoader.loadworld();
 
-		
-		collisionHandler = new  CollisionHandler(map, world);
+		collisionHandler = new CollisionHandler(map, world);
 		renderer = new Renderer(map,world,collisionHandler);
 
 	}

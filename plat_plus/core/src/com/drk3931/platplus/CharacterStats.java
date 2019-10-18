@@ -6,6 +6,13 @@ public class CharacterStats extends EntityStats
     private int maxHealth;
     private boolean markedForRemoval = false;
 
+
+    @Override
+    public void update(float delta)
+    {
+        
+    }
+
     public boolean markedForRemoval()
     {
         return markedForRemoval;
@@ -37,6 +44,8 @@ public class CharacterStats extends EntityStats
         }
 
         this.health -= amount;
+        
+
         if(health < 0)
         {
             health = 0; 

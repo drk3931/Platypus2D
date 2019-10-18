@@ -33,7 +33,7 @@ public class PlayerRoutine implements CharacterRoutine {
             playerEntity.xVelocity = initialXVelocity;
         }
 
-        if (Gdx.input.isKeyPressed(Keys.W) && playerEntity.canJump()) {
+        if (Gdx.input.isKeyPressed(Keys.W) && playerEntity.canJump()){
             playerEntity.yVelocity = jumpAcceleration;
 
         }

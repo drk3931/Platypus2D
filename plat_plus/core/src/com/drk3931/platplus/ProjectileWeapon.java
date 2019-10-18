@@ -7,21 +7,20 @@ import java.util.Stack;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class ProjectileWeapon extends EquipableItem {
 
     Stack<Projectile> mag;
     LinkedList<Projectile> poppedProjectiles;
     float timeSinceLastFire = 0;
-    final float fireRate =  0.22f;
+    final float fireRate =  0.09f;
 
     public ProjectileWeapon(CharacterEntity c) {
 
         super(c);
         this.mag = new Stack<Projectile>();
         poppedProjectiles = new LinkedList<Projectile>();
-        reload(50000);
+        reload(1000);
 
     }
 

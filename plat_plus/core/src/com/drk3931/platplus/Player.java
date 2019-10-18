@@ -1,29 +1,25 @@
 package com.drk3931.platplus;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.drk3931.platplus.Entity.Identity;
 import com.drk3931.platplus.characterroutines.PlayerRoutine;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class Player implements Updateable,DrawableComponent{
+public class Player extends Character implements Updateable,DrawableComponent{
 
     public CharacterEntity characterEntity;
-
     public ProjectileWeapon weapon;
 
 
     public Player(int x, int y, int w, int h) {
 
-        TextureRegion pTex = new TextureRegion(new Texture(Gdx.files.internal("gPast.jpeg")));
+        TextureRegion pTex = GameLoader.getTexRegion("gPast.png");
 
         characterEntity = new CharacterEntity(x, y, w, h, Color.BLUE, true, pTex) {
          
-        
             @Override
             public void onCollision(Entity e){
 
@@ -35,13 +31,15 @@ public class Player implements Updateable,DrawableComponent{
             {
                 
             }
-
+            
 
         };
+         
+       this.characterEntity.setIdentity(Identity.PLAYER);
 
         weapon = new ProjectileWeapon(this.characterEntity);
 
-        this.characterEntity.setIdentity(Identity.PLAYER);
+     
 
 
         this.characterEntity.setCharacterRoutine(new PlayerRoutine(this));
@@ -68,5 +66,11 @@ public class Player implements Updateable,DrawableComponent{
         weapon.update(delta);
 
 	}
+
+    @Override
+    public CharacterEntity getCharacterEntity() {
+        return this.characterEntity;
+    }
+            
 
 }

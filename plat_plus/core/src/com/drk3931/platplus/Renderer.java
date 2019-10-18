@@ -24,9 +24,9 @@ class Renderer {
     public Renderer(Map map, World world, CollisionHandler collisionHandler) {
 
         this.collisionHandler = collisionHandler;
-
         this.world = world;
         this.map = map;
+
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
         spriteBatch = new SpriteBatch();
@@ -41,11 +41,15 @@ class Renderer {
 
     private void cameraUpdate() {
 
+
+        /*
         Player p = this.world.getPlayer();
         GeometricRepresentation pGeoRep = p.characterEntity.geometricRepresentation;
         
         camera.position.x = pGeoRep.getX();
         camera.position.y = pGeoRep.getY();
+
+        */
 
         camera.update();
 

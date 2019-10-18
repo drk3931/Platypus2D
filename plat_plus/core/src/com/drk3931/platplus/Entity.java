@@ -32,7 +32,6 @@ public abstract class Entity implements Updateable{
     public Entity()
     {
         this.geometricRepresentation = new GeometricRepresentation();
-        this.entityStats = new EntityStats();
     }
 
     public Entity setIdentity(Identity ident)

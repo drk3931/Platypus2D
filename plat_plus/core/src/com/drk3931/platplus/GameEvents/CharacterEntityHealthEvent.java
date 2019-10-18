@@ -3,14 +3,9 @@ package com.drk3931.platplus.GameEvents;
 import com.drk3931.platplus.CharacterEntity;
 import com.drk3931.platplus.Entity;
 
-public class CharacterEntityHealthEvent extends GameEvent {
-
-    Entity source;
-    CharacterEntity target; 
+public class CharacterEntityHealthEvent extends EntityOnEntityEvent {
 
     int healthModification;
-
-
 
     public CharacterEntityHealthEvent(int healthModification,Entity source, CharacterEntity target)
     {
@@ -21,7 +16,7 @@ public class CharacterEntityHealthEvent extends GameEvent {
 
     private void modifyCharacterHealth()
     {
-        if(Math.signum(healthModification) == -1)
+        if(Math.signum(healthModification) < 0 )
         {
             target.getCharacterStats().subHealth(healthModification);
         }
