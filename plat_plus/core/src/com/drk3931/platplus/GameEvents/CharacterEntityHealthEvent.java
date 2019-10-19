@@ -7,28 +7,20 @@ public class CharacterEntityHealthEvent extends EntityOnEntityEvent {
 
     int healthModification;
 
-    public CharacterEntityHealthEvent(int healthModification,Entity source, CharacterEntity target)
-    {
+    public CharacterEntityHealthEvent(int healthModification, Entity source, CharacterEntity target) {
         this.healthModification = healthModification;
-        this.source = source; 
-        this.target = target; 
+        this.source = source;
+        this.target = target;
     }
 
-    private void modifyCharacterHealth()
-    {
-        if(Math.signum(healthModification) < 0 )
-        {
-            target.getCharacterStats().subHealth(healthModification);
-        }
-        else{
-            target.getCharacterStats().incHealth(healthModification);
-        }
+    private void modifyCharacterHealth() {
+
+        target.getCharacterStats().modHealth(healthModification);
+
     }
 
-    public void action(float delta)
-    {
+    public void action(float delta) {
         modifyCharacterHealth();
     }
-
 
 }

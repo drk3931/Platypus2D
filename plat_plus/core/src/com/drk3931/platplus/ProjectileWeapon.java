@@ -84,7 +84,7 @@ public class ProjectileWeapon extends EquipableItem {
         {
             Projectile p = (Projectile)i.next();
             p.update(delta);
-
+        
         }
         
     }

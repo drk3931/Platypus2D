@@ -1,68 +1,59 @@
 package com.drk3931.platplus;
 
-
-public abstract class Entity implements Updateable{
-
+public abstract class Entity implements Updateable {
 
     public GeometricRepresentation geometricRepresentation;
     protected EntityStats entityStats;
+
     abstract public void onCollision(Entity e);
+
     public float xVelocity, yVelocity;
 
+    private boolean markedForRemoval = false;
 
-    protected void loadStats(EntityStats eStats)
-    {
+    public void setMarkedForRemoval() {
+        this.markedForRemoval = true;
+    }
+
+    public boolean isMarkedForRemoval() {
+        return this.markedForRemoval;
+    }
+
+    protected void loadStats(EntityStats eStats) {
         this.entityStats = eStats;
     }
 
     public EntityStats getStats() {
         return this.entityStats;
     }
-  
-    enum Identity{
-        ENEMY,
-        PLAYER,
-        FRIEND,
-        PROJECTILE
+
+    enum Identity {
+        ENEMY, PLAYER, FRIEND, PROJECTILE
     }
 
     private Identity identity;
 
-
-    public Entity()
-    {
+    public Entity() {
         this.geometricRepresentation = new GeometricRepresentation();
     }
 
-    public Entity setIdentity(Identity ident)
-    {
+    public Entity setIdentity(Identity ident) {
         this.identity = ident;
         return this;
     }
 
-    public Identity getIdentity()
-    {
+    public Identity getIdentity() {
         return this.identity;
     }
 
-
-    public void setVelocity(float xVelocity, float yVelocity)
-    {
+    public void setVelocity(float xVelocity, float yVelocity) {
         this.xVelocity = xVelocity;
-        this.yVelocity = yVelocity; 
+        this.yVelocity = yVelocity;
     }
 
+    public void move(float delta) {
+        geometricRepresentation.translate(delta * xVelocity, delta * yVelocity);
 
-    public void move(float delta)
-    {
-        geometricRepresentation.translate(delta * xVelocity, delta * yVelocity);        
-    
     }
-
-
-
-    
-
-
 
 }

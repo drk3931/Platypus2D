@@ -46,6 +46,7 @@ class World implements DrawableComponent,Updateable {
         {
             GameEvent e = (GameEvent)i.next();
             e.action(delta);
+            i.remove();
         }
 
         Iterator<Character> charIter = characters.iterator();
@@ -53,7 +54,7 @@ class World implements DrawableComponent,Updateable {
         {
             Character c = charIter.next();
             c.update(delta);
-            if(c.isMarkedForRemoval())
+            if(c.getCharacterEntity().isMarkedForRemoval())
             {
                 charIter.remove();
             }

@@ -49,6 +49,10 @@ public class Enemy extends Character {
     public void update(float delta) {
 
        characterEntity.update(delta);
+       if(characterEntity.getCharacterStats().getHealth() == 0)
+       {
+           characterEntity.beginDestructionRoutine();
+       }
 
     }
 

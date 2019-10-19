@@ -14,7 +14,6 @@ public class Projectile extends Entity implements DrawableComponent {
     public Circle circleRep;
     private ProjectileStats projectileStats;
     private ProjectileWeapon firedFrom; 
-    private boolean collisionOccured;
   
 
     public Projectile(ProjectileWeapon firedFrom) {
@@ -24,7 +23,6 @@ public class Projectile extends Entity implements DrawableComponent {
         this.firedFrom = firedFrom;
         this.projectileStats = new ProjectileStats();
         loadStats(this.projectileStats);
-        this.collisionOccured = false;
 
     
     }
@@ -46,17 +44,15 @@ public class Projectile extends Entity implements DrawableComponent {
 
 	@Override
     public void onCollision(Entity e) {
-        if(collisionOccured)
-        {
-            return; 
-        }
+
+
+      
         if(e.getIdentity() == Identity.ENEMY && this.firedFrom.boundEntity.getIdentity() == Identity.PLAYER)
         {
-         
-
+    
             CharacterEntity enemy = (CharacterEntity)e;
-            World.pushEvent(new CharacterEntityHealthEvent(getProjectiletStats().damage,this,enemy));
-            
+            World.pushEvent(new CharacterEntityHealthEvent(getProjectiletStats().healthEff,this,enemy));
+            setMarkedForRemoval();
         }
 
         if(e.getIdentity() == Identity.PLAYER && this.firedFrom.boundEntity.getIdentity() == Identity.ENEMY)

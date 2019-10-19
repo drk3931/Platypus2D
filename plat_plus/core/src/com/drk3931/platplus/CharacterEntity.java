@@ -1,10 +1,10 @@
 package com.drk3931.platplus;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 
 public abstract class CharacterEntity extends Entity implements DrawableComponent {
 
@@ -56,21 +56,26 @@ public abstract class CharacterEntity extends Entity implements DrawableComponen
         return this;
     }
 
-    public boolean isReadyToBeDestroyed()
+    private boolean destructionRoutineStarted = false; 
+
+    protected void beginDestructionRoutine()
     {
-        return this.readyToBeDestroyed;
+        this.destructionRoutineStarted = true; 
     }
 
     public void update(float delta) {
 
-        if (getCharacterStats().markedForRemoval()) {
+        
+        if (destructionRoutineStarted) {
             destructionTimer += delta;
             onDestroyRoutine();
             if (destructionTimer > deathTime) {
-                readyToBeDestroyed = true;
+                setMarkedForRemoval();
             }
             return;
         } 
+
+    
 
         if (gravityEnabled) {
 

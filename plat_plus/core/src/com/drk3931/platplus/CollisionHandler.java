@@ -65,7 +65,8 @@ class CollisionHandler implements DrawableComponent {
             Projectile p = (Projectile) i.next();
             simpleBroadPhase(p.geometricRepresentation.shapeRepresentation);
             boolean terrainCollision = simpleNarrowPhase(p.geometricRepresentation.shapeRepresentation);
-            if (terrainCollision || projectileEnemyIntersect(p)) {
+            projectileCharacterIntersect(p);
+            if (terrainCollision || p.isMarkedForRemoval()) {
                 i.remove();
             }
           
@@ -73,7 +74,7 @@ class CollisionHandler implements DrawableComponent {
 
     }
 
-    private boolean projectileEnemyIntersect(Projectile p)
+    private void projectileCharacterIntersect(Projectile p)
     {
 
         Circle c = p.circleRep;
@@ -82,10 +83,8 @@ class CollisionHandler implements DrawableComponent {
             Rectangle enemyShape = (Rectangle)character.getCharacterEntity().geometricRepresentation.getShape();
             if(Intersector.overlaps(c,enemyShape)){
                 p.onCollision(character.getCharacterEntity());
-                return true;
             }
         }
-        return false;
     }
 
     private void broadPhase(CharacterEntity cEntity) {
