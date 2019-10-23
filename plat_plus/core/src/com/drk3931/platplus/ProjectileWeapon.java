@@ -13,7 +13,7 @@ public class ProjectileWeapon extends EquipableItem {
     Stack<Projectile> mag;
     LinkedList<Projectile> poppedProjectiles;
     float timeSinceLastFire = 0;
-    final float fireRate =  0.09f;
+    final float fireRate = 0.09f;
 
     public ProjectileWeapon(CharacterEntity c) {
 
@@ -32,23 +32,19 @@ public class ProjectileWeapon extends EquipableItem {
 
     public void fire(int xDir, int yDir) {
 
-        if(timeSinceLastFire < fireRate)
-        {
+        if (timeSinceLastFire < fireRate) {
             return;
         }
         try {
 
-
-
             Projectile p = this.mag.pop();
 
 
-            int xComputed = xDir - Gdx.graphics.getWidth()/2;
-            int yComputed = yDir - (Gdx.graphics.getHeight()/2);
+            int yComputed = yDir - boundY;
+            int xComputed = xDir - boundX;
 
-    
-            p.setTrajectory(boundX, boundY, (int)xComputed, (int)yComputed);
-            
+            p.setTrajectory(boundX, boundY, (int) xComputed, (int) yComputed);
+
             this.poppedProjectiles.add(p);
             timeSinceLastFire = 0;
 
@@ -62,36 +58,31 @@ public class ProjectileWeapon extends EquipableItem {
 
         Iterator<Projectile> i = poppedProjectiles.iterator();
 
-
-        while(i.hasNext())
-        {
-            Projectile p = (Projectile)i.next();
+        while (i.hasNext()) {
+            Projectile p = (Projectile) i.next();
             p.drawShapeRenderer(r);
 
         }
-        
 
     }
 
     @Override
-    public void update(float delta)
-    {
+    public void update(float delta) {
         super.update(delta);
-        this.timeSinceLastFire+=delta;
+        this.timeSinceLastFire += delta;
 
         Iterator<Projectile> i = poppedProjectiles.iterator();
-        while(i.hasNext())
-        {
-            Projectile p = (Projectile)i.next();
+        while (i.hasNext()) {
+            Projectile p = (Projectile) i.next();
             p.update(delta);
-        
+
         }
-        
+
     }
 
     @Override
     public void drawSpriteBatch(SpriteBatch b) {
-		
-	}
+
+    }
 
 }
