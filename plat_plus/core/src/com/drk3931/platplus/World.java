@@ -19,7 +19,7 @@ class World implements DrawableComponent {
 
     public World() {
 
-        geoRep = new GeometricRepresentation(Color.WHITE,new Rectangle(0,128,64,64));
+        geoRep = new GeometricRepresentation(Color.WHITE,new Rectangle(0,150,64,64));
        
     }
 
@@ -50,7 +50,7 @@ class World implements DrawableComponent {
             lastChangeY = speedy * delta * -1;
         }
 
-        geoRep.translate(lastChangeX, lastChangeY);
+        //geoRep.translate(lastChangeX, lastChangeY);
 
 
 
