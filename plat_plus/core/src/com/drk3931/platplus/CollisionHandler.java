@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polyline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
-import com.badlogic.gdx.math.Vector2;
 
 class CollisionHandler {
 
@@ -20,8 +19,13 @@ class CollisionHandler {
     }
 
     public void update(float delta) {
-        GeometricRepresentation playerGeo = world.geoRep;
-        Rectangle playerRect = (Rectangle) world.geoRep.shapeRepresentation;
+
+        Player player = world.player;
+        GeometricRepresentation playerGeo = player.e.getGeoRep();
+        Rectangle playerRect = (Rectangle) playerGeo.shapeRepresentation;
+
+        float playerVelX = player.e.getVelocityX(),playerVelY = player.e.getVelocityY();
+        
 
         /*
          * 
@@ -30,7 +34,42 @@ class CollisionHandler {
          * Resolve Y collision
          */
 
-        playerGeo.translate(world.velocityX, 0);
+
+
+
+
+
+
+
+        player.e.moveX();
+
+
+        for (Shape2D shape : map.getMapPolies()) {
+
+            if (shape.getClass() == Polyline.class) {
+                Polyline p = (Polyline) shape;
+                float[] vertices = p.getTransformedVertices();
+                if (Intersector.intersectSegmentRectangle(vertices[0], vertices[1], vertices[2], vertices[3],
+                        playerRect)) {
+        
+                    if (vertices[1] < vertices[3] && Math.signum(playerVelX) > 0) {
+                        // upwards slope
+
+                        //move backwards and recorrect upwards 
+                        playerGeo.translate(playerVelX * -1, 0);
+                        playerGeo.translate(Math.abs(playerVelX), Math.abs(playerVelX));
+
+
+                    } else {
+                        // downwards slope
+                        playerGeo.translate(playerVelX * -1, 0);
+                        playerGeo.translate(playerVelX, Math.abs(playerVelX));
+
+                    }
+                }
+            }
+
+        }
         for (Shape2D shape : map.getMapPolies()) {
 
             if (shape.getClass() == Rectangle.class) {
@@ -38,7 +77,7 @@ class CollisionHandler {
 
                 if (Intersector.intersectRectangles(playerRect, tileAsRect, overlappingRectangle)) {
                     
-                    if(world.velocityX < 0)
+                    if(playerVelX < 0)
                     {
                         playerGeo.translate(  overlappingRectangle.width, 0 );
 
@@ -52,7 +91,30 @@ class CollisionHandler {
 
             }
         }
-        playerGeo.translate(0, world.velocityY);
+
+
+       
+
+
+        player.e.moveY();
+
+        for (Shape2D shape : map.getMapPolies()) {
+
+            if (shape.getClass() == Polyline.class) {
+                Polyline p = (Polyline) shape;
+                float[] vertices = p.getTransformedVertices();
+                if (Intersector.intersectSegmentRectangle(vertices[0], vertices[1], vertices[2], vertices[3],
+                        playerRect)) {
+                    playerGeo.translate(0, playerVelY * -1);
+                    if (vertices[1] < vertices[3] && Math.signum(playerVelX) > 0) {
+                        // upwards slope
+                      
+                        
+                    }
+                }
+            }
+
+        }
 
         for (Shape2D shape : map.getMapPolies()) {
 
@@ -62,7 +124,7 @@ class CollisionHandler {
                 if (Intersector.intersectRectangles(playerRect, tileAsRect, overlappingRectangle)) {
 
 
-                    if(world.velocityY < 0)
+                    if(playerVelY < 0)
                     {
                         playerGeo.translate(  0, overlappingRectangle.height );
 
@@ -76,26 +138,10 @@ class CollisionHandler {
             }
         }
 
-        for (Shape2D shape : map.getMapPolies()) {
 
-            if (shape.getClass() == Polyline.class) {
-                Polyline p = (Polyline) shape;
-                float[] vertices = p.getTransformedVertices();
-                if (Intersector.intersectSegmentRectangle(vertices[0], vertices[1], vertices[2], vertices[3],
-                        playerRect)) {
-                    playerGeo.translate(world.velocityX * -1, world.velocityY * -1);
-                    if (vertices[1] < vertices[3] && Math.signum(world.velocityX) > 0) {
-                        // upwards slope
-                        playerGeo.translate(world.velocityX, world.velocityX);
-                    } else {
-                        // downwards slope
-                        playerGeo.translate(world.velocityX, world.velocityX * -1);
+       
 
-                    }
-                }
-            }
-
-        }
+    
     }
 
 }
