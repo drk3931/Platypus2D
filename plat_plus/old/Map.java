@@ -68,23 +68,7 @@ class Map implements DrawableComponent{
                 Cell cell = terrainTileLayer.getCell(i, j);
 
                 if (cell != null) {
-                    
-                    MapProperties tileProps = cell.getTile().getProperties();
-                    if(tileProps.containsKey("SLOPE"))
-                    {
-                        String slopeType = (String)tileProps.get("SLOPE");
-                        if(slopeType.equals("UP"))
-                        {
-                            mapPolies.add(genLineSeg(i * CELL_W, j * CELL_H, i * CELL_W + CELL_W, j * CELL_H + CELL_H));
-                            
-                        }else{
-                            mapPolies.add(genLineSeg(i * CELL_W, j * CELL_H + CELL_H, i * CELL_W + CELL_W, j * CELL_H));
-                        }
-
-                    }
-                    else{
-                        mapPolies.add(genRect(i * CELL_W, j * CELL_H, CELL_W, CELL_H));
-                    }
+                    mapPolies.add(genRect(i * CELL_W, j * CELL_H, CELL_W, CELL_H));
                 }
             }
         }
@@ -97,7 +81,7 @@ class Map implements DrawableComponent{
     }
 
 
-    public void parseMapEnemies()
+    public void parseMapEnemies(World gameWorld)
     {
         MapLayer enemiesLayer = tiledMap.getLayers().get("Enemies");
         MapObjects objects = enemiesLayer.getObjects();
@@ -164,12 +148,6 @@ class Map implements DrawableComponent{
             if (s.getClass() == Circle.class) {
                 Circle c = (Circle) s;
                 shapeRenderer.circle(c.x, c.y, c.radius);
-
-            }
-
-            if (s.getClass() == Polyline.class) {
-                Polyline p = (Polyline)s;
-                shapeRenderer.polyline(p.getVertices());
 
             }
 

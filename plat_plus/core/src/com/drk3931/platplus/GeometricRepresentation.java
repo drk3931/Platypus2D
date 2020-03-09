@@ -8,16 +8,13 @@ import com.badlogic.gdx.math.Shape2D;
 public class GeometricRepresentation {
 
     public Shape2D shapeRepresentation;
-    public Color color;
+    private Color color;
 
     public GeometricRepresentation(Color c, Shape2D shape) {
         this.shapeRepresentation = shape;
         this.color = c;
     }
 
-    public GeometricRepresentation() {
-
-    }
 
 
     public void setShape(Shape2D shape) {
@@ -29,7 +26,12 @@ public class GeometricRepresentation {
     }
 
     public void setColor(Color c) {
-        color = c;
+        this.color = c;
+    }
+
+    public Color getColor()
+    {
+        return this.color;
     }
 
     public void setXY(int x, int y) {

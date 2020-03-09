@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="1.2.4" name="plat_set" tilewidth="70" tileheight="70" tilecount="112" columns="0">
+<tileset version="1.2" tiledversion="1.3.3" name="plat_set" tilewidth="70" tileheight="70" tilecount="112" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="271">
   <image width="70" height="70" source="PNG/Default size/platformIndustrial_001.png"/>
@@ -17,9 +17,15 @@
   <image width="70" height="70" source="PNG/Default size/platformIndustrial_005.png"/>
  </tile>
  <tile id="276">
+  <properties>
+   <property name="SLOPE" value="DOWN"/>
+  </properties>
   <image width="70" height="70" source="PNG/Default size/platformIndustrial_006.png"/>
  </tile>
  <tile id="277">
+  <properties>
+   <property name="SLOPE" value="UP"/>
+  </properties>
   <image width="70" height="70" source="PNG/Default size/platformIndustrial_007.png"/>
  </tile>
  <tile id="278">

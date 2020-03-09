@@ -7,31 +7,54 @@ import com.badlogic.gdx.Gdx;
 public class PlatPlus extends ApplicationAdapter {
 
 
-	Renderer renderer;
-	World world;
 	Map map;
-	CollisionHandler collisionHandler;
+	GameLoader gameLoader;
+	Renderer renderer;
+
+
+	/*
     GameLoader gameLoader;
+	*/
+
+	World world;
+	CollisionHandler collisionHandler;
+
+
+
 
 	@Override
 	public void create () {
 
-		gameLoader = new GameLoader();
 
+		gameLoader = new GameLoader();
 		map = gameLoader.loadMap();
-		world= gameLoader.loadworld();
+		renderer = new Renderer(map);
+		world= gameLoader.loadWorld();
+		collisionHandler = new CollisionHandler(map, world);
+
+		renderer.addDrawableComponent(world);
+
+		/*
+
 
 		collisionHandler = new CollisionHandler(map, world);
 		renderer = new Renderer(map,world,collisionHandler);
+		*/
 
 	}
 
 	@Override
 	public void render() {
+		/*
+		world.update(delta);
+		collisionHandler.update(delta);
+		*/
 		float delta = Gdx.graphics.getDeltaTime();
 		world.update(delta);
 		collisionHandler.update(delta);
 		renderer.draw();
+
+
 	}
 	
 	@Override

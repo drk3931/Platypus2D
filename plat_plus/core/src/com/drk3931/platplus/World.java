@@ -1,67 +1,57 @@
 package com.drk3931.platplus;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Stack;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.drk3931.platplus.GameEvents.GameEvent;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Rectangle;
 
-class World implements DrawableComponent,Updateable {
-
+class World implements DrawableComponent {
     
-    private static Stack<GameEvent> gameEvents = new Stack<GameEvent>();
-    final public static float gravityAcceleration = -19f;
+    final public static float accelGravity = -19f;
+    
 
-
-    private Player player;
-    public ArrayList<Character> characters;
-    public Entity[] gameEntities;    
-
-
-
-    public Player getPlayer() {
-        return player;
-    }
+    GeometricRepresentation geoRep;
+    public final int speedx = 200, speedy = 200; float lastChangeX = 0, lastChangeY = 0;
 
     public World() {
 
-        player = new Player(0, 72, 64, 64);
-        characters = new ArrayList<Character>();
+        geoRep = new GeometricRepresentation(Color.WHITE,new Rectangle(0,128,64,64));
+       
     }
 
-    public static void pushEvent(GameEvent e)
-    {
-        gameEvents.push(e);
-    }
-
+    
     public void update(float delta) {
 
+        lastChangeX = 0;
+        lastChangeY = 0;
 
-        
-        Iterator<GameEvent> i = gameEvents.iterator();
-        while(i.hasNext())
+
+        if(Gdx.input.isKeyPressed(Keys.LEFT))
         {
-            GameEvent e = (GameEvent)i.next();
-            e.action(delta);
-            i.remove();
+            lastChangeX = delta * speedx * -1;
         }
 
-        Iterator<Character> charIter = characters.iterator();
-        while(charIter.hasNext())
+        if(Gdx.input.isKeyPressed(Keys.RIGHT))
         {
-            Character c = charIter.next();
-            c.update(delta);
-            if(c.getCharacterEntity().isMarkedForRemoval())
-            {
-                charIter.remove();
-            }
-
+            lastChangeX = delta * speedx;
         }
 
-        player.update(delta);
+        if(Gdx.input.isKeyPressed(Keys.UP))
+        {
+            lastChangeY = speedy * delta;
+        }
+
+        if(Gdx.input.isKeyPressed(Keys.DOWN))
+        {
+            lastChangeY = speedy * delta * -1;
+        }
+
+        geoRep.translate(lastChangeX, lastChangeY);
+
 
 
     }
@@ -69,36 +59,41 @@ class World implements DrawableComponent,Updateable {
     @Override
     public void drawShapeRenderer(ShapeRenderer shapeRenderer) {
 
+        Rectangle r = (Rectangle)geoRep.shapeRepresentation;
+       
+        shapeRenderer.setColor(geoRep.getColor());
+        shapeRenderer.set(ShapeType.Filled);
+        shapeRenderer.rect(r.x,r.y,r.width,r.height);
 
+
+
+        
+        /*
         for (Character c: characters) {
             c.getCharacterEntity().drawShapeRenderer(shapeRenderer);
         }
 
         player.drawShapeRenderer(shapeRenderer);
-
+        */
 
     }
 
     @Override
     public void drawSpriteBatch(SpriteBatch b) {
 
+
+        /*
        for (Character c: characters) {
             c.getCharacterEntity().drawSpriteBatch(b);
         }
 
         player.drawSpriteBatch(b);
+        */
 
 
     }
 
 
-    public void addEnemy(int x, int y)
-    {
-
-        Enemy e = new Enemy(x, y, 64, 64, Color.RED, true);
-        
-        this.characters.add(e);
-    }
-
+  
   
 }

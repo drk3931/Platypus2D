@@ -2,6 +2,8 @@ package com.drk3931.platplus;
 
 import static com.badlogic.gdx.Gdx.*;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -17,16 +19,14 @@ class Renderer {
     public SpriteBatch spriteBatch;
     private TiledMapRenderer tiledMapRenderer;
 
-    private World world;
+    private ArrayList<DrawableComponent> drawableComponents;
     private Map map;
-    private CollisionHandler collisionHandler;
 
-    public Renderer(Map map, World world, CollisionHandler collisionHandler) {
+    public Renderer(Map map) {
 
-        this.collisionHandler = collisionHandler;
-        this.world = world;
+        //map needs to be provided in the constructor to setup the tiledMaprenderer
         this.map = map;
-
+        drawableComponents = new ArrayList<DrawableComponent>();
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
         spriteBatch = new SpriteBatch();
@@ -36,6 +36,7 @@ class Renderer {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         cameraUpdate();
+
 
     }
 
@@ -55,6 +56,11 @@ class Renderer {
 
     }
 
+    public void addDrawableComponent(DrawableComponent c)
+    {
+        this.drawableComponents.add(c);
+    }
+
     public void draw() {
         gl.glClearColor(0, 0, 0, 1.0f);
         gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -69,14 +75,23 @@ class Renderer {
         tiledMapRenderer.render();
 
         shapeRenderer.begin();
-        map.drawShapeRenderer(this.shapeRenderer);
-        world.drawShapeRenderer(this.shapeRenderer);
-        collisionHandler.drawShapeRenderer(this.shapeRenderer);
+
+        
+        this.map.drawShapeRenderer(shapeRenderer);
+        for(DrawableComponent d: drawableComponents)
+        {
+            d.drawShapeRenderer(shapeRenderer);
+        }
+        
         shapeRenderer.end();
 
         spriteBatch.begin();
+        this.map.drawSpriteBatch(spriteBatch);
 
-        world.drawSpriteBatch(spriteBatch);
+        for(DrawableComponent d: drawableComponents)
+        {
+            d.drawSpriteBatch(spriteBatch);
+        }
 
         spriteBatch.end();
 
