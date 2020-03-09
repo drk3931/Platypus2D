@@ -30,7 +30,7 @@ class CollisionHandler {
          * Resolve Y collision
          */
 
-        playerGeo.translate(world.lastChangeX, 0);
+        playerGeo.translate(world.velocityX, 0);
         for (Shape2D shape : map.getMapPolies()) {
 
             if (shape.getClass() == Rectangle.class) {
@@ -38,7 +38,7 @@ class CollisionHandler {
 
                 if (Intersector.intersectRectangles(playerRect, tileAsRect, overlappingRectangle)) {
                     
-                    if(world.lastChangeX < 0)
+                    if(world.velocityX < 0)
                     {
                         playerGeo.translate(  overlappingRectangle.width, 0 );
 
@@ -52,7 +52,7 @@ class CollisionHandler {
 
             }
         }
-        playerGeo.translate(0, world.lastChangeY);
+        playerGeo.translate(0, world.velocityY);
 
         for (Shape2D shape : map.getMapPolies()) {
 
@@ -62,7 +62,7 @@ class CollisionHandler {
                 if (Intersector.intersectRectangles(playerRect, tileAsRect, overlappingRectangle)) {
 
 
-                    if(world.lastChangeY < 0)
+                    if(world.velocityY < 0)
                     {
                         playerGeo.translate(  0, overlappingRectangle.height );
 
@@ -83,13 +83,13 @@ class CollisionHandler {
                 float[] vertices = p.getTransformedVertices();
                 if (Intersector.intersectSegmentRectangle(vertices[0], vertices[1], vertices[2], vertices[3],
                         playerRect)) {
-                    playerGeo.translate(world.lastChangeX * -1, world.lastChangeY * -1);
-                    if (vertices[1] < vertices[3] && Math.signum(world.lastChangeX) > 0) {
+                    playerGeo.translate(world.velocityX * -1, world.velocityY * -1);
+                    if (vertices[1] < vertices[3] && Math.signum(world.velocityX) > 0) {
                         // upwards slope
-                        playerGeo.translate(world.lastChangeX, world.lastChangeX);
+                        playerGeo.translate(world.velocityX, world.velocityX);
                     } else {
                         // downwards slope
-                        playerGeo.translate(world.lastChangeX, world.lastChangeX * -1);
+                        playerGeo.translate(world.velocityX, world.velocityX * -1);
 
                     }
                 }

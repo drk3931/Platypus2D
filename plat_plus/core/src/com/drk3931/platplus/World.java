@@ -15,7 +15,7 @@ class World implements DrawableComponent {
     
 
     GeometricRepresentation geoRep;
-    public final int speedx = 200, speedy = 200; float lastChangeX = 0, lastChangeY = 0;
+    public final int speedx = 200, speedy = 200; float velocityX = 0, velocityY = 0;
 
     public World() {
 
@@ -26,28 +26,28 @@ class World implements DrawableComponent {
     
     public void update(float delta) {
 
-        lastChangeX = 0;
-        lastChangeY = 0;
+        velocityX = 0;
+        velocityY = 0;
 
 
         if(Gdx.input.isKeyPressed(Keys.LEFT))
         {
-            lastChangeX = delta * speedx * -1;
+            velocityX = delta * speedx * -1;
         }
 
         if(Gdx.input.isKeyPressed(Keys.RIGHT))
         {
-            lastChangeX = delta * speedx;
+            velocityX = delta * speedx;
         }
 
         if(Gdx.input.isKeyPressed(Keys.UP))
         {
-            lastChangeY = speedy * delta;
+            velocityY = delta * speedy;
         }
 
         if(Gdx.input.isKeyPressed(Keys.DOWN))
         {
-            lastChangeY = speedy * delta * -1;
+            velocityY = delta * speedy * -1;
         }
 
         //geoRep.translate(lastChangeX, lastChangeY);
