@@ -7,11 +7,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 
 class Player implements DrawableComponent, CameraController {
 
-    int speedX = 333, jumpVelocity = 2000;
+    int speedX = 333, jumpVelocity = 1400;
     Entity e;
 
     GravityEffect gravEffect;
@@ -26,6 +27,7 @@ class Player implements DrawableComponent, CameraController {
     public void update(float delta) {
 
         e.setVelocityX(0);
+        //e.setVelocityY(0);
 
         if (Gdx.input.isKeyPressed(Keys.LEFT)) {
             e.setVelocityX(delta * speedX * -1);
@@ -35,9 +37,19 @@ class Player implements DrawableComponent, CameraController {
             e.setVelocityX(delta * speedX);
         }
 
-        if (Gdx.input.isKeyJustPressed(Keys.UP)) {
+        
+        if (Gdx.input.isKeyPressed(Keys.UP) && e.getVelocityY() == 0) {
             e.setVelocityY(delta * jumpVelocity);
         }
+        
+
+        /*
+        if (Gdx.input.isKeyPressed(Keys.UP)) {
+            e.setVelocityY(delta * 300);
+        }
+        if (Gdx.input.isKeyPressed(Keys.DOWN)) {
+            e.setVelocityY(delta * 300 * -1);
+        }*/
 
         gravEffect.apply(e, delta);
     }
@@ -64,7 +76,15 @@ class Player implements DrawableComponent, CameraController {
 
         
         c.position.x = e.getGeoRep().getX();
-        c.position.y = e.getGeoRep().getY();
+
+        if(e.getGeoRep().getY() > Gdx.graphics.getHeight()/2)
+        {
+            c.position.y = e.getGeoRep().getY();
+        }
+        else{
+            c.position.y = Gdx.graphics.getHeight()/2;
+        }
+
         
     }
 

@@ -35,12 +35,6 @@ class CollisionHandler {
          */
 
 
-
-
-
-
-
-
         player.e.moveX();
 
 
@@ -103,14 +97,13 @@ class CollisionHandler {
             if (shape.getClass() == Polyline.class) {
                 Polyline p = (Polyline) shape;
                 float[] vertices = p.getTransformedVertices();
-                if (Intersector.intersectSegmentRectangle(vertices[0], vertices[1], vertices[2], vertices[3],
+                while (Intersector.intersectSegmentRectangle(vertices[0], vertices[1], vertices[2], vertices[3],
                         playerRect)) {
-                    playerGeo.translate(0, playerVelY * -1);
-                    if (vertices[1] < vertices[3] && Math.signum(playerVelX) > 0) {
-                        // upwards slope
-                      
-                        
-                    }
+                
+                        playerGeo.translate(0, Math.signum(playerVelY) * -1);
+                        player.e.setVelocityY(0);
+
+    
                 }
             }
 
@@ -127,10 +120,15 @@ class CollisionHandler {
                     if(playerVelY < 0)
                     {
                         playerGeo.translate(  0, overlappingRectangle.height );
+                        player.e.setVelocityY(0);
+
 
                     }
                     else{
                         playerGeo.translate(  0, overlappingRectangle.height * -1);
+                        player.e.setVelocityY((float)(playerVelY * -0.5));
+
+
 
                     }
                 }

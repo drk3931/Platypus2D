@@ -2,7 +2,7 @@ package com.drk3931.platplus;
 
 class GravityEffect implements Effect{
 
-    final int gravAcceleration = 100;
+    final int gravAcceleration = 50;
 
     public void apply(Entity e,float delta)
     {
