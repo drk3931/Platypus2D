@@ -35,26 +35,14 @@ class Renderer {
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap());
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        cameraUpdate();
 
 
     }
 
-    private void cameraUpdate() {
+
+    
 
 
-        /*
-        Player p = this.world.getPlayer();
-        GeometricRepresentation pGeoRep = p.characterEntity.geometricRepresentation;
-        
-        camera.position.x = pGeoRep.getX();
-        camera.position.y = pGeoRep.getY();
-
-        */
-
-        camera.update();
-
-    }
 
     public void addDrawableComponent(DrawableComponent c)
     {
@@ -65,7 +53,7 @@ class Renderer {
         gl.glClearColor(0, 0, 0, 1.0f);
         gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        cameraUpdate();
+        camera.update();
 
         // set render views
         spriteBatch.setProjectionMatrix(camera.combined);

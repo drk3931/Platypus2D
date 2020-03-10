@@ -16,6 +16,11 @@ class World implements DrawableComponent {
 
     
     Player player;
+
+
+    public Player getPlayer(){
+        return this.player;
+    }
     
 
     public World() {

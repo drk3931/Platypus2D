@@ -52,6 +52,7 @@ public class PlatPlus extends ApplicationAdapter {
 		float delta = Gdx.graphics.getDeltaTime();
 		world.update(delta);
 		collisionHandler.update(delta);
+		world.getPlayer().applyToCam(renderer.camera);
 		renderer.draw();
 
 
