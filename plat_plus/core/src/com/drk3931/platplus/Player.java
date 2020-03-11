@@ -60,7 +60,7 @@ class Player implements DrawableComponent, CameraController,Updateable {
             int yPos = Gdx.input.getY();
             int xPos = Gdx.input.getX();
 
-            if(System.currentTimeMillis() - lastFire > 650)
+            if(System.currentTimeMillis() - lastFire > 50)
             {
 
                 cameraUnprojected.set(xPos, yPos, 0);

@@ -22,7 +22,7 @@ public class Projectile implements DrawableComponent, Updateable {
 
         int boundX = origin.getGeoRep().getX() + origin.getGeoRep().getWidth()/2;
         int boundY = origin.getGeoRep().getY() + origin.getGeoRep().getHeight()/2;
-        Circle c = new Circle(boundX,boundY,25);
+        Circle c = new Circle(boundX,boundY,15);
 
       
         projectileRep = new Entity();

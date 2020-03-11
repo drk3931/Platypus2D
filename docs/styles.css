@@ -16,11 +16,20 @@ html,body{
 
 }
 
-
+body{
+    overflow-y: hidden !important;
+}
 
 #embed-html{
-    max-height: 100% !important;
-    
+    padding-top: 100px;
+}
+
+
+#embed-html table{
+    max-height: 100vh !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+
 }
 
 
