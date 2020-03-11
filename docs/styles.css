@@ -32,6 +32,10 @@ body{
 
 }
 
+.logo{
+    display: none !important;
+}
+
 
 #gameTitle{
     text-align: center;

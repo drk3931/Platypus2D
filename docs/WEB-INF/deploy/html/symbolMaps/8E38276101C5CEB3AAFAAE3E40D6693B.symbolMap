@@ -5137,18 +5137,19 @@ c,com.drk3931.platplus.PlatPlus::map,com.drk3931.platplus.PlatPlus,map,com/drk39
 d,com.drk3931.platplus.PlatPlus::renderer,com.drk3931.platplus.PlatPlus,renderer,com/drk3931/platplus/PlatPlus.java,12,-1
 e,com.drk3931.platplus.PlatPlus::world,com.drk3931.platplus.PlatPlus,world,com/drk3931/platplus/PlatPlus.java,19,-1
 Player,,com.drk3931.platplus.Player,,com/drk3931/platplus/Player.java,18,-1
-yub,com.drk3931.platplus.Player::$applyToCam(Lcom/drk3931/platplus/Player;Lcom/badlogic/gdx/graphics/Camera;)V,com.drk3931.platplus.Player,$applyToCam,com/drk3931/platplus/Player.java,102,0
-zub,com.drk3931.platplus.Player::$drawShapeRenderer(Lcom/drk3931/platplus/Player;Lcom/badlogic/gdx/graphics/glutils/ShapeRenderer;)V,com.drk3931.platplus.Player,$drawShapeRenderer,com/drk3931/platplus/Player.java,91,0
-Aub,com.drk3931.platplus.Player::$update(Lcom/drk3931/platplus/Player;F)V,com.drk3931.platplus.Player,$update,com/drk3931/platplus/Player.java,40,0
-Bub,com.drk3931.platplus.Player::Player() <init>,com.drk3931.platplus.Player,Player,com/drk3931/platplus/Player.java,28,0
+yub,com.drk3931.platplus.Player::$applyToCam(Lcom/drk3931/platplus/Player;Lcom/badlogic/gdx/graphics/Camera;)V,com.drk3931.platplus.Player,$applyToCam,com/drk3931/platplus/Player.java,104,0
+zub,com.drk3931.platplus.Player::$drawShapeRenderer(Lcom/drk3931/platplus/Player;Lcom/badlogic/gdx/graphics/glutils/ShapeRenderer;)V,com.drk3931.platplus.Player,$drawShapeRenderer,com/drk3931/platplus/Player.java,93,0
+Aub,com.drk3931.platplus.Player::$update(Lcom/drk3931/platplus/Player;F)V,com.drk3931.platplus.Player,$update,com/drk3931/platplus/Player.java,42,0
+Bub,com.drk3931.platplus.Player::Player() <init>,com.drk3931.platplus.Player,Player,com/drk3931/platplus/Player.java,30,0
 a,com.drk3931.platplus.Player::camRef,com.drk3931.platplus.Player,camRef,com/drk3931/platplus/Player.java,26,-1
 b,com.drk3931.platplus.Player::cameraUnprojected,com.drk3931.platplus.Player,cameraUnprojected,com/drk3931/platplus/Player.java,24,-1
-Cub,com.drk3931.platplus.Player::drawShapeRenderer(Lcom/badlogic/gdx/graphics/glutils/ShapeRenderer;)V,com.drk3931.platplus.Player,drawShapeRenderer,com/drk3931/platplus/Player.java,91,0
-Dub,com.drk3931.platplus.Player::drawSpriteBatch(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V,com.drk3931.platplus.Player,drawSpriteBatch,com/drk3931/platplus/Player.java,96,0
+Cub,com.drk3931.platplus.Player::drawShapeRenderer(Lcom/badlogic/gdx/graphics/glutils/ShapeRenderer;)V,com.drk3931.platplus.Player,drawShapeRenderer,com/drk3931/platplus/Player.java,93,0
+Dub,com.drk3931.platplus.Player::drawSpriteBatch(Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V,com.drk3931.platplus.Player,drawSpriteBatch,com/drk3931/platplus/Player.java,98,0
 c,com.drk3931.platplus.Player::e,com.drk3931.platplus.Player,e,com/drk3931/platplus/Player.java,21,-1
-d,com.drk3931.platplus.Player::jumpVelocity,com.drk3931.platplus.Player,jumpVelocity,com/drk3931/platplus/Player.java,20,-1
-e,com.drk3931.platplus.Player::lastFire,com.drk3931.platplus.Player,lastFire,com/drk3931/platplus/Player.java,37,-1
-f,com.drk3931.platplus.Player::speedX,com.drk3931.platplus.Player,speedX,com/drk3931/platplus/Player.java,20,-1
+d,com.drk3931.platplus.Player::fireRateMS,com.drk3931.platplus.Player,fireRateMS,com/drk3931/platplus/Player.java,28,-1
+e,com.drk3931.platplus.Player::jumpVelocity,com.drk3931.platplus.Player,jumpVelocity,com/drk3931/platplus/Player.java,20,-1
+f,com.drk3931.platplus.Player::lastFire,com.drk3931.platplus.Player,lastFire,com/drk3931/platplus/Player.java,39,-1
+g,com.drk3931.platplus.Player::speedX,com.drk3931.platplus.Player,speedX,com/drk3931/platplus/Player.java,20,-1
 Renderer,,com.drk3931.platplus.Renderer,,com/drk3931/platplus/Renderer.java,17,-1
 Eub,com.drk3931.platplus.Renderer::$addDrawableComponent(Lcom/drk3931/platplus/Renderer;Lcom/drk3931/platplus/DrawableComponent;)V,com.drk3931.platplus.Renderer,$addDrawableComponent,com/drk3931/platplus/Renderer.java,49,0
 Fub,com.drk3931.platplus.Renderer::$draw(Lcom/drk3931/platplus/Renderer;)V,com.drk3931.platplus.Renderer,$draw,com/drk3931/platplus/Renderer.java,54,0
