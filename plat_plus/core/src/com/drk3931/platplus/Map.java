@@ -41,6 +41,8 @@ class Map implements DrawableComponent{
         return this.mapPolies;
     }
 
+    World world;
+
     public Map(String mapFileName) {
 
         mapPolies = new ArrayList<Shape2D>();
@@ -59,6 +61,8 @@ class Map implements DrawableComponent{
 
         Gdx.app.log("Terrain Layer Width", ""+terrainTileLayer.getWidth());
         Gdx.app.log("Terrain Layer Height", ""+terrainTileLayer.getHeight());
+
+        this.world = world;
 
 
 
@@ -97,7 +101,7 @@ class Map implements DrawableComponent{
     }
 
 
-    public void parseMapEnemies()
+    public void parseCharactersLayer(World world)
     {
         MapLayer enemiesLayer = tiledMap.getLayers().get("Enemies");
         MapObjects objects = enemiesLayer.getObjects();
@@ -117,10 +121,11 @@ class Map implements DrawableComponent{
             float enemyX = Float.parseFloat(objProps.get("x").toString());
             float enemyY = Float.parseFloat(objProps.get("y").toString());
 
-           // enemyY = (CELL_H * MAP_H) - enemyY;
 
+            Character c = new Character();
+            c.setupCharacter(enemyX,enemyY,64.0f,64.0f);
 
-            //gameWorld.addEnemy((int)enemyX, (int)enemyY);
+            world.addCharacter(c);
         
         }
     }

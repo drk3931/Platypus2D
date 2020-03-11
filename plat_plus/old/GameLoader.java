@@ -17,7 +17,7 @@ class GameLoader{
     }
 
 
-    public World loadworld()
+    public World loadworld(GameWorld world)
     {
         gameWorld = new World();
         gameMap.parseMapEnemies(gameWorld);

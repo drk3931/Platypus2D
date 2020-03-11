@@ -1,11 +1,14 @@
 package com.drk3931.platplus;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
 
-public class GeometricRepresentation {
+public class GeometricRepresentation implements DrawableComponent {
 
     public Shape2D shapeRepresentation;
     private Color color;
@@ -14,8 +17,6 @@ public class GeometricRepresentation {
         this.shapeRepresentation = shape;
         this.color = c;
     }
-
-
 
     public void setShape(Shape2D shape) {
         shapeRepresentation = shape;
@@ -29,8 +30,7 @@ public class GeometricRepresentation {
         this.color = c;
     }
 
-    public Color getColor()
-    {
+    public Color getColor() {
         return this.color;
     }
 
@@ -42,34 +42,27 @@ public class GeometricRepresentation {
             return;
         }
 
-        
         if (shapeRepresentation instanceof Circle) {
             Circle asCircle = (Circle) shapeRepresentation;
-            asCircle.x=x;
-            asCircle.y=y;
+            asCircle.x = x;
+            asCircle.y = y;
             return;
         }
     }
 
-
-    public void setRadius(int rad) throws Exception
-    {
-        if(shapeRepresentation instanceof Circle)
-        {
-            ((Circle)shapeRepresentation).radius = rad;
-        }
-        else{
+    public void setRadius(int rad) throws Exception {
+        if (shapeRepresentation instanceof Circle) {
+            ((Circle) shapeRepresentation).radius = rad;
+        } else {
             throw new Exception("Not a circle!");
         }
     }
 
-    public void setWH(int w, int h) throws Exception{
-        if(shapeRepresentation instanceof Circle)
-        {
-            Rectangle asRect = (Rectangle)shapeRepresentation;
-            asRect.setSize(w,h);
-        }
-        else{
+    public void setWH(int w, int h) throws Exception {
+        if (shapeRepresentation instanceof Circle) {
+            Rectangle asRect = (Rectangle) shapeRepresentation;
+            asRect.setSize(w, h);
+        } else {
             throw new Exception("Not a rectangle!");
         }
 
@@ -84,61 +77,65 @@ public class GeometricRepresentation {
 
         }
 
-        
         if (shapeRepresentation instanceof Circle) {
             Circle asCircle = (Circle) shapeRepresentation;
-            asCircle.x+=dx;
-            asCircle.y+=dy;
+            asCircle.x += dx;
+            asCircle.y += dy;
         }
 
     }
 
+    public int getX() {
 
-    public int getX()
-    {
+        if (shapeRepresentation instanceof Rectangle) {
+            return (int) ((Rectangle) shapeRepresentation).getX();
+        } else if (shapeRepresentation instanceof Circle) {
+            return (int) ((Circle) shapeRepresentation).x;
+        } else {
+            return -1;
+        }
+    }
+
+    public int getY() {
+
+        if (shapeRepresentation instanceof Rectangle) {
+            return (int) ((Rectangle) shapeRepresentation).getY();
+        } else if (shapeRepresentation instanceof Circle) {
+            return (int) ((Circle) shapeRepresentation).y;
+        } else {
+            return -1;
+        }
+
+    }
+
+    public int getWidth() {
+        return (int) ((Rectangle) this.shapeRepresentation).width;
+    }
+
+    public int getHeight() {
+        return (int) ((Rectangle) this.shapeRepresentation).height;
+
+    }
+
+    public int getRadius() {
+        return (int) ((Circle) this.shapeRepresentation).radius;
+
+    }
+
+    @Override
+    public void drawShapeRenderer(ShapeRenderer shapeRenderer) {
         
-        if(shapeRepresentation instanceof Rectangle)
-        {
-            return (int)((Rectangle)shapeRepresentation).getX();
-        }
-        else if(shapeRepresentation instanceof Circle){
-            return (int)((Circle)shapeRepresentation).x;
-        }
-        else{
-            return -1;
-        }
+        GeometricRepresentation geoRep = this;
+        Rectangle r = (Rectangle) geoRep.shapeRepresentation;
+
+        shapeRenderer.setColor(geoRep.getColor());
+        shapeRenderer.set(ShapeType.Filled);
+        shapeRenderer.rect(r.x, r.y, r.width, r.height);
     }
 
-    public int getY()
-    {
-
-        if(shapeRepresentation instanceof Rectangle)
-        {
-            return (int)((Rectangle)shapeRepresentation).getY();
-        }
-        else if(shapeRepresentation instanceof Circle){
-            return (int)((Circle)shapeRepresentation).y;
-        }
-        else{
-            return -1;
-        }
-
-    }
-
-    public int getWidth()
-    {
-        return (int)((Rectangle)this.shapeRepresentation).width;
-    }
-
-    public int getHeight()
-    {
-        return (int)((Rectangle)this.shapeRepresentation).height;
-
-    }
-
-    public int getRadius()
-    {
-        return (int)((Circle)this.shapeRepresentation).radius;
+    @Override
+    public void drawSpriteBatch(SpriteBatch b) {
+        // TODO Auto-generated method stub
 
     }
     

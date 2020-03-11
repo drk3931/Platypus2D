@@ -1,6 +1,8 @@
-package com.drk3931.platplus;
+package com.drk3931.platplus.effects;
 
-class GravityEffect implements Effect{
+import com.drk3931.platplus.Entity;
+
+public class GravityEffect implements Effect{
 
     final int gravAcceleration = 50;
 

@@ -1,6 +1,8 @@
 package com.drk3931.platplus;
 
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
@@ -8,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
+import com.drk3931.platplus.projectiles.Projectile;
 
 class World implements DrawableComponent {
     
@@ -16,6 +19,9 @@ class World implements DrawableComponent {
 
     
     Player player;
+
+    ArrayList<Character> characters;
+    public static ArrayList<Projectile> projectileStore;
 
 
     public Player getPlayer(){
@@ -26,6 +32,8 @@ class World implements DrawableComponent {
     public World() {
 
         player = new Player();
+        characters = new ArrayList<Character>();
+        projectileStore = new ArrayList<Projectile>();
         
        
     }
@@ -36,6 +44,15 @@ class World implements DrawableComponent {
 
 
         player.update(delta);
+        for(Character c: characters)
+        {
+            c.update(delta);
+        }
+
+        for(Projectile p: projectileStore)
+        {
+            p.update(delta);
+        }
 
 
         //geoRep.translate(lastChangeX, lastChangeY);
@@ -49,15 +66,16 @@ class World implements DrawableComponent {
 
 
         player.drawShapeRenderer(shapeRenderer);
-        
-        /*
-        for (Character c: characters) {
-            c.getCharacterEntity().drawShapeRenderer(shapeRenderer);
+        for(Character c: characters)
+        {
+            c.drawShapeRenderer(shapeRenderer);
         }
-
-        player.drawShapeRenderer(shapeRenderer);
-        */
-
+        for(Projectile p: projectileStore)
+        {
+            p.drawShapeRenderer(shapeRenderer);
+        }
+        
+       
     }
 
     @Override
@@ -75,6 +93,20 @@ class World implements DrawableComponent {
 
     }
 
+    public void addCharacter(Character c){
+
+
+        this.characters.add(c);
+
+    }
+
+
+    public void addProjectile(Projectile p){
+
+
+        this.projectileStore.add(p);
+
+    }
 
   
   

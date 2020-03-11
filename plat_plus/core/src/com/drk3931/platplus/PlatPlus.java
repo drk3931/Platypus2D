@@ -29,7 +29,7 @@ public class PlatPlus extends ApplicationAdapter {
 		gameLoader = new GameLoader();
 		map = gameLoader.loadMap();
 		renderer = new Renderer(map);
-		world= gameLoader.loadWorld();
+		world= gameLoader.loadWorld(map);
 		collisionHandler = new CollisionHandler(map, world);
 
 		renderer.addDrawableComponent(world);

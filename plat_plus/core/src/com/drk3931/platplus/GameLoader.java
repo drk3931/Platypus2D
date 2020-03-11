@@ -33,9 +33,11 @@ class GameLoader {
         
     }
 
-    public World loadWorld()
+    public World loadWorld(Map map)
     {
-        return new World();
+        World world = new World();
+        map.parseCharactersLayer(world);
+        return world;
     }
 
 

@@ -1,11 +1,17 @@
 package com.drk3931.platplus;
 
-class Entity{
+public class Entity{
 
 
     private GeometricRepresentation geoRep;
 
     float velocityX,velocityY;
+
+    boolean markedForRemoval = false;
+
+    void setMarkedForRemoval(){
+        this.markedForRemoval = true;
+    }
 
     public float getVelocityX()
     {
