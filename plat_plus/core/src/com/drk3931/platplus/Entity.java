@@ -1,11 +1,13 @@
 package com.drk3931.platplus;
 
+import com.badlogic.gdx.math.Vector2;
+
 public class Entity{
 
 
     private GeometricRepresentation geoRep;
 
-    float velocityX,velocityY;
+    private Vector2 velocity;
 
     boolean markedForRemoval = false;
 
@@ -15,16 +17,16 @@ public class Entity{
 
     public float getVelocityX()
     {
-        return this.velocityX;
+        return velocity.x;
     }
 
     public float getVelocityY(){
-        return this.velocityY;
+        return velocity.y;
     }
 
     public Entity()
     {
-
+        velocity = new Vector2();
     }
 
     public Entity setGeoRep(GeometricRepresentation geo){
@@ -38,19 +40,33 @@ public class Entity{
     }
 
     public void moveX(){
-        this.geoRep.translate(velocityX, 0);
+        this.geoRep.translate(this.velocity.x, 0);
     }
 
     public void moveY(){
-        this.geoRep.translate(0, velocityY);
+        this.geoRep.translate(0, this.velocity.y);
     }
 
     public void setVelocityX(float vx)
     {
-        this.velocityX = vx;
+        this.velocity.x = vx;
     }   
     public void setVelocityY(float vy)
     {
-        this.velocityY = vy; 
+        this.velocity.y = vy; 
     }
+
+    public void setVelocity(float x, float y)
+    {
+        this.velocity.x = x; this.velocity.y = y;
+    }
+    public Vector2 getVelocity(){
+        return this.velocity;
+    }
+
+    public void move(float delta){
+        this.geoRep.translate(delta *velocity.x, delta * velocity.y);
+    }
+
+    
 }

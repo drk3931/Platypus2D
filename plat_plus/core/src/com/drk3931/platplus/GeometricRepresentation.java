@@ -126,11 +126,30 @@ public class GeometricRepresentation implements DrawableComponent {
     public void drawShapeRenderer(ShapeRenderer shapeRenderer) {
         
         GeometricRepresentation geoRep = this;
-        Rectangle r = (Rectangle) geoRep.shapeRepresentation;
 
-        shapeRenderer.setColor(geoRep.getColor());
-        shapeRenderer.set(ShapeType.Filled);
-        shapeRenderer.rect(r.x, r.y, r.width, r.height);
+
+        if(geoRep.shapeRepresentation instanceof Rectangle)
+        {
+
+            Rectangle r = (Rectangle) geoRep.shapeRepresentation;
+            shapeRenderer.setColor(geoRep.getColor());
+            shapeRenderer.set(ShapeType.Filled);
+            shapeRenderer.rect(r.x, r.y, r.width, r.height);
+
+        }
+
+        if(geoRep.shapeRepresentation instanceof Circle)
+        {
+
+            Circle r = (Circle) geoRep.shapeRepresentation;
+            shapeRenderer.setColor(geoRep.getColor());
+            shapeRenderer.set(ShapeType.Filled);
+            shapeRenderer.circle(r.x, r.y, r.radius);
+
+        }
+
+
+
     }
 
     @Override

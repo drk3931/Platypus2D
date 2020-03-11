@@ -5,12 +5,14 @@ import static com.badlogic.gdx.Gdx.*;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector3;
 
 class Renderer {
 
@@ -83,6 +85,10 @@ class Renderer {
 
         spriteBatch.end();
 
+    }
+
+    static Vector3 getMousePosInGameWorld(Vector3 vec, Camera camera) {
+        return camera.unproject(vec);
     }
 
 }

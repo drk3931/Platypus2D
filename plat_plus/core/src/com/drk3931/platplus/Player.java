@@ -12,6 +12,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 class Player implements DrawableComponent, CameraController,Updateable {
 
@@ -19,13 +21,20 @@ class Player implements DrawableComponent, CameraController,Updateable {
     Entity e;
 
     GravityEffect gravEffect;
+    Vector3 cameraUnprojected; 
+
+    Camera camRef;
 
     public Player() {
 
         e = new Entity();
         e.setGeoRep(new GeometricRepresentation(Color.WHITE, new Rectangle(0, 150, 64, 64)));
         gravEffect = new GravityEffect();
+        cameraUnprojected = new Vector3();
     }
+
+
+    long lastFire = 0;
 
     @Override
     public void update(float delta) {
@@ -51,7 +60,18 @@ class Player implements DrawableComponent, CameraController,Updateable {
             int yPos = Gdx.input.getY();
             int xPos = Gdx.input.getX();
 
-            World.projectileStore.add(new Projectile(this.e, Color.BLUE, xPos, yPos));
+            if(System.currentTimeMillis() - lastFire > 650)
+            {
+
+                cameraUnprojected.set(xPos, yPos, 0);
+                cameraUnprojected.set(Renderer.getMousePosInGameWorld(cameraUnprojected, camRef));
+
+            
+                lastFire = System.currentTimeMillis();
+                World.projectileStore.add(new Projectile(this.e, Color.BLUE, cameraUnprojected.x, cameraUnprojected.y));
+
+            }
+        
             
             //this.player.weapon.fire(xPos, Gdx.graphics.getHeight() - yPos);
         }
@@ -81,6 +101,9 @@ class Player implements DrawableComponent, CameraController,Updateable {
     @Override
     public void applyToCam(Camera c) {
 
+
+        this.camRef = c;
+
         
         c.position.x = e.getGeoRep().getX();
 
@@ -91,6 +114,7 @@ class Player implements DrawableComponent, CameraController,Updateable {
         else{
             c.position.y = Gdx.graphics.getHeight()/2;
         }
+
 
         
     }

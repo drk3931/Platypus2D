@@ -1,5 +1,6 @@
 package com.drk3931.platplus.projectiles;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -14,26 +15,20 @@ public class Projectile implements DrawableComponent, Updateable {
 
     Entity origin;
     Entity projectileRep;
-    Vector2 velocity;
 
-    public Projectile(Entity origin, Color color, int targX, int targY)
+    public Projectile(Entity origin, Color color, float xTarg,float yTarg)
     {
         this.origin = origin;
 
         int boundX = origin.getGeoRep().getX() + origin.getGeoRep().getWidth()/2;
         int boundY = origin.getGeoRep().getY() + origin.getGeoRep().getHeight()/2;
-        Circle c = new Circle(boundX,boundY,50);
+        Circle c = new Circle(boundX,boundY,25);
 
       
         projectileRep = new Entity();
         projectileRep.setGeoRep(new GeometricRepresentation(color, c));
+        projectileRep.getVelocity().set(xTarg - boundX,yTarg - boundY).nor().scl(277);
 
-
-
-        int yComputed = targY - boundY;
-        int xComputed = targX - boundX;
-
-        velocity = new Vector2(xComputed,yComputed).nor().setLength(100);
 
 
 
@@ -42,10 +37,7 @@ public class Projectile implements DrawableComponent, Updateable {
     @Override
     public void drawShapeRenderer(ShapeRenderer r) {
 
-        Circle c = (Circle)projectileRep.getGeoRep().shapeRepresentation;
-        r.circle(c.x, c.y, c.radius);
-
-
+        projectileRep.getGeoRep().drawShapeRenderer(r);
 
     }
 
@@ -56,9 +48,8 @@ public class Projectile implements DrawableComponent, Updateable {
 
     @Override
     public void update(float delta) {
-        // TODO Auto-generated method stub
-        projectileRep.getGeoRep().translate(delta * velocity.x, delta * velocity.y);
-        
+       
+        projectileRep.move(delta);
 
     }
 
