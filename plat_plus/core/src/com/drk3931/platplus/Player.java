@@ -25,6 +25,8 @@ class Player implements DrawableComponent, CameraController,Updateable {
 
     Camera camRef;
 
+    int fireRateMS = 333;
+
     public Player() {
 
         e = new Entity();
@@ -60,7 +62,7 @@ class Player implements DrawableComponent, CameraController,Updateable {
             int yPos = Gdx.input.getY();
             int xPos = Gdx.input.getX();
 
-            if(System.currentTimeMillis() - lastFire > 50)
+            if(System.currentTimeMillis() - lastFire > fireRateMS)
             {
 
                 cameraUnprojected.set(xPos, yPos, 0);
