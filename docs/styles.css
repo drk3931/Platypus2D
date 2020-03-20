@@ -21,7 +21,6 @@ html,body{
 
 #embed-html table{
     padding-top: 150px;
-    position: absolute;
     max-height: 100vh !important;
     margin-left: auto !important;
     margin-right: auto !important;

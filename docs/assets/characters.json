@@ -1,0 +1,31 @@
+{
+    "player":{
+
+        "health":100,
+        "moveAnimation":"moveAnimation.png",
+        "weapon":"projectilePlayer",
+        "enableGravity":true
+
+    },
+    "enemies":{
+
+        "enemyGround":{
+            "health":50,
+            "enableGravity":true,
+            "moveAnimation":"enemyGroundMoveAnimation.png",
+            "weapon":"projectileEnemyGround",
+            "behavior":"GroundPatrolBehavior"
+        },
+        
+        "enemyAir":{
+            "health":35,
+            "enableGravity":false,
+            "moveAnimation":"enemyAirMoveAnimation.png",
+            "weapon":"projectileEnemyAir",
+            "behavior":"AirPatrolBehavior"
+
+
+        }
+
+    }
+}
