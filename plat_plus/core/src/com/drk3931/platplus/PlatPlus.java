@@ -34,22 +34,21 @@ public class PlatPlus extends ApplicationAdapter {
 
 		renderer.addDrawableComponent(world);
 
-		/*
 
-
-		collisionHandler = new CollisionHandler(map, world);
-		renderer = new Renderer(map,world,collisionHandler);
-		*/
 
 	}
 
 	@Override
 	public void render() {
-		/*
-		world.update(delta);
-		collisionHandler.update(delta);
-		*/
+
+		
 		float delta = Gdx.graphics.getDeltaTime();
+		float timeLimitMin = (float)1/30;
+
+		if(delta > timeLimitMin)
+		{
+			return;
+		}
 		world.update(delta);
 		collisionHandler.update(delta);
 		world.getPlayer().applyToCam(renderer.camera);

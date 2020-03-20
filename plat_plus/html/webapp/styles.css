@@ -4,28 +4,24 @@ canvas {
 }
 
 html,body{
-    margin: 0 !important;
-    padding: 0 !important;
-    min-height: 100vh !important;
-    max-height: 100vh !important;
+    
+    min-width: 1024px;
+    min-height: 900px;
 
-    background: rgba(0, 32, 63, 1);
-    background: -webkit-linear-gradient(top, rgba(0, 32, 63, 1) 0%, rgba(0, 10, 20, 1) 100%);
-    background: linear-gradient(to bottom, rgba(0, 32, 63, 1) 0%, rgba(0, 10, 20, 1) 100%);
-    font-family: 'Lexend Deca', sans-serif;
+    margin: 0;
+    overflow-y: hidden;
 
 }
 
-body{
-    overflow-y: hidden !important;
-}
 
 #embed-html{
-    padding-top: 100px;
+    margin: auto !important;
 }
 
 
 #embed-html table{
+    padding-top: 150px;
+    position: absolute;
     max-height: 100vh !important;
     margin-left: auto !important;
     margin-right: auto !important;

@@ -30,7 +30,7 @@ class Player implements DrawableComponent, CameraController,Updateable {
     public Player() {
 
         e = new Entity();
-        e.setGeoRep(new GeometricRepresentation(Color.WHITE, new Rectangle(0, 150, 64, 64)));
+        e.setGeoRep(new GeometricRepresentation(Color.ORANGE, new Rectangle(0, 150, 64, 64)));
         gravEffect = new GravityEffect();
         cameraUnprojected = new Vector3();
     }
