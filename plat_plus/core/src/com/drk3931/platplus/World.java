@@ -12,7 +12,7 @@ class World implements DrawableComponent {
 
 
     
-    Player player;
+    private Player player;
 
     ArrayList<Character> characters;
     public static ArrayList<Projectile> projectileStore;
@@ -82,8 +82,10 @@ class World implements DrawableComponent {
             c.getCharacterEntity().drawSpriteBatch(b);
         }
 
-        player.drawSpriteBatch(b);
         */
+
+        player.drawSpriteBatch(b);
+
 
 
     }

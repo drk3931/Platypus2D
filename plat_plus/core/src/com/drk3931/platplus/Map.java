@@ -20,6 +20,8 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polyline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 
 class Map implements DrawableComponent{
 
@@ -103,9 +105,12 @@ class Map implements DrawableComponent{
 
     public void parseCharactersLayer(World world)
     {
-        MapLayer enemiesLayer = tiledMap.getLayers().get("Enemies");
+        MapLayer enemiesLayer = tiledMap.getLayers().get("Characters");
         MapObjects objects = enemiesLayer.getObjects();
 
+        
+        JsonReader json = new JsonReader();
+        JsonValue characters = json.parse(Gdx.files.internal("characters.json"));
 
 
         Iterator<MapObject> objectsIter = objects.iterator();
@@ -118,14 +123,19 @@ class Map implements DrawableComponent{
             MapProperties objProps = obj.getProperties();
 
 
-            float enemyX = Float.parseFloat(objProps.get("x").toString());
-            float enemyY = Float.parseFloat(objProps.get("y").toString());
+            float characterX = Float.parseFloat(objProps.get("x").toString());
+            float characterY = Float.parseFloat(objProps.get("y").toString());
 
 
-            Character c = new Character();
-            c.setupCharacter(enemyX,enemyY,64.0f,64.0f);
+            String characterType = (String)objProps.get("character_name");
 
-            world.addCharacter(c);
+            System.out.println(characterType);
+
+            
+            //Character c = new Character(world.getPlayer());
+            //c.setupCharacter(enemyX,enemyY,64.0f,64.0f);
+
+            //world.addCharacter(c);
         
         }
     }

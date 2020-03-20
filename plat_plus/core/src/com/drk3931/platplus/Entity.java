@@ -9,12 +9,6 @@ public class Entity{
 
     private Vector2 velocity;
 
-    boolean markedForRemoval = false;
-
-    void setMarkedForRemoval(){
-        this.markedForRemoval = true;
-    }
-
     public float getVelocityX()
     {
         return velocity.x;

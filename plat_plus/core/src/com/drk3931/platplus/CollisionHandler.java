@@ -10,17 +10,18 @@ class CollisionHandler {
 
     private World world;
     private Map map;
+    private Player player;
     private Rectangle overlappingRectangle;
 
     public CollisionHandler(Map map, World world) {
         this.world = world;
         this.map = map;
+        this.player = world.getPlayer();
         this.overlappingRectangle = new Rectangle();
     }
 
     public void update(float delta) {
 
-        Player player = world.player;
         GeometricRepresentation playerGeo = player.e.getGeoRep();
         Rectangle playerRect = (Rectangle) playerGeo.shapeRepresentation;
 

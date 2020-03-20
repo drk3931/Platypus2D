@@ -9,13 +9,13 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
-class Player implements DrawableComponent, CameraController,Updateable {
+public class Player implements DrawableComponent, CameraController,Updateable {
+
+
+    private AnimationHandler animationHandler;
 
     int speedX = 333, jumpVelocity = 1400;
     Entity e;
@@ -25,14 +25,18 @@ class Player implements DrawableComponent, CameraController,Updateable {
 
     Camera camRef;
 
-    int fireRateMS = 333;
+    int fireRateMS = 1000;
+
 
     public Player() {
+
 
         e = new Entity();
         e.setGeoRep(new GeometricRepresentation(Color.ORANGE, new Rectangle(0, 150, 64, 64)));
         gravEffect = new GravityEffect();
         cameraUnprojected = new Vector3();
+        animationHandler = new  AnimationHandler(GameLoader.genAnimation("player_walk_animation.png", 5, 6), e);
+
     }
 
 
@@ -41,15 +45,19 @@ class Player implements DrawableComponent, CameraController,Updateable {
     @Override
     public void update(float delta) {
 
+
         e.setVelocityX(0);
         //e.setVelocityY(0);
 
         if (Gdx.input.isKeyPressed(Keys.LEFT)) {
             e.setVelocityX(delta * speedX * -1);
+           animationHandler.incrementTime(delta);
         }
 
         if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
             e.setVelocityX(delta * speedX);
+            animationHandler.incrementTime(delta);
+
         }
 
         
@@ -96,8 +104,9 @@ class Player implements DrawableComponent, CameraController,Updateable {
 
     @Override
     public void drawSpriteBatch(SpriteBatch b) {
-        // TODO Auto-generated method stub
 
+        animationHandler.draw(b);
+      
     }
 
     @Override
