@@ -26,8 +26,6 @@ public class AnimationHandler {
     public void draw(SpriteBatch b){
         TextureRegion currentFrame = animation.getKeyFrame(animationTime, true);
     
-        currentFrame.setRegionWidth(e.getGeoRep().getWidth());
-        currentFrame.setRegionHeight(e.getGeoRep().getHeight());
         if(e.getVelocityX() < 0)
         {
             currentFrame.flip(true, false);
@@ -39,7 +37,7 @@ public class AnimationHandler {
 
   
     
-        b.draw(currentFrame, e.getGeoRep().getX(),e.getGeoRep().getY());
+        b.draw(currentFrame, e.getGeoRep().getX(),e.getGeoRep().getY(),e.getGeoRep().getWidth(),e.getGeoRep().getHeight());
 
         if(lastFlipped != null){
             lastFlipped.flip(true, false);

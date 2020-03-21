@@ -57,6 +57,7 @@ public class Player extends Character implements Updateable,DrawableComponent{
 
     @Override
     public void drawSpriteBatch(SpriteBatch b) {
+        
        characterEntity.drawSpriteBatch(b);
     }
 

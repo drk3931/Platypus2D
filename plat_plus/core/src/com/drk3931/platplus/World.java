@@ -21,11 +21,14 @@ class World implements DrawableComponent {
     public Player getPlayer(){
         return this.player;
     }
+
+    public void spawnPlayer(float x, float y){
+        player = new Player( x,  y);
+    }
     
 
     public World() {
 
-        player = new Player();
         characters = new ArrayList<Character>();
         projectileStore = new ArrayList<Projectile>();
         
@@ -77,12 +80,12 @@ class World implements DrawableComponent {
     public void drawSpriteBatch(SpriteBatch b) {
 
 
-        /*
+        
        for (Character c: characters) {
-            c.getCharacterEntity().drawSpriteBatch(b);
+            c.drawSpriteBatch(b);
         }
 
-        */
+        
 
         player.drawSpriteBatch(b);
 

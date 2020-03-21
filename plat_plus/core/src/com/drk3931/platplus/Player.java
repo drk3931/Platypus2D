@@ -28,11 +28,11 @@ public class Player implements DrawableComponent, CameraController,Updateable {
     int fireRateMS = 1000;
 
 
-    public Player() {
+    public Player(float x, float y) {
 
 
         e = new Entity();
-        e.setGeoRep(new GeometricRepresentation(Color.ORANGE, new Rectangle(0, 150, 64, 64)));
+        e.setGeoRep(new GeometricRepresentation(Color.ORANGE, new Rectangle(x, y, 64, 128)));
         gravEffect = new GravityEffect();
         cameraUnprojected = new Vector3();
         animationHandler = new  AnimationHandler(GameLoader.genAnimation("player_walk_animation.png", 5, 6), e);

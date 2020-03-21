@@ -1,10 +1,11 @@
 package com.drk3931.platplus.behaviors;
 
+import com.drk3931.platplus.Character;
 import com.drk3931.platplus.Entity;
 
 public class AirPatrolBehavior extends Behavior {
 
-    public AirPatrolBehavior(Entity controllingCharacter) {
+    public AirPatrolBehavior(Character controllingCharacter) {
         super(controllingCharacter);
     }
 

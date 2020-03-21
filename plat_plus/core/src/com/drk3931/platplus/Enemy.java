@@ -2,13 +2,14 @@ package com.drk3931.platplus;
 
 public class Enemy extends Character {
 
-    public Enemy(Player player) {
-        super(player);
+    public Enemy(Player player, CharacterState cState) {
+        super(player,cState);
     }
 
-    public void spawnProjectile()
-    {
-        
+    @Override
+    public void spawnProjectile() {
+        // TODO Auto-generated method stub
+
     }
 
 }

@@ -16,6 +16,7 @@ public abstract class Character implements DrawableComponent, Updateable {
 
     private Entity entityRep;
     private Player playerRef;
+    public CharacterState characterState;
 
 
     public Animation<TextureRegion> movingAnimation;
@@ -25,15 +26,17 @@ public abstract class Character implements DrawableComponent, Updateable {
     public Animation<TextureRegion> defenseAnimation;
 
 
-    public Character(Player player){
+    
+    public void setEntityRep(float x,float y,float w,float h){
         this.entityRep = new Entity();
-        this.playerRef = player;
+        entityRep.setGeoRep(new GeometricRepresentation(Color.WHITE, new Rectangle(x,y,w,h)));
     }
 
-    public void setupCharacter(float x, float y, float w, float h)
-    {
-        entityRep.setGeoRep(new GeometricRepresentation(Color.RED, new Rectangle(x,y,w,h)));
 
+    public Character(Player player, CharacterState cState){
+        this.entityRep = new Entity();
+        this.playerRef = player;
+        this.characterState = cState;
     }
 
 
@@ -50,8 +53,12 @@ public abstract class Character implements DrawableComponent, Updateable {
 
     @Override
     public void update(float delta) {
-        // TODO Auto-generated method stub
+        
+        this.characterState.update(delta);
+        this.characterState.getCurrentBehavior().update(delta);
 
     }
+
+    public abstract void spawnProjectile();
 
 }

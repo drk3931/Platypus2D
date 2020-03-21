@@ -14,14 +14,16 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polyline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+import com.drk3931.platplus.behaviors.AirPatrolBehavior;
+import com.drk3931.platplus.behaviors.GroundPatrolBehavior;
 
 class Map implements DrawableComponent{
 
@@ -105,19 +107,28 @@ class Map implements DrawableComponent{
 
     public void parseCharactersLayer(World world)
     {
-        MapLayer enemiesLayer = tiledMap.getLayers().get("Characters");
-        MapObjects objects = enemiesLayer.getObjects();
+        MapLayer characterLayer = tiledMap.getLayers().get("Characters");
+        MapObjects objects = characterLayer.getObjects();
 
         
         JsonReader json = new JsonReader();
         JsonValue characters = json.parse(Gdx.files.internal("characters.json"));
 
 
+        
+
+        MapProperties playerProps = objects.get("player").getProperties();
+    
+        float playerX = Float.parseFloat(playerProps.get("x").toString());
+        float playerY = Float.parseFloat(playerProps.get("y").toString());
+        world.spawnPlayer(playerX,playerY);
+        
         Iterator<MapObject> objectsIter = objects.iterator();
 
 
         while(objectsIter.hasNext())
         {
+
 
             MapObject obj = (MapObject)objectsIter.next();
             MapProperties objProps = obj.getProperties();
@@ -127,15 +138,44 @@ class Map implements DrawableComponent{
             float characterY = Float.parseFloat(objProps.get("y").toString());
 
 
-            String characterType = (String)objProps.get("character_name");
-
+            String characterType = objProps.get("character_name", "none", String.class);
             System.out.println(characterType);
+
+            Character newCharacter;
+
+            if(characterType.equals("enemyGround"))
+            {
+                
+                JsonValue enemyGround = characters.get("enemies").get("enemyGround");
+
+                CharacterState eState = new CharacterState();
+
+                newCharacter = new Enemy(world.getPlayer(),eState);
+
+                eState.setHealth(enemyGround.getInt("health"));
+                eState.setBehavior(new GroundPatrolBehavior(newCharacter));
+                newCharacter.setEntityRep(characterX,characterY,(float)Integer.parseInt(enemyGround.get("width").asString()),(float)Integer.parseInt(enemyGround.get("height").asString()));
+                world.addCharacter(newCharacter);
+
+            }
+
+            if(characterType.equals("enemyAir"))
+            {
+                JsonValue enemyAir = characters.get("enemies").get("enemyAir");
+                CharacterState eState = new CharacterState();
+                newCharacter = new Enemy(world.getPlayer(),eState);
+                newCharacter.setEntityRep(characterX,characterY,(float)Integer.parseInt(enemyAir.get("width").asString()),(float)Integer.parseInt(enemyAir.get("height").asString()));
+
+                eState.setHealth(enemyAir.getInt("health"));
+                eState.setBehavior(new AirPatrolBehavior(newCharacter));
+                world.addCharacter(newCharacter);
+
+            }
 
             
             //Character c = new Character(world.getPlayer());
             //c.setupCharacter(enemyX,enemyY,64.0f,64.0f);
 
-            //world.addCharacter(c);
         
         }
     }

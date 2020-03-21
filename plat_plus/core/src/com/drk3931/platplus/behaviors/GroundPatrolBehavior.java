@@ -1,10 +1,10 @@
 package com.drk3931.platplus.behaviors;
 
-import com.drk3931.platplus.Entity;
+import com.drk3931.platplus.Character;
 
 public class GroundPatrolBehavior extends Behavior {
 
-    public GroundPatrolBehavior(Entity controllingCharacter) {
+    public GroundPatrolBehavior(Character controllingCharacter) {
         super(controllingCharacter);
     }
 
