@@ -1,7 +1,7 @@
 d:assets:0:application/unknown
-t:characters.json:705:application/unknown
+t:characters.json:807:application/unknown
 t:items.json:390:application/unknown
-b:plat_plus_l1.tmx:11858:application/unknown
+b:plat_plus_l1.tmx:11783:application/unknown
 b:plat_set.tsx:13023:application/unknown
 i:player_walk_animation.png:63643:image/png
 d:PNG:0:application/unknown

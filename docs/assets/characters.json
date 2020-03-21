@@ -14,7 +14,9 @@
             "enableGravity":true,
             "moveAnimation":"enemyGroundMoveAnimation.png",
             "weapon":"projectileEnemyGround",
-            "behavior":"GroundPatrolBehavior"
+            "behavior":"GroundPatrolBehavior",
+            "width":25,
+            "height":50
         },
         
         "enemyAir":{
@@ -22,7 +24,9 @@
             "enableGravity":false,
             "moveAnimation":"enemyAirMoveAnimation.png",
             "weapon":"projectileEnemyAir",
-            "behavior":"AirPatrolBehavior"
+            "behavior":"AirPatrolBehavior",
+            "width":50,
+            "height":50
 
 
         }

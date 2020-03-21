@@ -13,10 +13,7 @@
    </properties>
    <point/>
   </object>
-  <object id="8" x="208.667" y="1975.67">
-   <properties>
-    <property name="character_name" value="player"/>
-   </properties>
+  <object id="8" name="player" x="208.667" y="1975.67">
    <point/>
   </object>
   <object id="9" x="1955.33" y="2114.34">
