@@ -7,7 +7,7 @@
   </data>
  </layer>
  <objectgroup id="3" name="Characters">
-  <object id="1" x="910" y="1719.67">
+  <object id="1" x="910" y="1831.67">
    <properties>
     <property name="character_name" value="enemyAir"/>
    </properties>

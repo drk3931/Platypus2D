@@ -105,7 +105,7 @@ public class Player implements DrawableComponent, CameraController,Updateable {
     @Override
     public void drawSpriteBatch(SpriteBatch b) {
 
-        animationHandler.draw(b);
+        //animationHandler.draw(b);
       
     }
 

@@ -2,8 +2,8 @@ package com.drk3931.platplus;
 
 public class Enemy extends Character {
 
-    public Enemy(Player player, CharacterState cState) {
-        super(player,cState);
+    public Enemy(Player player) {
+        super(player);
     }
 
     @Override

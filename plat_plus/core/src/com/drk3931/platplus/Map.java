@@ -148,13 +148,12 @@ class Map implements DrawableComponent{
                 
                 JsonValue enemyGround = characters.get("enemies").get("enemyGround");
 
-                CharacterState eState = new CharacterState();
 
-                newCharacter = new Enemy(world.getPlayer(),eState);
-
-                eState.setHealth(enemyGround.getInt("health"));
-                eState.setBehavior(new GroundPatrolBehavior(newCharacter));
+                newCharacter = new Enemy(world.getPlayer());
                 newCharacter.setEntityRep(characterX,characterY,(float)Integer.parseInt(enemyGround.get("width").asString()),(float)Integer.parseInt(enemyGround.get("height").asString()));
+
+                newCharacter.characterState.setHealth(enemyGround.getInt("health"));
+                newCharacter.characterState.setBehavior(new GroundPatrolBehavior(newCharacter));
                 world.addCharacter(newCharacter);
 
             }
@@ -162,12 +161,11 @@ class Map implements DrawableComponent{
             if(characterType.equals("enemyAir"))
             {
                 JsonValue enemyAir = characters.get("enemies").get("enemyAir");
-                CharacterState eState = new CharacterState();
-                newCharacter = new Enemy(world.getPlayer(),eState);
+                newCharacter = new Enemy(world.getPlayer());
                 newCharacter.setEntityRep(characterX,characterY,(float)Integer.parseInt(enemyAir.get("width").asString()),(float)Integer.parseInt(enemyAir.get("height").asString()));
 
-                eState.setHealth(enemyAir.getInt("health"));
-                eState.setBehavior(new AirPatrolBehavior(newCharacter));
+                newCharacter.characterState.setHealth(enemyAir.getInt("health"));
+                newCharacter.characterState.setBehavior(new AirPatrolBehavior(newCharacter));
                 world.addCharacter(newCharacter);
 
             }

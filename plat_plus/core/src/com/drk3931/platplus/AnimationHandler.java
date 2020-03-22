@@ -16,35 +16,16 @@ public class AnimationHandler {
         this.e = e; 
     }
 
+    public TextureRegion getCurrentRegion(){
+        return animation.getKeyFrame(animationTime, true);
+    }
+
     public void incrementTime(float delta){
         animationTime+=delta;
     }
 
 
-    private TextureRegion lastFlipped;
-
-    public void draw(SpriteBatch b){
-        TextureRegion currentFrame = animation.getKeyFrame(animationTime, true);
     
-        if(e.getVelocityX() < 0)
-        {
-            currentFrame.flip(true, false);
-            lastFlipped = currentFrame;
-        }
-        else{
-            lastFlipped = null;
-        }
-
-  
-    
-        b.draw(currentFrame, e.getGeoRep().getX(),e.getGeoRep().getY(),e.getGeoRep().getWidth(),e.getGeoRep().getHeight());
-
-        if(lastFlipped != null){
-            lastFlipped.flip(true, false);
-                
-        }
-    }
-
     
  
   

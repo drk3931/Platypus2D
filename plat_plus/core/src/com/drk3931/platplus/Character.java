@@ -19,11 +19,7 @@ public abstract class Character implements DrawableComponent, Updateable {
     public CharacterState characterState;
 
 
-    public Animation<TextureRegion> movingAnimation;
-    public Animation<TextureRegion> deathAnimation;
-    public Animation<TextureRegion> alertAnimation;
-    public Animation<TextureRegion> attackAnimation;
-    public Animation<TextureRegion> defenseAnimation;
+
 
 
     
@@ -33,32 +29,38 @@ public abstract class Character implements DrawableComponent, Updateable {
     }
 
 
-    public Character(Player player, CharacterState cState){
+    public Character(Player player){
         this.entityRep = new Entity();
         this.playerRef = player;
-        this.characterState = cState;
+        this.characterState = new CharacterState(this);
+    }
+
+    public void setCharacterState(CharacterState c){
+        this.characterState = c;
     }
 
 
     @Override
     public void drawShapeRenderer(ShapeRenderer shapeRenderer) {
-        this.entityRep.getGeoRep().drawShapeRenderer(shapeRenderer);
+       this.entityRep.getGeoRep().drawShapeRenderer(shapeRenderer); 
 
     }
 
     @Override
     public void drawSpriteBatch(SpriteBatch b) {
-
+        this.entityRep.drawSpriteBatch(b);
     }
 
     @Override
     public void update(float delta) {
         
-        this.characterState.update(delta);
         this.characterState.getCurrentBehavior().update(delta);
+        this.characterState.update(delta);
+        this.entityRep.setCurrentTextureRegion(this.characterState.getCurrentRegion());
 
     }
 
-    public abstract void spawnProjectile();
+    //only the character behavior object will spawn projectile
+    protected abstract void spawnProjectile();
 
 }

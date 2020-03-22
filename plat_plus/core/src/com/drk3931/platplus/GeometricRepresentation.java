@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
 
-public class GeometricRepresentation implements DrawableComponent {
+public class GeometricRepresentation  {
 
     public Shape2D shapeRepresentation;
     private Color color;
@@ -122,7 +122,6 @@ public class GeometricRepresentation implements DrawableComponent {
 
     }
 
-    @Override
     public void drawShapeRenderer(ShapeRenderer shapeRenderer) {
         
         GeometricRepresentation geoRep = this;
@@ -152,11 +151,6 @@ public class GeometricRepresentation implements DrawableComponent {
 
     }
 
-    @Override
-    public void drawSpriteBatch(SpriteBatch b) {
-        // TODO Auto-generated method stub
-
-    }
     
     
 

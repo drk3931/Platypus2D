@@ -2,33 +2,51 @@ package com.drk3931.platplus;
 
 import java.util.HashMap;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.drk3931.platplus.behaviors.Behavior;
 
 public class CharacterState implements Updateable
 {
-    HashMap<String,Integer> stats;
 
-    
 
     public enum State{
         ALIVE,
         DEAD,
+        MOVING
+
+        /*
         ATTACK,
         DEFENSE,
         SPAWN,
         ALERT,
-        DEATH,
-        MOVING     
+          */ 
     }
 
     private State currentState;
     private Behavior currentBehavior;
+    private HashMap<String,Integer> stats;
 
+    private AnimationHandler movingAnimation;
+    private AnimationHandler deathAnimation;
 
-    public CharacterState(){
+    private TextureRegion defaultAppearence;
+    private TextureRegion currentTexture;
+
+    private Character controllingCharacter;
+
+    public State getCurrentState(){
+        return this.currentState;
+    }
+    public TextureRegion getCurrentRegion(){
+        return currentTexture;
+    }
+
+    public CharacterState(Character c){
 
         this.stats = new HashMap<String,Integer>();
-
+        this.currentState = State.ALIVE;
+        this.controllingCharacter = c;
     }
 
     public void setHealth(int amount)
@@ -49,14 +67,21 @@ public class CharacterState implements Updateable
 
     public void modifyHealth(int amount)
     {
-        stats.put("health", stats.get("health") - amount);
+        stats.put("health", stats.get("health") + amount);
     }
 
 	@Override
 	public void update(float delta) {
 
-        if(stats.get("health") < 0){
+        if(stats.get("health") <= 0){
+            stats.put("health",0);
             this.currentState = State.DEAD;
+            this.deathAnimation.incrementTime(delta);
+            this.currentTexture = deathAnimation.getCurrentRegion();
+        }
+      
+        else{
+            this.currentTexture = defaultAppearence;
         }
 		
 	}
