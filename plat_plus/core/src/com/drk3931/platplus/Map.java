@@ -69,7 +69,6 @@ class Map implements DrawableComponent {
         Gdx.app.log("Terrain Layer Width", "" + terrainTileLayer.getWidth());
         Gdx.app.log("Terrain Layer Height", "" + terrainTileLayer.getHeight());
 
-        this.world = world;
 
         for (int i = 0; i < terrainTileLayer.getWidth(); i++) {
             for (int j = 0; j < terrainTileLayer.getHeight(); j++) {
@@ -121,7 +120,7 @@ class Map implements DrawableComponent {
         
         Iterator<MapObject> objectsIter = objects.iterator();
 
-        Animation<TextureRegion> deathAnimation = GameLoader.genAnimation("poof.png", 6, 5, 0.10f);
+        Animation<TextureRegion> deathAnimation = GameLoader.genAnimation("player_walk_animation.png", 6, 5, 0.10f);
         deathAnimation.setPlayMode(PlayMode.NORMAL);
 
         while(objectsIter.hasNext())
