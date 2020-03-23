@@ -21,7 +21,7 @@
         
         "enemyAir":{
             "health":35,
-            "defaultAnimation":"enemyAirDefault.gif",
+            "defaultAnimation":"enemyAir.atlas",
             "weapon":"projectileEnemyAir",
             "behavior":"AirPatrolBehavior"
         }

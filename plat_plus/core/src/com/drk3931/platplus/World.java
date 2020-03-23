@@ -13,6 +13,7 @@ class World implements DrawableComponent {
     final public static float accelGravity = -19f;
 
 
+
     
     private Player player;
 

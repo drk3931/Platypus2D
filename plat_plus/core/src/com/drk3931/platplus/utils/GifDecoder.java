@@ -3,7 +3,7 @@
 /* Released under Apache 2.0 */
 /* https://code.google.com/p/animated-gifs-in-android/ */
 
-package utils;
+package com.drk3931.platplus.utils;
 
 import java.io.InputStream;
 import java.util.Vector;

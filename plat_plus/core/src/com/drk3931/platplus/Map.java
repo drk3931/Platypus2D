@@ -174,7 +174,7 @@ class Map implements DrawableComponent {
                 newCharacter.characterState.setHealth(enemyAir.getInt("health"));
                 newCharacter.characterState.setBehavior(new AirPatrolBehavior(newCharacter));
              
-                Animation<TextureRegion> defaultAnimation = GameLoader.genAnimationGif(enemyAir.getString("defaultAnimation"),PlayMode.LOOP);
+                Animation<TextureRegion> defaultAnimation = GameLoader.genAnimationAtlas(enemyAir.getString("defaultAnimation"),PlayMode.LOOP,0.05f);
 
                 newCharacter.characterState.setDefaultAnimation(defaultAnimation);
                 newCharacter.characterState.setDeathAnimation(deathAnimation);
