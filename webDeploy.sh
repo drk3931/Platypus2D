@@ -1,5 +1,9 @@
 #!/bin/bash
 
+pushd docs
+rm -rf ./*
+popd
+
 pushd plat_plus
 ./gradlew html:dist
 popd 
