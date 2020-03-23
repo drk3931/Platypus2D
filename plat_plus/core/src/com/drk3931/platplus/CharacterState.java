@@ -99,6 +99,7 @@ public class CharacterState implements Updateable {
         else{
             currentTint = transparent;
             currentState = State.DEFAULT;
+            
         }
 
         this.lastHealth = stats.get("health");
