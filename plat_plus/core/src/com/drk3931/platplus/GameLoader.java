@@ -1,6 +1,5 @@
 package com.drk3931.platplus;
 import com.drk3931.platplus.Map;
-import com.drk3931.platplus.utils.GifDecoder;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -67,15 +66,6 @@ class GameLoader {
 
     }
 
-
-
-    public static Animation<TextureRegion> genAnimationGif(String fileName, PlayMode playMode){
-
-
-    
-        return GifDecoder.loadGIFAnimation(playMode, Gdx.files.internal(fileName).read());
-
-    }
 
     public static Animation<TextureRegion> genAnimationAtlas(String fileName, PlayMode playMode, float timing){
 
