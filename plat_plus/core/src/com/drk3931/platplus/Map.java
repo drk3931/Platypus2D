@@ -121,7 +121,7 @@ class Map implements DrawableComponent {
         
         Iterator<MapObject> objectsIter = objects.iterator();
 
-        Animation<TextureRegion> deathAnimation = GameLoader.genAnimation("poof.png", 6, 5, 0.10f);
+        Animation<TextureRegion> deathAnimation = GameLoader.genAnimation("Poof.png", 6, 5, 0.10f);
         deathAnimation.setPlayMode(PlayMode.NORMAL);
 
         while(objectsIter.hasNext())
