@@ -5,7 +5,6 @@ import java.util.HashMap;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.drk3931.platplus.behaviors.Behavior;
 
 public class CharacterState implements Updateable {
@@ -29,9 +28,15 @@ public class CharacterState implements Updateable {
     private TextureRegion currentTexture;
 
     private Character controllingCharacter;
+    private boolean markedForRemoval;
 
     public State getCurrentState() {
         return this.currentState;
+    
+    }
+
+    public boolean isMarkedForRemoval(){
+        return markedForRemoval;
     }
 
     public TextureRegion getCurrentRegion() {
@@ -40,7 +45,13 @@ public class CharacterState implements Updateable {
 
     public void setDefaultAnimation(Animation<TextureRegion> a) {
 
-        this.defaultAnimation = new AnimationHandler(a);
+        this.defaultAnimation = new AnimationHandler(a,true);
+
+    }
+
+    public void setDeathAnimation(Animation<TextureRegion> a) {
+
+        this.deathAnimation = new AnimationHandler(a,false);
 
     }
 
@@ -49,6 +60,7 @@ public class CharacterState implements Updateable {
         this.stats = new HashMap<String, Integer>();
         this.currentState = State.DEFAULT;
         this.controllingCharacter = c;
+        this.markedForRemoval = false;
     }
 
     public void setHealth(int amount) {
@@ -87,6 +99,13 @@ public class CharacterState implements Updateable {
         }
 
         if (currentState == State.DEAD) {
+            deathAnimation.incrementTime(delta);
+            this.currentTexture = deathAnimation.getCurrentRegion();
+
+
+            if(deathAnimation.isFinished()){
+                markedForRemoval = true;
+            }
 
         } else {
             this.defaultAnimation.incrementTime(delta);

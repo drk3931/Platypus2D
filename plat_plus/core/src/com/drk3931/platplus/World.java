@@ -2,6 +2,8 @@ package com.drk3931.platplus;
 
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.drk3931.platplus.projectiles.Projectile;
@@ -36,16 +38,24 @@ class World implements DrawableComponent {
        
     }
 
+    LinkedList<Character> markedForRemoval = new LinkedList<Character>();
     
     public void update(float delta) {
 
-        
+        markedForRemoval.clear();
 
         player.update(delta);
         for(Character c: characters)
         {
             c.update(delta);
+            if(c.characterState.isMarkedForRemoval())
+            {
+                this.markedForRemoval.add(c);
+            }
         }
+
+        characters.removeAll(markedForRemoval);
+
 
         for(Projectile p: projectileStore)
         {

@@ -24,9 +24,6 @@
             "defaultAnimation":"enemyAirDefault.gif",
             "weapon":"projectileEnemyAir",
             "behavior":"AirPatrolBehavior"
-  
-
-
         }
 
     }

@@ -36,7 +36,9 @@ public class Player implements DrawableComponent, CameraController,Updateable {
         e.setGeoRep(new GeometricRepresentation(Color.ORANGE, new Rectangle(x, y, 64, 128)));
         gravEffect = new GravityEffect();
         cameraUnprojected = new Vector3();
-        animationHandler = new  AnimationHandler(GameLoader.genAnimation("player_walk_animation.png", 6,5,0.025f));
+        animationHandler = new  AnimationHandler(GameLoader.genAnimation("player_walk_animation.png", 6,5,0.025f),true);
+        
+  
     }
 
 

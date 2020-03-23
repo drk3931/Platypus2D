@@ -121,6 +121,9 @@ class Map implements DrawableComponent {
         
         Iterator<MapObject> objectsIter = objects.iterator();
 
+        Animation<TextureRegion> deathAnimation = GameLoader.genAnimation("poof.png", 6, 5, 0.10f);
+        deathAnimation.setPlayMode(PlayMode.NORMAL);
+
         while(objectsIter.hasNext())
         {
 
@@ -138,7 +141,6 @@ class Map implements DrawableComponent {
 
             Character newCharacter;
 
-            System.out.println(characterType);
 
             if(characterType.equals("enemyGround"))
             {
@@ -156,6 +158,8 @@ class Map implements DrawableComponent {
 
                 Animation<TextureRegion> defaultAnimation = GameLoader.genAnimationAtlas(animationVal.getString("file"),PlayMode.LOOP,animationVal.getFloat("timing"));
                 newCharacter.characterState.setDefaultAnimation(defaultAnimation);
+                newCharacter.characterState.setDeathAnimation(deathAnimation);
+
 
                 world.addCharacter(newCharacter);
 
@@ -173,6 +177,7 @@ class Map implements DrawableComponent {
                 Animation<TextureRegion> defaultAnimation = GameLoader.genAnimationGif(enemyAir.getString("defaultAnimation"),PlayMode.LOOP);
 
                 newCharacter.characterState.setDefaultAnimation(defaultAnimation);
+                newCharacter.characterState.setDeathAnimation(deathAnimation);
 
                 world.addCharacter(newCharacter);
 
