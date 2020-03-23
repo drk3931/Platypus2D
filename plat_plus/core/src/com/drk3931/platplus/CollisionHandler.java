@@ -35,6 +35,7 @@ class CollisionHandler {
 
         float playerVelX = player.e.getVelocityX(),playerVelY = player.e.getVelocityY();
 
+        markedForRemoval.clear();
 
         for(Projectile p: world.projectileStore){
             for(Character c:world.characters){
