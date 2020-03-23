@@ -5,13 +5,18 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
@@ -24,16 +29,15 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.drk3931.platplus.behaviors.AirPatrolBehavior;
 import com.drk3931.platplus.behaviors.GroundPatrolBehavior;
+import com.drk3931.platplus.projectiles.PlayerProjectile;
 
-class Map implements DrawableComponent{
+class Map implements DrawableComponent {
 
     private ArrayList<Shape2D> mapPolies;
     private TiledMap tiledMap;
-    public final int CELL_W, CELL_H,MAP_H,MAP_W;
+    public final int CELL_W, CELL_H, MAP_H, MAP_W;
 
-
-    public Cell getCell(String layer, int x, int y)
-    {
+    public Cell getCell(String layer, int x, int y) {
         return ((TiledMapTileLayer) tiledMap.getLayers().get(layer)).getCell(x, y);
     }
 
@@ -59,16 +63,13 @@ class Map implements DrawableComponent{
         MAP_H = (int) terrainTileLayer.getHeight();
         MAP_W = (int) terrainTileLayer.getWidth();
 
+        Gdx.app.log("Terrain Cell Width", "" + CELL_W);
+        Gdx.app.log("Terrain Cell Height", "" + CELL_H);
 
-        Gdx.app.log("Terrain Cell Width", ""+CELL_W);
-        Gdx.app.log("Terrain Cell Height", ""+CELL_H);
-
-        Gdx.app.log("Terrain Layer Width", ""+terrainTileLayer.getWidth());
-        Gdx.app.log("Terrain Layer Height", ""+terrainTileLayer.getHeight());
+        Gdx.app.log("Terrain Layer Width", "" + terrainTileLayer.getWidth());
+        Gdx.app.log("Terrain Layer Height", "" + terrainTileLayer.getHeight());
 
         this.world = world;
-
-
 
         for (int i = 0; i < terrainTileLayer.getWidth(); i++) {
             for (int j = 0; j < terrainTileLayer.getHeight(); j++) {
@@ -76,34 +77,25 @@ class Map implements DrawableComponent{
                 Cell cell = terrainTileLayer.getCell(i, j);
 
                 if (cell != null) {
-                    
+
                     MapProperties tileProps = cell.getTile().getProperties();
-                    if(tileProps.containsKey("SLOPE"))
-                    {
-                        String slopeType = (String)tileProps.get("SLOPE");
-                        if(slopeType.equals("UP"))
-                        {
+                    if (tileProps.containsKey("SLOPE")) {
+                        String slopeType = (String) tileProps.get("SLOPE");
+                        if (slopeType.equals("UP")) {
                             mapPolies.add(genLineSeg(i * CELL_W, j * CELL_H, i * CELL_W + CELL_W, j * CELL_H + CELL_H));
-                            
-                        }else{
+
+                        } else {
                             mapPolies.add(genLineSeg(i * CELL_W, j * CELL_H + CELL_H, i * CELL_W + CELL_W, j * CELL_H));
                         }
 
-                    }
-                    else{
+                    } else {
                         mapPolies.add(genRect(i * CELL_W, j * CELL_H, CELL_W, CELL_H));
                     }
                 }
             }
         }
 
-
-
-
-      
-
     }
-
 
     public void parseCharactersLayer(World world)
     {
@@ -113,35 +105,40 @@ class Map implements DrawableComponent{
         
         JsonReader json = new JsonReader();
         JsonValue characters = json.parse(Gdx.files.internal("characters.json"));
+        JsonValue itemsData = json.parse(Gdx.files.internal("items.json"));
 
 
         
 
         MapProperties playerProps = objects.get("player").getProperties();
+        JsonValue weapons = itemsData.get("weapons");
+
     
         float playerX = Float.parseFloat(playerProps.get("x").toString());
         float playerY = Float.parseFloat(playerProps.get("y").toString());
         world.spawnPlayer(playerX,playerY);
+        PlayerProjectile.setDamage(weapons.get("projectilePlayer").getInt("damage"));
         
         Iterator<MapObject> objectsIter = objects.iterator();
-
 
         while(objectsIter.hasNext())
         {
 
 
-            MapObject obj = (MapObject)objectsIter.next();
-            MapProperties objProps = obj.getProperties();
+            RectangleMapObject currentObj = (RectangleMapObject)objectsIter.next();
+            
+        
+            MapProperties objProps = currentObj.getProperties();
 
 
-            float characterX = Float.parseFloat(objProps.get("x").toString());
-            float characterY = Float.parseFloat(objProps.get("y").toString());
+            Rectangle charRect = currentObj.getRectangle();
+            float characterX = charRect.x, characterY = charRect.y, characterW = charRect.width, characterH = charRect.height;
 
-
-            String characterType = objProps.get("character_name", "none", String.class);
-            System.out.println(characterType);
+            String characterType = objProps.get("character_type","NO TYPE FOUND", String.class);
 
             Character newCharacter;
+
+            System.out.println(characterType);
 
             if(characterType.equals("enemyGround"))
             {
@@ -150,10 +147,16 @@ class Map implements DrawableComponent{
 
 
                 newCharacter = new Enemy(world.getPlayer());
-                newCharacter.setEntityRep(characterX,characterY,(float)Integer.parseInt(enemyGround.get("width").asString()),(float)Integer.parseInt(enemyGround.get("height").asString()));
+                newCharacter.setEntityRep(characterX,characterY,characterW,characterH);
 
                 newCharacter.characterState.setHealth(enemyGround.getInt("health"));
                 newCharacter.characterState.setBehavior(new GroundPatrolBehavior(newCharacter));
+
+                JsonValue animationVal =enemyGround.get("defaultAnimation");
+
+                Animation<TextureRegion> defaultAnimation = GameLoader.genAnimationAtlas(animationVal.getString("file"),PlayMode.LOOP,animationVal.getFloat("timing"));
+                newCharacter.characterState.setDefaultAnimation(defaultAnimation);
+
                 world.addCharacter(newCharacter);
 
             }
@@ -162,10 +165,15 @@ class Map implements DrawableComponent{
             {
                 JsonValue enemyAir = characters.get("enemies").get("enemyAir");
                 newCharacter = new Enemy(world.getPlayer());
-                newCharacter.setEntityRep(characterX,characterY,(float)Integer.parseInt(enemyAir.get("width").asString()),(float)Integer.parseInt(enemyAir.get("height").asString()));
+                newCharacter.setEntityRep(characterX,characterY,characterW,characterH);
 
                 newCharacter.characterState.setHealth(enemyAir.getInt("health"));
                 newCharacter.characterState.setBehavior(new AirPatrolBehavior(newCharacter));
+             
+                Animation<TextureRegion> defaultAnimation = GameLoader.genAnimationGif(enemyAir.getString("defaultAnimation"),PlayMode.LOOP);
+
+                newCharacter.characterState.setDefaultAnimation(defaultAnimation);
+
                 world.addCharacter(newCharacter);
 
             }
@@ -197,9 +205,8 @@ class Map implements DrawableComponent{
         return new Polyline(new float[] { x1, y1, x2, y2 });
     }
 
-
     @Override
-    public void drawShapeRenderer(ShapeRenderer shapeRenderer){
+    public void drawShapeRenderer(ShapeRenderer shapeRenderer) {
 
         shapeRenderer.setColor(Color.WHITE);
         shapeRenderer.set(ShapeType.Line);
@@ -221,7 +228,7 @@ class Map implements DrawableComponent{
             }
 
             if (s.getClass() == Polyline.class) {
-                Polyline p = (Polyline)s;
+                Polyline p = (Polyline) s;
                 shapeRenderer.polyline(p.getVertices());
 
             }
@@ -233,6 +240,6 @@ class Map implements DrawableComponent{
     @Override
     public void drawSpriteBatch(SpriteBatch b) {
 
-	}
+    }
 
 }

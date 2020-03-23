@@ -1,5 +1,6 @@
 package com.drk3931.platplus;
 import com.drk3931.platplus.effects.GravityEffect;
+import com.drk3931.platplus.projectiles.PlayerProjectile;
 import com.drk3931.platplus.projectiles.Projectile;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -18,7 +19,7 @@ public class Player implements DrawableComponent, CameraController,Updateable {
     private AnimationHandler animationHandler;
 
     int speedX = 333, jumpVelocity = 1400;
-    Entity e;
+    public Entity e;
 
     GravityEffect gravEffect;
     Vector3 cameraUnprojected; 
@@ -35,15 +36,19 @@ public class Player implements DrawableComponent, CameraController,Updateable {
         e.setGeoRep(new GeometricRepresentation(Color.ORANGE, new Rectangle(x, y, 64, 128)));
         gravEffect = new GravityEffect();
         cameraUnprojected = new Vector3();
-        animationHandler = new  AnimationHandler(GameLoader.genAnimation("player_walk_animation.png", 5, 6), e);
-
+        animationHandler = new  AnimationHandler(GameLoader.genAnimation("player_walk_animation.png", 6,5,0.025f));
     }
+
+
 
 
     long lastFire = 0;
 
     @Override
     public void update(float delta) {
+
+
+    
 
 
         e.setVelocityX(0);
@@ -78,7 +83,9 @@ public class Player implements DrawableComponent, CameraController,Updateable {
 
             
                 lastFire = System.currentTimeMillis();
-                World.projectileStore.add(new Projectile(this.e, Color.BLUE, cameraUnprojected.x, cameraUnprojected.y));
+
+                World.projectileStore.add(new PlayerProjectile(this,cameraUnprojected.x, cameraUnprojected.y));
+
 
             }
         
@@ -95,17 +102,20 @@ public class Player implements DrawableComponent, CameraController,Updateable {
         }*/
 
         gravEffect.apply(e, delta);
+        this.e.setCurrentTextureRegion(animationHandler.getCurrentRegion());
+
     }
 
     @Override
     public void drawShapeRenderer(ShapeRenderer shapeRenderer) {
-       this.e.getGeoRep().drawShapeRenderer(shapeRenderer);
+       //this.e.getGeoRep().drawShapeRenderer(shapeRenderer);
     }
 
     @Override
     public void drawSpriteBatch(SpriteBatch b) {
 
         //animationHandler.draw(b);
+        this.e.drawSpriteBatch(b);
       
     }
 

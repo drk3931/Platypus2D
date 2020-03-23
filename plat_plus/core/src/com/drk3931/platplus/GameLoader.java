@@ -4,7 +4,11 @@ import com.drk3931.platplus.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
+
+import utils.GifDecoder;
 
 class GameLoader {
 
@@ -42,8 +46,7 @@ class GameLoader {
     }
 
 
-
-    public static Animation<TextureRegion> genAnimation(String fileName, int FRAME_ROWS,int FRAME_COLS){
+    public static Animation<TextureRegion> genAnimation(String fileName, int FRAME_COLS,int FRAME_ROWS,float timing){
 
 
         Texture animationSheet = new Texture(Gdx.files.internal(fileName));
@@ -60,7 +63,26 @@ class GameLoader {
 			}
         }
         
-        return new Animation<TextureRegion>(0.025f, frames);
+        return new Animation<TextureRegion>(timing, frames);
+
+    }
+
+
+
+    public static Animation<TextureRegion> genAnimationGif(String fileName, PlayMode playMode){
+
+
+    
+        return GifDecoder.loadGIFAnimation(playMode, Gdx.files.internal(fileName).read());
+
+    }
+
+    public static Animation<TextureRegion> genAnimationAtlas(String fileName, PlayMode playMode, float timing){
+
+
+        TextureAtlas atlas = new TextureAtlas(fileName);
+    
+        return new Animation<TextureRegion>(timing, atlas.getRegions(), PlayMode.LOOP);
 
     }
 

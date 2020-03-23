@@ -3,30 +3,28 @@
 
         "health":100,
         "moveAnimation":"moveAnimation.png",
-        "weapon":"projectilePlayer",
-        "enableGravity":true
+        "weapon":"projectilePlayer"
 
     },
     "enemies":{
 
         "enemyGround":{
             "health":50,
-            "enableGravity":true,
-            "moveAnimation":"enemyGroundMoveAnimation.png",
+            "defaultAnimation":{
+                "file":"groundEnemy.atlas",
+                "timing":0.75
+            },
             "weapon":"projectileEnemyGround",
-            "behavior":"GroundPatrolBehavior",
-            "width":25,
-            "height":50
+            "behavior":"GroundPatrolBehavior"
+
         },
         
         "enemyAir":{
             "health":35,
-            "enableGravity":false,
-            "moveAnimation":"enemyAirMoveAnimation.png",
+            "defaultAnimation":"enemyAirDefault.gif",
             "weapon":"projectileEnemyAir",
-            "behavior":"AirPatrolBehavior",
-            "width":50,
-            "height":50
+            "behavior":"AirPatrolBehavior"
+  
 
 
         }

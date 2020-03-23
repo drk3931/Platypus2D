@@ -8,12 +8,11 @@ public class AnimationHandler {
 
     private float animationTime;
     private Animation<TextureRegion> animation;
-    private Entity e;
 
 
-    public AnimationHandler(Animation<TextureRegion> animation, Entity e){
+    public AnimationHandler(Animation<TextureRegion> animation){
         this.animation = animation;
-        this.e = e; 
+   
     }
 
     public TextureRegion getCurrentRegion(){
@@ -22,13 +21,9 @@ public class AnimationHandler {
 
     public void incrementTime(float delta){
         animationTime+=delta;
+        
     }
 
-
-    
-    
- 
-  
 
 
 

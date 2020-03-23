@@ -6,15 +6,20 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
+import com.drk3931.platplus.Character;
 import com.drk3931.platplus.DrawableComponent;
 import com.drk3931.platplus.Entity;
 import com.drk3931.platplus.GeometricRepresentation;
 import com.drk3931.platplus.Updateable;
 
-public class Projectile implements DrawableComponent, Updateable {
+public abstract class Projectile implements DrawableComponent, Updateable {
 
     Entity origin;
     Entity projectileRep;
+
+    public Entity asEntity(){
+        return this.projectileRep;
+    }
 
     public Projectile(Entity origin, Color color, float xTarg,float yTarg)
     {
@@ -27,7 +32,7 @@ public class Projectile implements DrawableComponent, Updateable {
       
         projectileRep = new Entity();
         projectileRep.setGeoRep(new GeometricRepresentation(color, c));
-        projectileRep.getVelocity().set(xTarg - boundX,yTarg - boundY).nor().scl(277);
+        projectileRep.getVelocity().set(xTarg - boundX,yTarg - boundY).nor().scl(777);
 
 
 
@@ -52,6 +57,11 @@ public class Projectile implements DrawableComponent, Updateable {
         projectileRep.move(delta);
 
     }
+
+    public abstract void onHit(Character c);
+    
+    //may also add an on hit for entities 
+
 
 
 }

@@ -1,10 +1,15 @@
 package com.drk3931.platplus;
 
+import java.util.LinkedList;
+
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polyline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
+import com.drk3931.platplus.projectiles.PlayerProjectile;
+import com.drk3931.platplus.projectiles.Projectile;
 
 class CollisionHandler {
 
@@ -18,7 +23,10 @@ class CollisionHandler {
         this.map = map;
         this.player = world.getPlayer();
         this.overlappingRectangle = new Rectangle();
+        markedForRemoval = new LinkedList<Projectile>();
     }
+
+    LinkedList<Projectile> markedForRemoval;
 
     public void update(float delta) {
 
@@ -26,6 +34,20 @@ class CollisionHandler {
         Rectangle playerRect = (Rectangle) playerGeo.shapeRepresentation;
 
         float playerVelX = player.e.getVelocityX(),playerVelY = player.e.getVelocityY();
+
+
+        for(Projectile p: world.projectileStore){
+            for(Character c:world.characters){
+                if(Intersector.overlaps((Circle)p.asEntity().getGeoRep().shapeRepresentation,(Rectangle)c.entityRep.getGeoRep().shapeRepresentation)){
+                    if(p instanceof PlayerProjectile){
+                        p.onHit((Enemy)c);
+                        markedForRemoval.add(p);
+                    }
+                }
+            }
+        }
+
+        world.projectileStore.removeAll(markedForRemoval);
         
 
         /*
@@ -37,6 +59,11 @@ class CollisionHandler {
 
 
         player.e.moveX();
+
+
+     
+
+
 
 
         for (Shape2D shape : map.getMapPolies()) {

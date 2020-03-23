@@ -14,7 +14,7 @@ public abstract class Character implements DrawableComponent, Updateable {
         It has a state
     */
 
-    private Entity entityRep;
+    public Entity entityRep;
     private Player playerRef;
     public CharacterState characterState;
 
@@ -42,12 +42,14 @@ public abstract class Character implements DrawableComponent, Updateable {
 
     @Override
     public void drawShapeRenderer(ShapeRenderer shapeRenderer) {
-       this.entityRep.getGeoRep().drawShapeRenderer(shapeRenderer); 
+       
+        this.entityRep.drawShapeRenderer(shapeRenderer);
 
     }
 
     @Override
     public void drawSpriteBatch(SpriteBatch b) {
+      
         this.entityRep.drawSpriteBatch(b);
     }
 
@@ -57,6 +59,8 @@ public abstract class Character implements DrawableComponent, Updateable {
         this.characterState.getCurrentBehavior().update(delta);
         this.characterState.update(delta);
         this.entityRep.setCurrentTextureRegion(this.characterState.getCurrentRegion());
+        this.entityRep.setTint(characterState.getTint());
+
 
     }
 

@@ -1,5 +1,6 @@
 package com.drk3931.platplus;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -77,15 +78,23 @@ public class Entity implements DrawableComponent {
     @Override
     public void drawShapeRenderer(ShapeRenderer r) {
       
-        this.geoRep.drawShapeRenderer(r);
+        //this.geoRep.drawShapeRenderer(r);
 
+    }
+
+    Color tint = new Color(1,1,1,1);
+
+    public void setTint(Color tint) {
+        this.tint = tint;
     }
 
     @Override
     public void drawSpriteBatch(SpriteBatch b) {
         
-        
+    
+        b.setColor(tint);
         b.draw(currentTextureRegion,geoRep.getX(),geoRep.getY(),geoRep.getWidth(),geoRep.getHeight());
+        
 
     }
 
