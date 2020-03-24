@@ -23,7 +23,7 @@ allprojects {
     version = '1.0'
     ext {
         appName = "platplus"
-        gdxVersion = '1.9.11-SNAPSHOT'
+        gdxVersion = '1.9.6-SNAPSHOT'
         roboVMVersion = '2.3.6'
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.0'
