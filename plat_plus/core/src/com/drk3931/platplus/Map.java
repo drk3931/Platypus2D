@@ -152,6 +152,7 @@ class Map implements DrawableComponent {
 
                 newCharacter.characterState.setHealth(enemyGround.getInt("health"));
                 newCharacter.characterState.setBehavior(new GroundPatrolBehavior(newCharacter));
+                ((GroundPatrolBehavior)newCharacter.characterState.getCurrentBehavior()).setLimits(200 , 200,160);
 
                 JsonValue animationVal =enemyGround.get("defaultAnimation");
 

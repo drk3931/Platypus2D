@@ -34,7 +34,7 @@ public class GeometricRepresentation  {
         return this.color;
     }
 
-    public void setXY(int x, int y) {
+    public void setPosition(int x, int y) {
         if (shapeRepresentation instanceof Rectangle) {
             Rectangle asRect = (Rectangle) shapeRepresentation;
             asRect.x = x;
@@ -84,6 +84,17 @@ public class GeometricRepresentation  {
         }
 
     }
+
+    public int getCenterX(){
+        return (int) (((Rectangle) shapeRepresentation).getX() + ((Rectangle) shapeRepresentation).getWidth());
+
+    }
+
+    public int getCenterY(){
+        return (int) (((Rectangle) shapeRepresentation).getY() + ((Rectangle) shapeRepresentation).getHeight());
+
+    }
+
 
     public int getX() {
 

@@ -56,9 +56,6 @@ public class Player implements DrawableComponent, CameraController,Updateable {
         }
 
 
-    
-
-
         e.setVelocityX(0);
         //e.setVelocityY(0);
 
@@ -109,7 +106,7 @@ public class Player implements DrawableComponent, CameraController,Updateable {
             e.setVelocityY(delta * 300 * -1);
         }*/
 
-        gravEffect.apply(e, delta);
+        gravEffect.apply(e);
         this.e.setCurrentTextureRegion(animationHandler.getCurrentRegion());
 
     }
@@ -154,6 +151,11 @@ public class Player implements DrawableComponent, CameraController,Updateable {
         }
 
 
+        
+    }
+
+
+    public void onKnockBack(){
         
     }
 

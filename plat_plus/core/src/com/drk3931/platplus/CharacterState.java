@@ -95,7 +95,7 @@ public class CharacterState implements Updateable {
         }
 
         if (stats.get("health") <= 0) {
-            this.currentState = State.DEAD;
+            currentState = State.DEAD;
         }
 
         if (currentState == State.DEAD) {
@@ -117,11 +117,15 @@ public class CharacterState implements Updateable {
         }
         else{
             currentTint = transparent;
-            currentState = State.DEFAULT;
             
         }
 
         this.lastHealth = stats.get("health");
+
+        if(currentState != State.DEAD){
+            getCurrentBehavior().update(delta);
+        }
+
 
     }
 

@@ -1,12 +1,13 @@
 package com.drk3931.platplus.effects;
 
+import com.badlogic.gdx.Gdx;
 import com.drk3931.platplus.Entity;
 
 public class GravityEffect implements Effect{
 
     final int gravAcceleration = 50;
 
-    public void apply(Entity e,float delta)
+    public void apply(Entity e)
     {
 
         if(e.getVelocityY() <= -30)
@@ -14,7 +15,7 @@ public class GravityEffect implements Effect{
             return;
         }
 
-        e.setVelocityY(e.getVelocityY() -  (gravAcceleration * delta));
+        e.setVelocityY(e.getVelocityY() -  gravAcceleration * Gdx.graphics.getDeltaTime());
 
     }
 }

@@ -4,7 +4,7 @@ import com.drk3931.platplus.Entity;
 import com.drk3931.platplus.Updateable;
 
 abstract public class Behavior implements Updateable{
-    private Character controllingCharacter;
+    protected Character controllingCharacter;
 
     public Behavior(Character controllingCharacter)
     {

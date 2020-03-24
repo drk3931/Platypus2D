@@ -56,7 +56,6 @@ public abstract class Character implements DrawableComponent, Updateable {
     @Override
     public void update(float delta) {
         
-        this.characterState.getCurrentBehavior().update(delta);
         this.characterState.update(delta);
         this.entityRep.setCurrentTextureRegion(this.characterState.getCurrentRegion());
         this.entityRep.setTint(characterState.getTint());
