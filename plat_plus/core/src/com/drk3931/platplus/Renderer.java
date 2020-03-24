@@ -52,9 +52,7 @@ class Renderer {
     }
 
     public void draw() {
-        gl.glClearColor(0, 0, 0, 1.0f);
-        //gl.glClearColor(Math.random(), Math.random(), Math.random(), Math.random());
-        gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+  
 
         camera.update();
 

@@ -2,6 +2,7 @@ package com.drk3931.platplus;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 
 
 public class PlatPlus extends ApplicationAdapter {
@@ -18,6 +19,7 @@ public class PlatPlus extends ApplicationAdapter {
 
 	World world;
 	CollisionHandler collisionHandler;
+	UIHandler uiHandler;
 
 
 
@@ -33,6 +35,7 @@ public class PlatPlus extends ApplicationAdapter {
 		collisionHandler = new CollisionHandler(map, world);
 
 		renderer.addDrawableComponent(world);
+		uiHandler = new UIHandler();
 
 
 
@@ -49,10 +52,18 @@ public class PlatPlus extends ApplicationAdapter {
 		{
 			return;
 		}
+		//uiHandler.update(delta);
 		world.update(delta);
 		collisionHandler.update(delta);
 		world.getPlayer().applyToCam(renderer.camera);
+
+		Gdx.gl.glClearColor(0, 0, 0, 1.0f);
+        //gl.glClearColor(Math.random(), Math.random(), Math.random(), Math.random());
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		uiHandler.draw();
 		renderer.draw();
+		
 
 
 	}

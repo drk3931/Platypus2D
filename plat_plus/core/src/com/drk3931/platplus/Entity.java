@@ -15,6 +15,7 @@ public class Entity implements DrawableComponent {
 
     private TextureRegion currentTextureRegion;
 
+    private Vector2 lastVelocity;
 
     public TextureRegion getCurrentTextureRegion(){
         return this.currentTextureRegion;
@@ -39,6 +40,7 @@ public class Entity implements DrawableComponent {
 
     public Entity setGeoRep(GeometricRepresentation geo) {
         this.geoRep = geo;
+        lastVelocity = new Vector2();
         return this;
     }
 
@@ -55,10 +57,12 @@ public class Entity implements DrawableComponent {
     }
 
     public void setVelocityX(float vx) {
+        lastVelocity.x=velocity.x;
         this.velocity.x = vx;
     }
 
     public void setVelocityY(float vy) {
+        lastVelocity.y=velocity.y;
         this.velocity.y = vy;
     }
 
@@ -88,12 +92,45 @@ public class Entity implements DrawableComponent {
         this.tint = tint;
     }
 
+    private boolean shouldFlip = false;
+
     @Override
     public void drawSpriteBatch(SpriteBatch b) {
+
+        if(currentTextureRegion == null){
+            return;
+        }
         
     
-        b.setColor(tint);
+        b.setColor(tint); 
+
+        if(getVelocityX() < 0 ){
+            shouldFlip = true;
+        }
+
+        if(getVelocityX() > 0 ){
+            shouldFlip = false;
+        }
+    
+
+
+        
+        if(shouldFlip && !currentTextureRegion.isFlipX())
+        {
+            currentTextureRegion.flip(true, false);
+        }
+        
+        if(!shouldFlip && currentTextureRegion.isFlipX())
+        {
+            currentTextureRegion.flip(true, false);
+        }
+
+
+
+
         b.draw(currentTextureRegion,geoRep.getX(),geoRep.getY(),geoRep.getWidth(),geoRep.getHeight());
+
+      
         
 
     }

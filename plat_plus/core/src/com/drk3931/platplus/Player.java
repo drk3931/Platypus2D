@@ -27,6 +27,7 @@ public class Player implements DrawableComponent, CameraController,Updateable {
     Camera camRef;
 
     int fireRateMS = 1000;
+    int health = 100;
 
 
     public Player(float x, float y) {
@@ -58,7 +59,7 @@ public class Player implements DrawableComponent, CameraController,Updateable {
 
         if (Gdx.input.isKeyPressed(Keys.LEFT)) {
             e.setVelocityX(delta * speedX * -1);
-           animationHandler.incrementTime(delta);
+            animationHandler.incrementTime(delta);
         }
 
         if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
