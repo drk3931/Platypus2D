@@ -2,6 +2,7 @@ package com.drk3931.platplus;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 
 public class PlatPlus extends ApplicationAdapter {
@@ -17,6 +18,7 @@ public class PlatPlus extends ApplicationAdapter {
 	World world;
 	CollisionHandler collisionHandler;
 	UIHandler uiHandler;
+	Color clearColor;
 
 	enum GameState {
 		INITIAL, GAME_RUNNING, GAME_OVER
@@ -53,6 +55,8 @@ public class PlatPlus extends ApplicationAdapter {
 
 		uiHandler = new UIHandler(this);
 
+		clearColor = new Color(Color.SKY);
+
 	}
 
 	@Override
@@ -82,7 +86,7 @@ public class PlatPlus extends ApplicationAdapter {
 		uiHandler.update(delta);
 
 
-		Gdx.gl.glClearColor(0, 0, 0, 1.0f);
+		Gdx.gl.glClearColor(clearColor.r,clearColor.g,clearColor.b, 1.0f);
 		// gl.glClearColor(Math.random(), Math.random(), Math.random(), Math.random());
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 

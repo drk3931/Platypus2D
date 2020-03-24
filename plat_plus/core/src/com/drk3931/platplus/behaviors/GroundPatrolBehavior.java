@@ -15,10 +15,12 @@ public class GroundPatrolBehavior extends Behavior {
         leftLimit = controllingCharacter.entityRep.getGeoRep().getCenterX() + left * -1;
         rightLimit = controllingCharacter.entityRep.getGeoRep().getCenterX() + right;
 
-        System.out.println(leftLimit + " " + controllingGeo.getX());
-        System.out.println(rightLimit + " " + controllingGeo.getX() + controllingGeo.getWidth());
         this.groundPatrolspeed = groundPatrolSpeed;
-        this.controllingCharacter.entityRep.setVelocity(groundPatrolspeed, 0);
+
+
+        int initialDirection = Math.random() > 0.5? -1: 1;
+
+        this.controllingCharacter.entityRep.setVelocity(groundPatrolspeed * initialDirection, 0);
 
 
     }
@@ -26,7 +28,6 @@ public class GroundPatrolBehavior extends Behavior {
     int groundPatrolspeed;
     int leftLimit;
     int rightLimit;
-    private GeometricRepresentation controllingGeo;
 
     @Override
     public void update(float delta) {
