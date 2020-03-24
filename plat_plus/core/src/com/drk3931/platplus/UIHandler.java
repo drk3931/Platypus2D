@@ -1,13 +1,20 @@
 package com.drk3931.platplus;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -24,15 +31,33 @@ public class UIHandler implements Updateable {
 
 
     public UIHandler() {
-        skin = new Skin(Gdx.files.internal("uiskin.json"));
+        skin = new Skin();
         stage = new Stage(new ScreenViewport());
+
+
+        Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
+		pixmap.setColor(Color.WHITE);
+		pixmap.fill();
+		skin.add("white", new Texture(pixmap));
+
+
+        BitmapFont font = new BitmapFont(Gdx.files.internal("font.fnt"));
+        skin.add("default",font);
+        TextButtonStyle textButtonStyle = new TextButtonStyle();
+		textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
+		textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
+		textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
+		textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
+		textButtonStyle.font = skin.getFont("default");
+		skin.add("default", textButtonStyle);
+
+
+        
         table = new Table();
         table.setWidth(stage.getWidth());
         table.align(Align.center | Align.top);
-
-
         table.setPosition(0, Gdx.graphics.getHeight());
-        startButton = new TextButton("New Game", skin);
+        startButton = new TextButton("New Game",skin);
 
         
         startButton.addListener(new ClickListener() {
@@ -46,11 +71,13 @@ public class UIHandler implements Updateable {
 
         table.padTop(100);
 
-        table.add(startButton).padBottom(30);
+        table.add(startButton).pad(50);
 
         table.row();
+        
 
         stage.addActor(table);
+        
         Gdx.input.setInputProcessor(stage);
     }
 
