@@ -1,6 +1,7 @@
 package com.drk3931.platplus;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
@@ -8,17 +9,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.drk3931.platplus.PlatPlus.GameState;
 import com.drk3931.platplus.projectiles.Projectile;
 
 class World implements DrawableComponent {
 
     final public static float accelGravity = -19f;
-
-    private enum GameState {
-        INITIAL, GAME_RUNNING, GAME_OVER
-    }
-
-    GameState currentState;
 
     private Player player;
 
@@ -37,35 +33,28 @@ class World implements DrawableComponent {
 
         characters = new ArrayList<Character>();
         projectileStore = new ArrayList<Projectile>();
-        this.currentState = GameState.INITIAL;
-
-       
 
     }
 
-   
-
-    LinkedList<Character> markedForRemoval = new LinkedList<Character>();
-
     public void update(float delta) {
 
-        
-
-        if (currentState == GameState.INITIAL) {
-            //return;
+        if (PlatPlus.getGameState() == GameState.INITIAL) {
+            return;
         }
 
-        markedForRemoval.clear();
-
         player.update(delta);
-        for (Character c : characters) {
-            c.update(delta);
+
+        Iterator<Character> iter = characters.iterator();
+        while (iter.hasNext()) {
+            Character c = iter.next();
             if (c.characterState.isMarkedForRemoval()) {
-                this.markedForRemoval.add(c);
+                iter.remove();
+            } else {
+                c.update(delta);
             }
         }
 
-        characters.removeAll(markedForRemoval);
+
 
         for (Projectile p : projectileStore) {
             p.update(delta);
@@ -77,7 +66,6 @@ class World implements DrawableComponent {
 
     @Override
     public void drawShapeRenderer(ShapeRenderer shapeRenderer) {
-
 
         player.drawShapeRenderer(shapeRenderer);
         for (Character c : characters) {

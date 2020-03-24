@@ -1,5 +1,6 @@
 package com.drk3931.platplus;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.graphics.Color;
@@ -23,10 +24,8 @@ class CollisionHandler {
         this.map = map;
         this.player = world.getPlayer();
         this.overlappingRectangle = new Rectangle();
-        markedForRemoval = new LinkedList<Projectile>();
     }
 
-    LinkedList<Projectile> markedForRemoval;
 
     public void update(float delta) {
 
@@ -35,20 +34,23 @@ class CollisionHandler {
 
         float playerVelX = player.e.getVelocityX(),playerVelY = player.e.getVelocityY();
 
-        markedForRemoval.clear();
 
-        for(Projectile p: world.projectileStore){
+        Iterator<Projectile> projectileIterator = world.projectileStore.iterator();
+        while(projectileIterator.hasNext()){
+            Projectile p = projectileIterator.next();
+
             for(Character c:world.characters){
                 if(Intersector.overlaps((Circle)p.asEntity().getGeoRep().shapeRepresentation,(Rectangle)c.entityRep.getGeoRep().shapeRepresentation)){
                     if(p instanceof PlayerProjectile){
                         p.onHit((Enemy)c);
-                        markedForRemoval.add(p);
+                        projectileIterator.remove();
                     }
                 }
             }
         }
 
-        world.projectileStore.removeAll(markedForRemoval);
+     
+
         
 
         /*

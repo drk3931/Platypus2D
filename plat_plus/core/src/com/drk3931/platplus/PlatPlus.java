@@ -22,6 +22,20 @@ public class PlatPlus extends ApplicationAdapter {
 	UIHandler uiHandler;
 
 
+	enum GameState {
+        INITIAL, GAME_RUNNING, GAME_OVER
+    }
+
+	private static GameState currentState = GameState.INITIAL;
+	
+	public static void setGameState(GameState state){
+	currentState = state;
+	}
+
+	public static GameState getGameState(){
+		return currentState;
+	}
+
 
 
 	@Override

@@ -3,10 +3,12 @@ t:animations.json:0:application/unknown
 t:characters.json:658:application/unknown
 t:enemyAir.atlas:1211:application/unknown
 i:enemyAir.png:405746:image/png
+t:font.fnt:14199:application/unknown
+i:font.png:15999:image/png
 t:groundEnemy.atlas:280:application/unknown
 i:groundEnemy.png:49290:image/png
 t:items.json:393:application/unknown
-b:plat_plus_l1.tmx:11796:application/unknown
+b:plat_plus_l1.tmx:22832:application/unknown
 b:plat_set.tsx:13023:application/unknown
 i:player_walk_animation.png:63643:image/png
 d:PNG:0:application/unknown
@@ -237,6 +239,7 @@ i:PNG/Retina/platformIndustrial_110.png:1822:image/png
 i:PNG/Retina/platformIndustrial_111.png:2695:image/png
 i:PNG/Retina/platformIndustrial_112.png:2367:image/png
 i:poof.png:286601:image/png
+t:uiskin.json:375:application/unknown
 t:com/badlogic/gdx/graphics/g3d/particles/particles.fragment.glsl:859:application/unknown
 t:com/badlogic/gdx/graphics/g3d/particles/particles.vertex.glsl:2996:application/unknown
 t:com/badlogic/gdx/graphics/g3d/shaders/default.fragment.glsl:6084:application/unknown
