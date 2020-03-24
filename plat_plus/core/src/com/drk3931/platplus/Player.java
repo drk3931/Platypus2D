@@ -129,7 +129,16 @@ public class Player implements DrawableComponent, CameraController,Updateable {
         this.camRef = c;
 
         
-        c.position.x = e.getGeoRep().getX();
+      
+        if(e.getGeoRep().getX() > Gdx.graphics.getWidth()/2)
+        {
+            c.position.x = e.getGeoRep().getX();
+        }
+        else{
+            c.position.x = Gdx.graphics.getWidth()/2;
+        }
+
+
 
         if(e.getGeoRep().getY() > Gdx.graphics.getHeight()/2)
         {
