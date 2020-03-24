@@ -21,14 +21,13 @@ class Renderer {
     public SpriteBatch spriteBatch;
     private TiledMapRenderer tiledMapRenderer;
 
-    private ArrayList<DrawableComponent> drawableComponents;
     private Map map;
+    private World world;
 
     public Renderer(Map map) {
 
         //map needs to be provided in the constructor to setup the tiledMaprenderer
         this.map = map;
-        drawableComponents = new ArrayList<DrawableComponent>();
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
         spriteBatch = new SpriteBatch();
@@ -41,15 +40,13 @@ class Renderer {
 
     }
 
+    public void setWorld(World world){
+        this.world = world;
+    }
 
     
 
 
-
-    public void addDrawableComponent(DrawableComponent c)
-    {
-        this.drawableComponents.add(c);
-    }
 
     public void draw() {
   
@@ -67,20 +64,24 @@ class Renderer {
 
         
         this.map.drawShapeRenderer(shapeRenderer);
-        for(DrawableComponent d: drawableComponents)
-        {
-            d.drawShapeRenderer(shapeRenderer);
+
+        if(this.world != null){
+            this.world.drawShapeRenderer(shapeRenderer);
+
         }
+        
         
         shapeRenderer.end();
 
         spriteBatch.begin();
         this.map.drawSpriteBatch(spriteBatch);
+        
+        if(this.world != null){
+            this.world.drawSpriteBatch(spriteBatch);
 
-        for(DrawableComponent d: drawableComponents)
-        {
-            d.drawSpriteBatch(spriteBatch);
         }
+
+    
 
         spriteBatch.end();
 

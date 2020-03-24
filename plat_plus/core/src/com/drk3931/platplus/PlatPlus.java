@@ -33,20 +33,19 @@ public class PlatPlus extends ApplicationAdapter {
 	}
 
 	public void loadWorld() {
-		world = gameLoader.loadWorld(mapRef);
+		world = gameLoader.loadWorld(map);
 		collisionHandler.setWorld(world);
-		renderer.addDrawableComponent(world);
+		renderer.setWorld(world);
+
 
 	}
 
-	private Map mapRef;
 
 	@Override
 	public void create() {
 
 		gameLoader = new GameLoader();
 		map = gameLoader.loadMap();
-		this.mapRef = map;
 
 		renderer = new Renderer(map);
 
@@ -59,13 +58,16 @@ public class PlatPlus extends ApplicationAdapter {
 	@Override
 	public void render() {
 
+
+
+
+
 		float delta = Gdx.graphics.getDeltaTime();
 		float timeLimitMin = (float) 1 / 30;
 
 		if (delta > timeLimitMin) {
 			return;
 		}
-		uiHandler.update(delta);
 
 		if (world != null) {
 			world.update(delta);
@@ -77,16 +79,17 @@ public class PlatPlus extends ApplicationAdapter {
 
 
 		}
-
-		
+		uiHandler.update(delta);
 
 
 		Gdx.gl.glClearColor(0, 0, 0, 1.0f);
 		// gl.glClearColor(Math.random(), Math.random(), Math.random(), Math.random());
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		uiHandler.draw();
+		
 		renderer.draw();
+		uiHandler.draw();
+
 
 	}
 
