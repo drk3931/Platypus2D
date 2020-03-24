@@ -19,10 +19,16 @@ class CollisionHandler {
     private Player player;
     private Rectangle overlappingRectangle;
 
-    public CollisionHandler(Map map, World world) {
+    public void setWorld(World world){
         this.world = world;
-        this.map = map;
         this.player = world.getPlayer();
+    }
+
+
+    public CollisionHandler(Map map) {
+       
+        this.map = map;
+        
         this.overlappingRectangle = new Rectangle();
     }
 
@@ -35,6 +41,7 @@ class CollisionHandler {
         float playerVelX = player.e.getVelocityX(),playerVelY = player.e.getVelocityY();
 
 
+        
         Iterator<Projectile> projectileIterator = world.projectileStore.iterator();
         while(projectileIterator.hasNext()){
             Projectile p = projectileIterator.next();
@@ -48,6 +55,7 @@ class CollisionHandler {
                 }
             }
         }
+        
 
      
 

@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -26,66 +27,75 @@ public class UIHandler implements Updateable {
     private Stage stage;
 
     private Table table;
-    private TextButton startButton;
+    private TextButton mainButton;
 
+    private Label gameLabel;
 
-
-    public UIHandler() {
+    public UIHandler(final PlatPlus gameRef) {
         skin = new Skin();
         stage = new Stage(new ScreenViewport());
 
-
         Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
-		pixmap.setColor(Color.WHITE);
-		pixmap.fill();
-		skin.add("white", new Texture(pixmap));
-
+        pixmap.setColor(Color.WHITE);
+        pixmap.fill();
+        skin.add("white", new Texture(pixmap));
 
         BitmapFont font = new BitmapFont(Gdx.files.internal("font.fnt"));
-        skin.add("default",font);
+
+        gameLabel = new Label("Platformer Demo", new Label.LabelStyle(font, Color.ORANGE));
+
+        skin.add("default", font);
         TextButtonStyle textButtonStyle = new TextButtonStyle();
-		textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
-		textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
-		textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
-		textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
-		textButtonStyle.font = skin.getFont("default");
-		skin.add("default", textButtonStyle);
+        textButtonStyle.up = skin.newDrawable("white", Color.LIGHT_GRAY);
+        textButtonStyle.down = skin.newDrawable("white", Color.LIGHT_GRAY);
+        textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
+        textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
+        textButtonStyle.font = skin.getFont("default");
+        skin.add("default", textButtonStyle);
 
-
-        
         table = new Table();
         table.setWidth(stage.getWidth());
         table.align(Align.center | Align.top);
         table.setPosition(0, Gdx.graphics.getHeight());
-        startButton = new TextButton("New Game",skin);
+        mainButton = new TextButton("New Game", skin);
 
-        
-        startButton.addListener(new ClickListener() {
+        mainButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 PlatPlus.setGameState(GameState.GAME_RUNNING);
-                startButton.setVisible(false);
+                mainButton.setVisible(false);
+                gameLabel.setVisible(false);
+                gameRef.loadWorld();
                 event.stop();
             }
         });
 
         table.padTop(100);
 
-        table.add(startButton).pad(50);
-
         table.row();
-        
+        table.add(gameLabel).padBottom(35);
+        table.row();
+        table.add(mainButton);
+        table.row();
 
         stage.addActor(table);
-        
+
         Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void update(float delta) {
-        stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 
+        stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
         stage.act(Gdx.graphics.getDeltaTime());
+
+        if (PlatPlus.getGameState() == GameState.GAME_OVER) {
+            mainButton.setText("Restart Game");
+
+            gameLabel.setVisible(true);
+            mainButton.setVisible(true);
+            
+        }
 
     }
 

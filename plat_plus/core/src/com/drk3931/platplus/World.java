@@ -100,7 +100,8 @@ class World implements DrawableComponent {
 
     }
 
-    private boolean gameOver() {
+    public boolean gameOver() {
+         
         boolean gameOver1 = this.player.health <= 0;
 
         boolean gameOver2 = player.e.getGeoRep().getY() < player.e.getGeoRep().getHeight() * -1;
