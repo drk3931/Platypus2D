@@ -1,4 +1,5 @@
 package com.drk3931.platplus;
+import com.drk3931.platplus.PlatPlus.GameState;
 import com.drk3931.platplus.effects.GravityEffect;
 import com.drk3931.platplus.projectiles.PlayerProjectile;
 import com.drk3931.platplus.projectiles.Projectile;
@@ -49,6 +50,10 @@ public class Player implements DrawableComponent, CameraController,Updateable {
 
     @Override
     public void update(float delta) {
+
+        if(PlatPlus.getGameState() == GameState.GAME_OVER){
+            return;
+        }
 
 
     
