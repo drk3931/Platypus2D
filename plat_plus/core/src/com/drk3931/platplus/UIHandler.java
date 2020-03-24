@@ -42,7 +42,7 @@ public class UIHandler implements Updateable {
 
         BitmapFont font = new BitmapFont(Gdx.files.internal("font.fnt"));
 
-        gameLabel = new Label("Platformer Demo", new Label.LabelStyle(font, Color.ORANGE));
+        gameLabel = new Label("Demo Level", new Label.LabelStyle(font, Color.ORANGE));
 
         skin.add("default", font);
         TextButtonStyle textButtonStyle = new TextButtonStyle();
