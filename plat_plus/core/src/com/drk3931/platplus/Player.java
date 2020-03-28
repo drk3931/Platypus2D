@@ -78,22 +78,23 @@ public class Player implements DrawableComponent, CameraController,Updateable {
         }
 
 
-        if(System.currentTimeMillis() - lastDamaged < damageTimer ){
+        if(isInvincible() ){
             playerTint = Color.RED;
         }
         else{
             playerTint = Color.WHITE;
+            e.setVelocityX(0);
         }
 
-        e.setVelocityX(0);
+       // e.setVelocityX(0);
         //e.setVelocityY(0);
 
-        if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+        if (Gdx.input.isKeyPressed(Keys.LEFT) && !isInvincible()) {
             e.setVelocityX(delta * speedX * -1);
             animationHandler.incrementTime(delta);
         }
 
-        if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+        if (Gdx.input.isKeyPressed(Keys.RIGHT) && !isInvincible()) {
             e.setVelocityX(delta * speedX);
             animationHandler.incrementTime(delta);
 
@@ -190,11 +191,8 @@ public class Player implements DrawableComponent, CameraController,Updateable {
 
 
     
-        e.setVelocityY(e.getVelocityY() * -1);
-
-
-        e.getGeoRep().translate(Math.signum(e.getVelocityX()) * -1 * 35,0);
-
+        e.setVelocityY(e.getVelocityX() * -1);
+        e.setVelocityX(e.getVelocityY() * -1);
 
 
         health -= knockBackDamage;
