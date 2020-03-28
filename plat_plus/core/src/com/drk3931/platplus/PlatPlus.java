@@ -78,7 +78,10 @@ public class PlatPlus extends ApplicationAdapter {
 			if (world.gameOver()) {
 				currentState = GameState.GAME_OVER;
 			}
-			collisionHandler.update(delta);
+			if(!world.gameOver()){
+				collisionHandler.update(delta);
+
+			}
 			world.getPlayer().applyToCam(renderer.camera);
 
 
@@ -101,4 +104,6 @@ public class PlatPlus extends ApplicationAdapter {
 	public void dispose() {
 
 	}
+
+	
 }

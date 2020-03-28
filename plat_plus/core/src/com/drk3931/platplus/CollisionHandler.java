@@ -34,6 +34,7 @@ class CollisionHandler {
 
 
     public void update(float delta) {
+        
 
         GeometricRepresentation playerGeo = player.e.getGeoRep();
         Rectangle playerRect = (Rectangle) playerGeo.shapeRepresentation;
@@ -46,7 +47,7 @@ class CollisionHandler {
         while(projectileIterator.hasNext()){
             Projectile p = projectileIterator.next();
 
-            for(Character c:world.characters){
+            for(Character c:world.getCharacters()){
                 if(Intersector.overlaps((Circle)p.asEntity().getGeoRep().shapeRepresentation,(Rectangle)c.entityRep.getGeoRep().shapeRepresentation)){
                     if(p instanceof PlayerProjectile){
                         p.onHit((Enemy)c);
@@ -56,6 +57,15 @@ class CollisionHandler {
             }
         }
         
+
+              
+      
+        for(Character c:world.getCharacters()){
+          Rectangle characterRect = (Rectangle)c.entityRep.getGeoRep().shapeRepresentation;
+          if(playerRect.overlaps(characterRect) && !player.isInvincible() && c.characterState.getCurrentState() != CharacterState.State.DEAD){
+              player.onKnockBack();
+          }
+        }
 
      
 

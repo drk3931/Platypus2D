@@ -30,6 +30,11 @@ public class AnimationHandler {
         return animationTime - this.animation.getAnimationDuration() >= 0;
     }
 
+    public void setAnimation(Animation<TextureRegion> newAnimation){
+        animationTime = 0;
+        this.animation = newAnimation;
+    }
+
 
 
 

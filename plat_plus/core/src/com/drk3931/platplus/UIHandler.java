@@ -91,7 +91,6 @@ public class UIHandler implements Updateable {
 
         if (PlatPlus.getGameState() == GameState.GAME_OVER) {
             mainButton.setText("Restart Game");
-
             gameLabel.setVisible(true);
             mainButton.setVisible(true);
             

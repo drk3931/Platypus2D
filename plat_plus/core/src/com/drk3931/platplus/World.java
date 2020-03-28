@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.drk3931.platplus.PlatPlus.GameState;
+import com.drk3931.platplus.Player.PlayerState;
 import com.drk3931.platplus.projectiles.Projectile;
 
 class World implements DrawableComponent {
@@ -18,7 +19,7 @@ class World implements DrawableComponent {
 
     private Player player;
 
-    ArrayList<Character> characters;
+    private ArrayList<Character> characters;
     public static ArrayList<Projectile> projectileStore;
 
     public Player getPlayer() {
@@ -38,7 +39,7 @@ class World implements DrawableComponent {
 
     public void update(float delta) {
 
-        if (PlatPlus.getGameState() == GameState.INITIAL) {
+        if (PlatPlus.getGameState() == GameState.INITIAL || PlatPlus.getGameState() == GameState.GAME_OVER) {
             return;
         }
 
@@ -102,11 +103,15 @@ class World implements DrawableComponent {
 
     public boolean gameOver() {
          
-        boolean gameOver1 = this.player.health <= 0;
+        boolean gameOver1 = this.player.getCurrentState() == PlayerState.DEAD;
 
         boolean gameOver2 = player.e.getGeoRep().getY() < player.e.getGeoRep().getHeight() * -1;
 
         return gameOver1 || gameOver2;
+    }
+
+    public ArrayList<Character> getCharacters(){
+        return characters;
     }
 
 }

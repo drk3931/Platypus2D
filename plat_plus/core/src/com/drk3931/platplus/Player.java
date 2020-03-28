@@ -1,4 +1,5 @@
 package com.drk3931.platplus;
+import com.drk3931.platplus.CharacterState.State;
 import com.drk3931.platplus.PlatPlus.GameState;
 import com.drk3931.platplus.effects.GravityEffect;
 import com.drk3931.platplus.projectiles.PlayerProjectile;
@@ -17,19 +18,27 @@ import com.badlogic.gdx.math.Vector3;
 public class Player implements DrawableComponent, CameraController,Updateable {
 
 
+    public enum PlayerState {
+        DEFAULT, DEAD, DAMAGED
+    }
+
+
+
+    private PlayerState currentState;
+    private GravityEffect gravEffect;
     private AnimationHandler animationHandler;
 
-    int speedX = 333, jumpVelocity = 1400;
+    //these allow us to control the camera and get world coordinates of where the 
+    //user clicks for projectile firing
+    private Vector3 cameraUnprojected; 
+    private Camera camRef;
+    private Color playerTint;
+
+    int speedX = 333, jumpVelocity = 1400, health = 100, lastHealth = 100,  fireRateMS = 1000;
+    long lastFire = 0;
+
+
     public Entity e;
-
-    GravityEffect gravEffect;
-    Vector3 cameraUnprojected; 
-
-    Camera camRef;
-
-    int fireRateMS = 1000;
-    int health = 100;
-
 
     public Player(float x, float y) {
 
@@ -39,22 +48,42 @@ public class Player implements DrawableComponent, CameraController,Updateable {
         gravEffect = new GravityEffect();
         cameraUnprojected = new Vector3();
         animationHandler = new  AnimationHandler(GameLoader.genAnimation("player_walk_animation.png", 6,5,0.025f),true);
-        
+        currentState = PlayerState.DEFAULT;
+        playerTint = Color.WHITE;
   
     }
 
 
 
+    long damageTimer = 500, lastDamaged = 0;
 
-    long lastFire = 0;
 
     @Override
     public void update(float delta) {
 
-        if(PlatPlus.getGameState() == GameState.GAME_OVER){
+    
+        playerTint = Color.WHITE;
+
+        if(currentState == PlayerState.DEAD){
             return;
         }
 
+        if(health < lastHealth){
+           currentState = PlayerState.DAMAGED;
+           lastDamaged = System.currentTimeMillis();
+        }
+
+        if(health <= 0){
+            currentState = PlayerState.DEAD;
+        }
+
+
+        if(System.currentTimeMillis() - lastDamaged < damageTimer ){
+            playerTint = Color.RED;
+        }
+        else{
+            playerTint = Color.WHITE;
+        }
 
         e.setVelocityX(0);
         //e.setVelocityY(0);
@@ -95,7 +124,6 @@ public class Player implements DrawableComponent, CameraController,Updateable {
             }
         
             
-            //this.player.weapon.fire(xPos, Gdx.graphics.getHeight() - yPos);
         }
 
         /*
@@ -108,7 +136,7 @@ public class Player implements DrawableComponent, CameraController,Updateable {
 
         gravEffect.apply(e);
         this.e.setCurrentTextureRegion(animationHandler.getCurrentRegion());
-
+        lastHealth = health;
     }
 
     @Override
@@ -120,6 +148,7 @@ public class Player implements DrawableComponent, CameraController,Updateable {
     public void drawSpriteBatch(SpriteBatch b) {
 
         //animationHandler.draw(b);
+        e.setTint(playerTint);
         this.e.drawSpriteBatch(b);
       
     }
@@ -154,9 +183,31 @@ public class Player implements DrawableComponent, CameraController,Updateable {
         
     }
 
+    int knockBackDamage = 10;
+
 
     public void onKnockBack(){
+
+
+    
+        e.setVelocityY(e.getVelocityY() * -1);
+
+
+        e.getGeoRep().translate(Math.signum(e.getVelocityX()) * -1 * 35,0);
+
+
+
+        health -= knockBackDamage;
+
         
+    }
+
+    public PlayerState getCurrentState(){
+        return this.currentState;
+    }
+
+    public boolean isInvincible(){
+        return System.currentTimeMillis() - lastDamaged < damageTimer;
     }
 
 }
