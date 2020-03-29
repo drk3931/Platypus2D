@@ -1,0 +1,19 @@
+{
+    "weapons":{
+        "projectileEnemyAir":{
+            "damage":-10,
+            "sprite":"projectileAir.png"
+        },   
+        "projectilePlayer":{
+            "damage":-25,
+            "sprite":"projectilePlayer.png"
+
+        }
+        ,   
+        "projectileEnemyGround":{
+            "damage":-15,
+            "sprite":"projectileGround.png"
+
+        }
+    }
+}
