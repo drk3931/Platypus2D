@@ -80,10 +80,13 @@ public class Player implements DrawableComponent, CameraController,Updateable {
 
         if(isInvincible() ){
             playerTint = Color.RED;
+            e.setOverrideFlip(true);
+
         }
         else{
             playerTint = Color.WHITE;
             e.setVelocityX(0);
+            e.setOverrideFlip(false);
         }
 
        // e.setVelocityX(0);
@@ -191,8 +194,8 @@ public class Player implements DrawableComponent, CameraController,Updateable {
 
 
     
-        e.setVelocityY(e.getVelocityX() * -1);
-        e.setVelocityX(e.getVelocityY() * -1);
+        e.setVelocityY(e.getVelocityY() * -1);
+        e.setVelocityX(e.getVelocityX() * -1);
 
 
         health -= knockBackDamage;

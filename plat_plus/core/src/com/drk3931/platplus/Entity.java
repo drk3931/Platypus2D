@@ -126,6 +126,10 @@ public class Entity implements DrawableComponent {
         }
 
 
+        if(overrideFlip){
+            currentTextureRegion.flip(true, false);
+        }
+
 
 
         b.draw(currentTextureRegion,geoRep.getX(),geoRep.getY(),geoRep.getWidth(),geoRep.getHeight());
@@ -134,6 +138,14 @@ public class Entity implements DrawableComponent {
         
 
     }
+
+
+    boolean overrideFlip = false;
+
+    void setOverrideFlip(boolean flip){
+        this.overrideFlip = flip;
+    }
+
 
     
 }
