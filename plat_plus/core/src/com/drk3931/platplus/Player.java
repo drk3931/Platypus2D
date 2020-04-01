@@ -187,15 +187,15 @@ public class Player implements DrawableComponent, CameraController,Updateable {
         
     }
 
-    int knockBackDamage = 10;
+    int knockBackDamage = 10,knockBackVx = 222;
 
 
-    public void onKnockBack(){
+    public void onKnockBack(int xDir){
 
 
     
         e.setVelocityY(e.getVelocityY() * -1);
-        e.setVelocityX(e.getVelocityX() * -1);
+        e.setVelocityX(knockBackVx* xDir * Gdx.graphics.getDeltaTime());
 
 
         health -= knockBackDamage;

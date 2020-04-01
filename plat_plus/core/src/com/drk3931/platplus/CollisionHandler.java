@@ -63,7 +63,7 @@ class CollisionHandler {
         for(Character c:world.getCharacters()){
           Rectangle characterRect = (Rectangle)c.entityRep.getGeoRep().shapeRepresentation;
           if(playerRect.overlaps(characterRect) && !player.isInvincible() && c.characterState.getCurrentState() != CharacterState.State.DEAD){
-              player.onKnockBack();
+              player.onKnockBack((int)Math.signum(c.entityRep.getVelocityX()));
           }
         }
 
