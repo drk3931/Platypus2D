@@ -15885,7 +15885,7 @@ Player,,com.drk3931.platplus.Player,,com/drk3931/platplus/Player.java,18,-1
 b$d,com.drk3931.platplus.Player::$applyToCam(Lcom/drk3931/platplus/Player;Lcom/badlogic/gdx/graphics/Camera;)V,com.drk3931.platplus.Player,$applyToCam,com/drk3931/platplus/Player.java,161,0
 c$d,com.drk3931.platplus.Player::$drawSpriteBatch(Lcom/drk3931/platplus/Player;Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V,com.drk3931.platplus.Player,$drawSpriteBatch,com/drk3931/platplus/Player.java,152,0
 d$d,com.drk3931.platplus.Player::$isInvincible(Lcom/drk3931/platplus/Player;)Z,com.drk3931.platplus.Player,$isInvincible,com/drk3931/platplus/Player.java,210,0
-e$d,com.drk3931.platplus.Player::$onKnockBack(Lcom/drk3931/platplus/Player;)V,com.drk3931.platplus.Player,$onKnockBack,com/drk3931/platplus/Player.java,193,0
+e$d,com.drk3931.platplus.Player::$onKnockBack(Lcom/drk3931/platplus/Player;I)V,com.drk3931.platplus.Player,$onKnockBack,com/drk3931/platplus/Player.java,193,0
 f$d,com.drk3931.platplus.Player::$update(Lcom/drk3931/platplus/Player;F)V,com.drk3931.platplus.Player,$update,com/drk3931/platplus/Player.java,62,0
 g$d,com.drk3931.platplus.Player::Player(FF) <init>,com.drk3931.platplus.Player,Player,com/drk3931/platplus/Player.java,43,0
 a,com.drk3931.platplus.Player::animationHandler,com.drk3931.platplus.Player,animationHandler,com/drk3931/platplus/Player.java,29,-1
@@ -15898,11 +15898,12 @@ g,com.drk3931.platplus.Player::fireRateMS,com.drk3931.platplus.Player,fireRateMS
 i,com.drk3931.platplus.Player::health,com.drk3931.platplus.Player,health,com/drk3931/platplus/Player.java,37,-1
 j,com.drk3931.platplus.Player::jumpVelocity,com.drk3931.platplus.Player,jumpVelocity,com/drk3931/platplus/Player.java,37,-1
 k,com.drk3931.platplus.Player::knockBackDamage,com.drk3931.platplus.Player,knockBackDamage,com/drk3931/platplus/Player.java,190,-1
-n,com.drk3931.platplus.Player::lastDamaged,com.drk3931.platplus.Player,lastDamaged,com/drk3931/platplus/Player.java,58,-1
-o,com.drk3931.platplus.Player::lastFire,com.drk3931.platplus.Player,lastFire,com/drk3931/platplus/Player.java,38,-1
-p,com.drk3931.platplus.Player::lastHealth,com.drk3931.platplus.Player,lastHealth,com/drk3931/platplus/Player.java,37,-1
-q,com.drk3931.platplus.Player::playerTint,com.drk3931.platplus.Player,playerTint,com/drk3931/platplus/Player.java,35,-1
-r,com.drk3931.platplus.Player::speedX,com.drk3931.platplus.Player,speedX,com/drk3931/platplus/Player.java,37,-1
+n,com.drk3931.platplus.Player::knockBackVx,com.drk3931.platplus.Player,knockBackVx,com/drk3931/platplus/Player.java,190,-1
+o,com.drk3931.platplus.Player::lastDamaged,com.drk3931.platplus.Player,lastDamaged,com/drk3931/platplus/Player.java,58,-1
+p,com.drk3931.platplus.Player::lastFire,com.drk3931.platplus.Player,lastFire,com/drk3931/platplus/Player.java,38,-1
+q,com.drk3931.platplus.Player::lastHealth,com.drk3931.platplus.Player,lastHealth,com/drk3931/platplus/Player.java,37,-1
+r,com.drk3931.platplus.Player::playerTint,com.drk3931.platplus.Player,playerTint,com/drk3931/platplus/Player.java,35,-1
+s,com.drk3931.platplus.Player::speedX,com.drk3931.platplus.Player,speedX,com/drk3931/platplus/Player.java,37,-1
 Player$PlayerState,,com.drk3931.platplus.Player$PlayerState,,com/drk3931/platplus/Player.java,21,-1
 k$d,com.drk3931.platplus.Player$PlayerState::$clinit()V,com.drk3931.platplus.Player$PlayerState,$clinit,com/drk3931/platplus/Player.java,21,0
 h$d,com.drk3931.platplus.Player$PlayerState::DAMAGED,com.drk3931.platplus.Player$PlayerState,DAMAGED,com/drk3931/platplus/Player.java,22,-1
