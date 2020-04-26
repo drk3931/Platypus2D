@@ -50,9 +50,15 @@
   <image width="70" height="70" source="PNG/Default size/platformIndustrial_014.png"/>
  </tile>
  <tile id="285">
+  <properties>
+   <property name="SLOPE" value="FLIP_DOWN"/>
+  </properties>
   <image width="70" height="70" source="PNG/Default size/platformIndustrial_015.png"/>
  </tile>
  <tile id="286">
+  <properties>
+   <property name="SLOPE" value="FLIP_UP"/>
+  </properties>
   <image width="70" height="70" source="PNG/Default size/platformIndustrial_016.png"/>
  </tile>
  <tile id="287">
