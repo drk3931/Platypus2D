@@ -66,12 +66,8 @@ public class PlatPlus extends ApplicationAdapter {
 
 
 
-		float delta = Gdx.graphics.getDeltaTime();
-		float timeLimitMin = (float) 1 / 30;
-
-		if (delta > timeLimitMin) {
-			return;
-		}
+		float delta = Math.min(Gdx.graphics.getDeltaTime(),1/30f);
+		
 
 		if (world != null) {
 			world.update(delta);
@@ -83,8 +79,6 @@ public class PlatPlus extends ApplicationAdapter {
 
 			}
 			world.getPlayer().applyToCam(renderer.camera);
-
-
 		}
 		uiHandler.update(delta);
 

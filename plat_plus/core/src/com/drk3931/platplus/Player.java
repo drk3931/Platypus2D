@@ -53,58 +53,27 @@ public class Player implements DrawableComponent, CameraController,Updateable {
   
     }
 
+    private void controlPlayer(float delta)
+    {
+        
+       if(isControlLocked()){
+           return;
+       }
 
 
-    long damageTimer = 500, lastDamaged = 0;
-
-
-    @Override
-    public void update(float delta) {
-
-    
-        playerTint = Color.WHITE;
-
-        if(currentState == PlayerState.DEAD){
-            return;
-        }
-
-        if(health < lastHealth){
-           currentState = PlayerState.DAMAGED;
-           lastDamaged = System.currentTimeMillis();
-        }
-
-        if(health <= 0){
-            currentState = PlayerState.DEAD;
-        }
-
-
-        if(isInvincible() ){
-            playerTint = Color.RED;
-            e.setOverrideFlip(true);
-
-        }
-        else{
-            playerTint = Color.WHITE;
-            e.setVelocityX(0);
-            e.setOverrideFlip(false);
-        }
-
-       // e.setVelocityX(0);
-        //e.setVelocityY(0);
-
-        if (Gdx.input.isKeyPressed(Keys.LEFT) && !isInvincible()) {
+        if (Gdx.input.isKeyPressed(Keys.LEFT)) {
             e.setVelocityX(delta * speedX * -1);
             animationHandler.incrementTime(delta);
         }
 
-        if (Gdx.input.isKeyPressed(Keys.RIGHT) && !isInvincible()) {
+        if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
             e.setVelocityX(delta * speedX);
             animationHandler.incrementTime(delta);
 
         }
 
         
-        if (Gdx.input.isKeyPressed(Keys.UP) && e.getVelocityY() == 0) {
+        if (Gdx.input.isKeyPressed(Keys.UP) && canJump()) {
             e.setVelocityY(delta * jumpVelocity);
         }
         
@@ -129,6 +98,53 @@ public class Player implements DrawableComponent, CameraController,Updateable {
         
             
         }
+    }
+
+
+
+
+
+    @Override
+    public void update(float delta) {
+
+    
+        playerTint = Color.WHITE;
+
+        if(currentState == PlayerState.DEAD){
+            return;
+        }
+
+        if(health < lastHealth){
+           currentState = PlayerState.DAMAGED;
+           lastDamaged = System.currentTimeMillis();
+        }
+
+        if(controlLocked){
+            if(System.currentTimeMillis() - controlLockTimer > controlLockLimit){
+                controlLocked = false;
+            }
+        }
+
+
+        if(health <= 0){
+            currentState = PlayerState.DEAD;
+        }
+
+
+        if(isInvincible() ){
+            playerTint = Color.RED;
+            e.setOverrideFlip(true);
+
+        }
+        else{
+            playerTint = Color.WHITE;
+            e.setVelocityX(0);
+            e.setOverrideFlip(false);
+        }
+
+
+
+        controlPlayer(delta);
 
         /*
         if (Gdx.input.isKeyPressed(Keys.UP)) {
@@ -187,28 +203,39 @@ public class Player implements DrawableComponent, CameraController,Updateable {
         
     }
 
-    int knockBackDamage = 10,knockBackVx = 222;
+    int knockBackDamage = 10, knockBackY = 750, knockBackX = 500;
+    long damageTimer = 1150, controlLockLimit = 300, controlLockTimer = 0, lastDamaged = 0;
+    boolean controlLocked = false;
+   
+   
+    public void onKnockBack(int cVelX, int cVelY, float delta){
 
 
-    public void onKnockBack(int xDir){
-
-
-    
-        e.setVelocityY(e.getVelocityY() * -1);
-        e.setVelocityX(knockBackVx* xDir * Gdx.graphics.getDeltaTime());
-
-
+        e.setVelocityY(knockBackY * delta);
+        e.setVelocityX(knockBackX* Math.signum(cVelX) * delta);
         health -= knockBackDamage;
+        controlLocked = true;
+        controlLockTimer = System.currentTimeMillis();
 
         
+    }
+
+    public boolean isInvincible(){
+        return System.currentTimeMillis() - lastDamaged < damageTimer;
+    }
+
+    public boolean isControlLocked(){
+        return controlLocked;
     }
 
     public PlayerState getCurrentState(){
         return this.currentState;
     }
 
-    public boolean isInvincible(){
-        return System.currentTimeMillis() - lastDamaged < damageTimer;
+    private boolean canJump(){
+        return e.getVelocityY() == 0;
     }
+
+
 
 }

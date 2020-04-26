@@ -28,7 +28,6 @@ class CollisionHandler {
     public CollisionHandler(Map map) {
        
         this.map = map;
-        
         this.overlappingRectangle = new Rectangle();
     }
 
@@ -42,7 +41,7 @@ class CollisionHandler {
         float playerVelX = player.e.getVelocityX(),playerVelY = player.e.getVelocityY();
 
 
-        
+        //handle projection collisions
         Iterator<Projectile> projectileIterator = world.projectileStore.iterator();
         while(projectileIterator.hasNext()){
             Projectile p = projectileIterator.next();
@@ -59,11 +58,11 @@ class CollisionHandler {
         
 
               
-      
+        //handle 
         for(Character c:world.getCharacters()){
           Rectangle characterRect = (Rectangle)c.entityRep.getGeoRep().shapeRepresentation;
           if(playerRect.overlaps(characterRect) && !player.isInvincible() && c.characterState.getCurrentState() != CharacterState.State.DEAD){
-              player.onKnockBack((int)Math.signum(c.entityRep.getVelocityX()));
+              player.onKnockBack((int)Math.signum(c.entityRep.getVelocityX()), (int)Math.signum(c.entityRep.getVelocityY()), delta);
           }
         }
 
@@ -83,10 +82,7 @@ class CollisionHandler {
 
 
      
-
-
-
-
+/*
         for (Shape2D shape : map.getMapPolies()) {
 
             if (shape.getClass() == Polyline.class) {
@@ -113,6 +109,7 @@ class CollisionHandler {
             }
 
         }
+*/
         for (Shape2D shape : map.getMapPolies()) {
 
             if (shape.getClass() == Rectangle.class) {
@@ -120,15 +117,7 @@ class CollisionHandler {
 
                 if (Intersector.intersectRectangles(playerRect, tileAsRect, overlappingRectangle)) {
                     
-                    if(playerVelX < 0)
-                    {
-                        playerGeo.translate(  overlappingRectangle.width, 0 );
-
-                    }
-                    else{
-                        playerGeo.translate(  overlappingRectangle.width * -1, 0 );
-
-                    }
+                    playerGeo.translate(  Math.signum(playerVelX) * -1 * overlappingRectangle.width, 0 );
 
                 }
 
@@ -141,6 +130,7 @@ class CollisionHandler {
 
         player.e.moveY();
 
+        /*
         for (Shape2D shape : map.getMapPolies()) {
 
             if (shape.getClass() == Polyline.class) {
@@ -157,6 +147,7 @@ class CollisionHandler {
             }
 
         }
+        */
 
         for (Shape2D shape : map.getMapPolies()) {
 
@@ -175,7 +166,7 @@ class CollisionHandler {
                     }
                     else{
                         playerGeo.translate(  0, overlappingRectangle.height * -1);
-                        player.e.setVelocityY((float)(playerVelY * -0.5));
+                        player.e.setVelocityY((float)(playerVelY * -0.25));
 
 
 
