@@ -80,7 +80,7 @@ class Renderer {
         //this.map.drawShapeRenderer(shapeRenderer);
 
         if(this.world != null){
-            //this.world.drawShapeRenderer(shapeRenderer);
+            this.world.drawShapeRenderer(shapeRenderer);
 
         }
         
