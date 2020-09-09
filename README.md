@@ -1,4 +1,4 @@
-# PlatPlus
+# Platypus2D
 Libgdx Game Engine intended for platformer and top down 2D games. 
 -Supports collision handling for AABB and sloped surfaces
 -Custom entity state menagement
@@ -7,4 +7,4 @@ Libgdx Game Engine intended for platformer and top down 2D games.
 -AI Routines
 
 Demonstration
-https://drk3931.github.io/PlatPlus/
+https://drk3931.github.io/PlatPlus2D/
