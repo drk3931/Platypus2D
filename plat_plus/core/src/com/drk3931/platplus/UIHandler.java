@@ -62,11 +62,21 @@ public class UIHandler implements Updateable {
         mainButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                PlatPlus.setGameState(GameState.GAME_RUNNING);
-                mainButton.setVisible(false);
-                gameLabel.setVisible(false);
-                gameRef.loadWorld();
-                event.stop();
+
+                try {
+
+                    PlatPlus.setGameState(GameState.GAME_RUNNING);
+                    mainButton.setVisible(false);
+                    gameLabel.setVisible(false);
+                    gameRef.loadWorld();
+                    event.stop();
+
+                } catch (Exception e) {
+                        
+                        System.exit(0);
+                
+                }
+
             }
         });
 

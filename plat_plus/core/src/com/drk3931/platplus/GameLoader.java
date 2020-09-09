@@ -1,5 +1,8 @@
 package com.drk3931.platplus;
 import com.drk3931.platplus.Map;
+
+import java.util.Iterator;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -18,9 +21,9 @@ class GameLoader {
       
     }
 
-    public static TextureRegion getTexRegion(String name)
+    public static TextureRegion getTexRegion(String fname)
     {
-        return new TextureRegion(new Texture(Gdx.files.internal(name)));
+        return new TextureRegion(new Texture(Gdx.files.internal(fname)));
     }
 
     public Map loadMap()
@@ -37,7 +40,7 @@ class GameLoader {
         
     }
 
-    public World loadWorld(Map map)
+    public World loadWorld(Map map) throws Exception
     {
         World world = new World();
         map.parseCharactersLayer(world);
@@ -66,11 +69,16 @@ class GameLoader {
 
     }
 
+    public static boolean FLIP_TEXTURE_ON_GENERATE = false;
+
 
     public static Animation<TextureRegion> genAnimationAtlas(String fileName, PlayMode playMode, float timing){
 
 
         TextureAtlas atlas = new TextureAtlas(fileName);
+      
+
+
     
         return new Animation<TextureRegion>(timing, atlas.getRegions(), PlayMode.LOOP);
 

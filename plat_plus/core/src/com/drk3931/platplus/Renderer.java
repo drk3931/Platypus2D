@@ -8,7 +8,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -23,6 +25,7 @@ class Renderer {
 
     private Map map;
     private World world;
+    private TextureRegion backdropRef;
 
     public Renderer(Map map) {
 
@@ -37,6 +40,14 @@ class Renderer {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 
+        backdropRef = GameLoader.getTexRegion("landscape.png");
+
+
+    
+
+       
+
+
 
     }
 
@@ -44,11 +55,16 @@ class Renderer {
         this.world = world;
     }
 
+
+
+
     
 
 
 
     public void draw() {
+
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
   
 
         camera.update();
@@ -56,17 +72,15 @@ class Renderer {
         // set render views
         spriteBatch.setProjectionMatrix(camera.combined);
         shapeRenderer.setProjectionMatrix(camera.combined);
-        tiledMapRenderer.setView(camera);
 
-        tiledMapRenderer.render();
 
-        shapeRenderer.begin();
+
 
         
-        this.map.drawShapeRenderer(shapeRenderer);
+        //this.map.drawShapeRenderer(shapeRenderer);
 
         if(this.world != null){
-            this.world.drawShapeRenderer(shapeRenderer);
+            //this.world.drawShapeRenderer(shapeRenderer);
 
         }
         
@@ -74,10 +88,37 @@ class Renderer {
         shapeRenderer.end();
 
         spriteBatch.begin();
+
+        for(int i = 0; i < 10; i++){
+
+
+            spriteBatch.draw(backdropRef,i * Gdx.graphics.getWidth(), 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()*2); 
+
+        }
+        
+    
+
+
+        spriteBatch.end();
+
+
+        tiledMapRenderer.setView(camera);
+
+        tiledMapRenderer.render();
+
+        shapeRenderer.begin();
+
+        spriteBatch.begin();
+
+
         this.map.drawSpriteBatch(spriteBatch);
         
         if(this.world != null){
             this.world.drawSpriteBatch(spriteBatch);
+
+        
+            
+
 
         }
 

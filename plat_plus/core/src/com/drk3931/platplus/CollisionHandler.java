@@ -80,36 +80,6 @@ class CollisionHandler {
 
         player.e.moveX();
 
-
-     
-/*
-        for (Shape2D shape : map.getMapPolies()) {
-
-            if (shape.getClass() == Polyline.class) {
-                Polyline p = (Polyline) shape;
-                float[] vertices = p.getTransformedVertices();
-                if (Intersector.intersectSegmentRectangle(vertices[0], vertices[1], vertices[2], vertices[3],
-                        playerRect)) {
-        
-                    if (vertices[1] < vertices[3] && Math.signum(playerVelX) > 0) {
-                        // upwards slope
-
-                        //move backwards and recorrect upwards 
-                        playerGeo.translate(playerVelX * -1, 0);
-                        playerGeo.translate(Math.abs(playerVelX), Math.abs(playerVelX));
-
-
-                    } else {
-                        // downwards slope
-                        playerGeo.translate(playerVelX * -1, 0);
-                        playerGeo.translate(playerVelX, Math.abs(playerVelX));
-
-                    }
-                }
-            }
-
-        }
-*/
         for (Shape2D shape : map.getMapPolies()) {
 
             if (shape.getClass() == Rectangle.class) {
@@ -129,25 +99,6 @@ class CollisionHandler {
 
 
         player.e.moveY();
-
-        /*
-        for (Shape2D shape : map.getMapPolies()) {
-
-            if (shape.getClass() == Polyline.class) {
-                Polyline p = (Polyline) shape;
-                float[] vertices = p.getTransformedVertices();
-                while (Intersector.intersectSegmentRectangle(vertices[0], vertices[1], vertices[2], vertices[3],
-                        playerRect)) {
-                
-                        playerGeo.translate(0, Math.signum(playerVelY) * -1);
-                        player.e.setVelocityY(0);
-
-    
-                }
-            }
-
-        }
-        */
 
         for (Shape2D shape : map.getMapPolies()) {
 

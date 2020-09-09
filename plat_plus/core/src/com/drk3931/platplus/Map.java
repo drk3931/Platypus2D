@@ -3,6 +3,7 @@ package com.drk3931.platplus;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -28,6 +29,7 @@ import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.drk3931.platplus.behaviors.AirPatrolBehavior;
+import com.drk3931.platplus.behaviors.Behavior;
 import com.drk3931.platplus.behaviors.GroundPatrolBehavior;
 import com.drk3931.platplus.projectiles.PlayerProjectile;
 
@@ -69,7 +71,6 @@ class Map implements DrawableComponent {
         Gdx.app.log("Terrain Layer Width", "" + terrainTileLayer.getWidth());
         Gdx.app.log("Terrain Layer Height", "" + terrainTileLayer.getHeight());
 
-
         for (int i = 0; i < terrainTileLayer.getWidth(); i++) {
             for (int j = 0; j < terrainTileLayer.getHeight(); j++) {
 
@@ -96,98 +97,80 @@ class Map implements DrawableComponent {
 
     }
 
-    public void parseCharactersLayer(World world)
-    {
+    public void parseCharactersLayer(World world) throws Exception{
+
         MapLayer characterLayer = tiledMap.getLayers().get("Characters");
-        MapObjects objects = characterLayer.getObjects();
-
-        
-        JsonReader json = new JsonReader();
-        JsonValue characters = json.parse(Gdx.files.internal("characters.json"));
-        JsonValue itemsData = json.parse(Gdx.files.internal("items.json"));
-
-
-        
-
-        MapProperties playerProps = objects.get("player").getProperties();
+        JsonReader jsonReader = new JsonReader();
+        JsonValue characters = jsonReader.parse(Gdx.files.internal("characters.json"));
+        JsonValue itemsData = jsonReader.parse(Gdx.files.internal("items.json"));
         JsonValue weapons = itemsData.get("weapons");
 
-    
+        // create player from map, not json
+        MapProperties playerProps = characterLayer.getObjects().get("player").getProperties();
         float playerX = Float.parseFloat(playerProps.get("x").toString());
         float playerY = Float.parseFloat(playerProps.get("y").toString());
-        world.spawnPlayer(playerX,playerY);
+        world.spawnPlayer(playerX, playerY);
         PlayerProjectile.setDamage(weapons.get("projectilePlayer").getInt("damage"));
-        
-        Iterator<MapObject> objectsIter = objects.iterator();
 
+        // standard death animation
         Animation<TextureRegion> deathAnimation = GameLoader.genAnimation("poof.png", 6, 5, 0.10f);
         deathAnimation.setPlayMode(PlayMode.NORMAL);
 
-        while(objectsIter.hasNext())
-        {
+        // parsing all enemies
+        MapObjects chacaterObjects = characterLayer.getObjects();
+        Iterator<MapObject> characterObjectsIterator = chacaterObjects.iterator();
 
+        while (characterObjectsIterator.hasNext()) {
 
-            RectangleMapObject currentObj = (RectangleMapObject)objectsIter.next();
-            
-        
-            MapProperties objProps = currentObj.getProperties();
+            RectangleMapObject currentObj = (RectangleMapObject) characterObjectsIterator.next();
 
-
+            MapProperties characterProperties = currentObj.getProperties();
             Rectangle charRect = currentObj.getRectangle();
-            float characterX = charRect.x, characterY = charRect.y, characterW = charRect.width, characterH = charRect.height;
+            float characterX = charRect.x, characterY = charRect.y, characterW = charRect.width,characterH = charRect.height;
+            String characterType = characterProperties.get("character_type", "NO_TYPE_FOUND", String.class);
+            Player playerRef = world.getPlayer();
 
-            String characterType = objProps.get("character_type","NO TYPE FOUND", String.class);
+            if (!characterType.equals("NO_TYPE_FOUND")) {
 
-            Character newCharacter;
-
-
-            if(characterType.equals("enemyGround"))
-            {
                 
-                JsonValue enemyGround = characters.get("enemies").get("enemyGround");
 
 
-                newCharacter = new Enemy(world.getPlayer());
-                newCharacter.setEntityRep(characterX,characterY,characterW,characterH);
+                JsonValue jsonCharacterData = characters.get("enemies").get(characterType);
 
-                newCharacter.characterState.setHealth(enemyGround.getInt("health"));
-                newCharacter.characterState.setBehavior(new GroundPatrolBehavior(newCharacter));
-                ((GroundPatrolBehavior)newCharacter.characterState.getCurrentBehavior()).setLimits(200 , 200,160);
+                if(jsonCharacterData == null){
+                    Gdx.app.log("Error", "Unknown Character Data " + characterType);
+                    throw new Exception();
+                }
+                else{
+                    Gdx.app.log("Info", "Adding character of type " + characterType + " Coordinates: " + characterX + ' ' + characterY + ' ' + characterW + ' ' + characterH);
+                }
 
-                JsonValue animationVal =enemyGround.get("defaultAnimation");
+                Character newCharacter = new Enemy(playerRef);
+                newCharacter.setEntityRep(characterX, characterY, characterW, characterH);
 
-                Animation<TextureRegion> defaultAnimation = GameLoader.genAnimationAtlas(animationVal.getString("file"),PlayMode.LOOP,animationVal.getFloat("timing"));
-                newCharacter.characterState.setDefaultAnimation(defaultAnimation);
+                newCharacter.characterState.setHealth(jsonCharacterData.getInt("health"));
                 newCharacter.characterState.setDeathAnimation(deathAnimation);
 
+                JsonValue defaultAnimation = jsonCharacterData.get("defaultAnimation");
+
+                newCharacter.characterState.setDefaultAnimation(GameLoader.genAnimationAtlas(defaultAnimation.getString("file"), Animation.PlayMode.LOOP, defaultAnimation.getInt("timing")));
+
+                String behavior = jsonCharacterData.getString("behavior");
+                Behavior characterBehavior = null;
+
+                if (behavior.equals("GroundPatrolBehavior")) {
+
+                    characterBehavior = new GroundPatrolBehavior(newCharacter);
+                } else if (behavior.equals("AirPatrolBehavior")) {
+                    characterBehavior = new AirPatrolBehavior(newCharacter);
+                }
+
+                newCharacter.characterState.setBehavior(characterBehavior);
 
                 world.addCharacter(newCharacter);
 
             }
 
-            if(characterType.equals("enemyAir"))
-            {
-                JsonValue enemyAir = characters.get("enemies").get("enemyAir");
-                newCharacter = new Enemy(world.getPlayer());
-                newCharacter.setEntityRep(characterX,characterY,characterW,characterH);
-
-                newCharacter.characterState.setHealth(enemyAir.getInt("health"));
-                newCharacter.characterState.setBehavior(new AirPatrolBehavior(newCharacter));
-             
-                Animation<TextureRegion> defaultAnimation = GameLoader.genAnimationAtlas(enemyAir.getString("defaultAnimation"),PlayMode.LOOP,0.05f);
-
-                newCharacter.characterState.setDefaultAnimation(defaultAnimation);
-                newCharacter.characterState.setDeathAnimation(deathAnimation);
-
-                world.addCharacter(newCharacter);
-
-            }
-
-            
-            //Character c = new Character(world.getPlayer());
-            //c.setupCharacter(enemyX,enemyY,64.0f,64.0f);
-
-        
         }
     }
 

@@ -4,7 +4,7 @@
         "health":100,
         "moveAnimation":"moveAnimation.png",
         "weapon":"projectilePlayer"
-
+ 
     },
     "enemies":{
 
@@ -12,7 +12,8 @@
             "health":50,
             "defaultAnimation":{
                 "file":"groundEnemy.atlas",
-                "timing":0.75
+                "timing":0.75,
+                "flipX":true
             },
             "weapon":"projectileEnemyGround",
             "behavior":"GroundPatrolBehavior"
@@ -21,7 +22,11 @@
         
         "enemyAir":{
             "health":35,
-            "defaultAnimation":"enemyAir.atlas",
+            "defaultAnimation":{
+                "file":"enemyAir.atlas",
+                "timing":0.10,
+                "flipX":true
+            },            
             "weapon":"projectileEnemyAir",
             "behavior":"AirPatrolBehavior"
         }

@@ -5,17 +5,22 @@ import com.drk3931.platplus.GeometricRepresentation;
 
 public class GroundPatrolBehavior extends Behavior {
 
+    final int PATROL_LEFT_LIMIT = 200, PATROL_RIGHT_LIMIT = 200, PATROL_SPEED = 100; 
+
     public GroundPatrolBehavior(Character controllingCharacter) {
         super(controllingCharacter);
         this.controllingGeo = controllingCharacter.entityRep.getGeoRep();
 
+        setLimits();
+        
+
     }
 
-    public void setLimits(int left, int right,int groundPatrolSpeed){
-        leftLimit = controllingCharacter.entityRep.getGeoRep().getCenterX() + left * -1;
-        rightLimit = controllingCharacter.entityRep.getGeoRep().getCenterX() + right;
+    public void setLimits(){
+        leftLimit = controllingCharacter.entityRep.getGeoRep().getCenterX() + PATROL_LEFT_LIMIT * -1;
+        rightLimit = controllingCharacter.entityRep.getGeoRep().getCenterX() + PATROL_RIGHT_LIMIT;
 
-        this.groundPatrolspeed = groundPatrolSpeed;
+        this.groundPatrolspeed = PATROL_SPEED;
 
 
         int initialDirection = Math.random() > 0.5? -1: 1;
@@ -34,6 +39,7 @@ public class GroundPatrolBehavior extends Behavior {
 
 
 
+        
 
         if(controllingGeo.getX() < leftLimit){
 
@@ -50,6 +56,8 @@ public class GroundPatrolBehavior extends Behavior {
         
 
         controllingCharacter.entityRep.move(delta);
+
+        
 
 
     }

@@ -7,7 +7,6 @@
         "projectilePlayer":{
             "damage":-25,
             "sprite":"projectilePlayer.png"
-
         }
         ,   
         "projectileEnemyGround":{

@@ -34,14 +34,12 @@ public class PlatPlus extends ApplicationAdapter {
 		return currentState;
 	}
 
-	public void loadWorld() {
+	public void loadWorld() throws Exception {
 		world = gameLoader.loadWorld(map);
 		collisionHandler.setWorld(world);
 		renderer.setWorld(world);
 
-
 	}
-
 
 	@Override
 	public void create() {
@@ -62,19 +60,14 @@ public class PlatPlus extends ApplicationAdapter {
 	@Override
 	public void render() {
 
-
-
-
-
-		float delta = Math.min(Gdx.graphics.getDeltaTime(),1/30f);
-		
+		float delta = Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f);
 
 		if (world != null) {
 			world.update(delta);
 			if (world.gameOver()) {
 				currentState = GameState.GAME_OVER;
 			}
-			if(!world.gameOver()){
+			if (!world.gameOver()) {
 				collisionHandler.update(delta);
 
 			}
@@ -82,15 +75,12 @@ public class PlatPlus extends ApplicationAdapter {
 		}
 		uiHandler.update(delta);
 
-
-		Gdx.gl.glClearColor(clearColor.r,clearColor.g,clearColor.b, 1.0f);
+		Gdx.gl.glClearColor(clearColor.r, clearColor.g, clearColor.b, 1.0f);
 		// gl.glClearColor(Math.random(), Math.random(), Math.random(), Math.random());
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 		
+
 		renderer.draw();
 		uiHandler.draw();
-
 
 	}
 
@@ -99,5 +89,4 @@ public class PlatPlus extends ApplicationAdapter {
 
 	}
 
-	
 }

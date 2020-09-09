@@ -214,7 +214,7 @@ public class Player implements DrawableComponent, CameraController,Updateable {
         e.setVelocityY(knockBackY * delta);
         e.setVelocityX(knockBackX* Math.signum(cVelX) * delta);
         health -= knockBackDamage;
-        controlLocked = true;
+         controlLocked = true;
         controlLockTimer = System.currentTimeMillis();
 
         
