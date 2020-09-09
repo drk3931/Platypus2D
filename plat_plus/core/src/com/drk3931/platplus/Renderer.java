@@ -76,16 +76,6 @@ class Renderer {
 
 
 
-        
-        //this.map.drawShapeRenderer(shapeRenderer);
-
-        if(this.world != null){
-            this.world.drawShapeRenderer(shapeRenderer);
-
-        }
-        
-        
-        shapeRenderer.end();
 
         spriteBatch.begin();
 
@@ -101,12 +91,24 @@ class Renderer {
 
         spriteBatch.end();
 
+        shapeRenderer.begin();
+
+        
+        //this.map.drawShapeRenderer(shapeRenderer);
+
+        if(this.world != null){
+            this.world.drawShapeRenderer(shapeRenderer);
+
+        }
+        
+        
+        shapeRenderer.end();
+
 
         tiledMapRenderer.setView(camera);
 
         tiledMapRenderer.render();
 
-        shapeRenderer.begin();
 
         spriteBatch.begin();
 
