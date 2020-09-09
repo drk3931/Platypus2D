@@ -7,4 +7,4 @@ Libgdx Game Engine intended for platformer and top down 2D games.
 -AI Routines
 
 Demonstration
-https://drk3931.github.io/PlatPlus/
+https://drk3931.github.io/PlatPlus2D/
