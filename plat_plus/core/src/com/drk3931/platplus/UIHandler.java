@@ -73,7 +73,7 @@ public class UIHandler implements Updateable {
 
                 } catch (Exception e) {
                         
-                        System.exit(0);
+                        
                 
                 }
 
