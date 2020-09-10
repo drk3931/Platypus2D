@@ -12,7 +12,7 @@
             "health":50,
             "defaultAnimation":{
                 "file":"groundEnemy.atlas",
-                "timing":0.75,
+                "timing":0.10,
                 "flipX":true
             },
             "weapon":"projectileEnemyGround",
