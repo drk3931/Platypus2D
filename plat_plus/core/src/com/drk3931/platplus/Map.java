@@ -116,6 +116,7 @@ class Map implements DrawableComponent {
         Animation<TextureRegion> deathAnimation = GameLoader.genAnimation("poof.png", 6, 5, 0.10f);
         deathAnimation.setPlayMode(PlayMode.NORMAL);
 
+
         // parsing all enemies
         MapObjects chacaterObjects = characterLayer.getObjects();
         Iterator<MapObject> characterObjectsIterator = chacaterObjects.iterator();
@@ -153,7 +154,7 @@ class Map implements DrawableComponent {
 
                 JsonValue defaultAnimation = jsonCharacterData.get("defaultAnimation");
 
-                newCharacter.characterState.setDefaultAnimation(GameLoader.genAnimationAtlas(defaultAnimation.getString("file"), Animation.PlayMode.LOOP, defaultAnimation.getInt("timing")));
+                newCharacter.characterState.setDefaultAnimation(GameLoader.genAnimationAtlas(defaultAnimation.getString("file"), Animation.PlayMode.LOOP, defaultAnimation.getFloat("timing")));
 
                 String behavior = jsonCharacterData.getString("behavior");
                 Behavior characterBehavior = null;

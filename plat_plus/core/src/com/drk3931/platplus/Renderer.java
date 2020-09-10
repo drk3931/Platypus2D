@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -74,14 +75,15 @@ class Renderer {
         shapeRenderer.setProjectionMatrix(camera.combined);
 
 
+        Color lastTint = spriteBatch.getColor();
 
 
-
+        spriteBatch.setColor(Color.WHITE);
         spriteBatch.begin();
 
         for(int i = 0; i < 10; i++){
 
-
+            
             spriteBatch.draw(backdropRef,i * Gdx.graphics.getWidth(), 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()*2); 
 
         }
@@ -90,6 +92,8 @@ class Renderer {
 
 
         spriteBatch.end();
+
+        spriteBatch.setColor(lastTint);
 
         shapeRenderer.begin();
 

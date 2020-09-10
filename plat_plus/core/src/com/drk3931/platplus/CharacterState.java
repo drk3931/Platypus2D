@@ -45,7 +45,7 @@ public class CharacterState implements Updateable {
 
     public void setDefaultAnimation(Animation<TextureRegion> a) {
 
-        this.defaultAnimation = new AnimationHandler(a,true);
+        this.defaultAnimation = new AnimationHandler(a,false);
 
     }
 
@@ -108,8 +108,12 @@ public class CharacterState implements Updateable {
             }
 
         } else {
+
+        
             this.defaultAnimation.incrementTime(delta);
             this.currentTexture = defaultAnimation.getCurrentRegion();
+
+
         }
 
         if (currentState == State.DAMAGED && System.currentTimeMillis() - lastDamaged < damagedTimer) {
