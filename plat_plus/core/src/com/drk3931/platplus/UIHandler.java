@@ -1,5 +1,7 @@
 package com.drk3931.platplus;
 
+import java.text.NumberFormat;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -41,6 +43,7 @@ public class UIHandler implements Updateable {
     public void onGameOver() {
         gameLabel.setText("Game Over");
         mainButton.setText("Restart Game");
+        healthNumber.setText("100");
     }
 
     enum UIEvent{
@@ -48,7 +51,9 @@ public class UIHandler implements Updateable {
     }
     public void onEvent(UIEvent e, Object data){
         if(e == UIEvent.PLAYER_DAMAGED){
-            this.healthNumber.setText(String.format("%03d",(Integer)data));
+
+            Integer asNum = (Integer)data;
+            this.healthNumber.setText(asNum); 
         }
     }
 
@@ -103,7 +108,9 @@ public class UIHandler implements Updateable {
         healthLabel.setFontScale(1.25f);
         healthLabel.setColor(Color.GREEN);
 
-        healthNumber = new Label(String.format("%03d", 100), runningSkin,"title-plain");
+      
+
+        healthNumber = new Label("100", runningSkin,"title-plain");
         healthNumber.setFontScale(1.25f);
         healthNumber.setColor(Color.WHITE);
 
