@@ -46,10 +46,9 @@ class GameLoader {
         
     }
 
-    public World loadWorld(Map map) 
+    public World loadWorld(PlatPlus gameRef) 
     {
-        World world = new World();
-        map.parseCharactersLayer(world);
+        World world = new World(gameRef);
         return world;
     }
 
@@ -67,6 +66,11 @@ class GameLoader {
 		int index = 0;
 		for (int i = 0; i < FRAME_ROWS; i++) {
 			for (int j = 0; j < FRAME_COLS; j++) {
+
+                if(FLIP_TEXTURE_ON_GENERATE){
+                    tmp[i][j].flip(true, false);
+                }
+
 				frames[index++] = tmp[i][j];
 			}
         }

@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polyline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
+import com.drk3931.platplus.PlatPlus.GameState;
 import com.drk3931.platplus.Player.DamageType;
 import com.drk3931.platplus.UIHandler.UIEvent;
 import com.drk3931.platplus.projectiles.PlayerProjectile;
@@ -16,23 +17,30 @@ import com.drk3931.platplus.projectiles.Projectile;
 
 class CollisionHandler {
 
+    private PlatPlus gameRef; 
     private World world;
     private Map map;
     private Player player;
     private Rectangle overlappingRectangle;
     private UIHandler uiHandler;
+    private Rectangle winRectangle;
 
-    public void setWorld(World world,UIHandler uiHandler){
+    public void setWinRectangle(Rectangle winRectangle){
+        this.winRectangle = winRectangle;
+    }
+
+    public void setWorld(World world){
         this.world = world;
         this.player = world.getPlayer();
-        this.uiHandler = uiHandler;
     }
 
 
-    public CollisionHandler(Map map) {
+    public CollisionHandler( PlatPlus gameRef) {
        
-        this.map = map;
+        this.uiHandler = gameRef.uiHandler;
+        this.map = gameRef.map;
         this.overlappingRectangle = new Rectangle();
+        this.gameRef = gameRef;
     }
 
 
@@ -41,6 +49,14 @@ class CollisionHandler {
 
         GeometricRepresentation playerGeo = player.e.getGeoRep();
         Rectangle playerRect = (Rectangle) playerGeo.shapeRepresentation;
+
+
+        if(playerRect.overlaps(winRectangle)){
+
+            gameRef.setGameState(GameState.GAME_WON);
+            
+        }
+
 
         float playerVelX = player.e.getVelocityX(),playerVelY = player.e.getVelocityY();
 

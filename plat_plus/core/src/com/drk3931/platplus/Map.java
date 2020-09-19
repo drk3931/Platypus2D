@@ -97,7 +97,20 @@ class Map implements DrawableComponent {
 
     }
 
-    public void parseCharactersLayer(World world) {
+    public void parseLevelsLayer(PlatPlus gameRef)
+    {
+
+        MapLayer levelLayer = tiledMap.getLayers().get("Level");
+        Rectangle endRectangle = ((RectangleMapObject)levelLayer.getObjects().get("winRect")).getRectangle();
+        gameRef.collisionHandler.setWinRectangle(endRectangle);
+        
+        
+
+    }
+
+    public void parseCharactersLayer(PlatPlus gameRef) {
+
+        World world = gameRef.world;
 
         MapLayer characterLayer = tiledMap.getLayers().get("Characters");
         JsonReader jsonReader = new JsonReader();

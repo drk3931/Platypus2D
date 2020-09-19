@@ -1,6 +1,7 @@
 package com.drk3931.platplus;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -22,7 +23,7 @@ public class PlatPlus extends ApplicationAdapter {
 	Color clearColor;
 
 	enum GameState {
-		INITIAL, GAME_RUNNING, GAME_OVER
+		INITIAL, GAME_RUNNING, GAME_OVER, GAME_WON
 	}
 
 	private static GameState currentState = GameState.INITIAL;
@@ -35,6 +36,9 @@ public class PlatPlus extends ApplicationAdapter {
 		if(state == GameState.GAME_OVER){
 			uiHandler.onGameOver();
 		}
+		if(state == GameState.GAME_WON){
+			uiHandler.onGameWon();
+		}
 	}
 
 	public static GameState getGameState() {
@@ -42,8 +46,11 @@ public class PlatPlus extends ApplicationAdapter {
 	}
 
 	public void loadWorld() {
-		world = gameLoader.loadWorld(map);
-		collisionHandler.setWorld(world,uiHandler);
+		this.world = gameLoader.loadWorld(this);
+		
+        map.parseLevelsLayer(this);
+        map.parseCharactersLayer(this);
+		collisionHandler.setWorld(world);
 		renderer.setWorld(world);
 
 	}
@@ -56,9 +63,9 @@ public class PlatPlus extends ApplicationAdapter {
 
 		renderer = new Renderer(map);
 
-		collisionHandler = new CollisionHandler(map);
-
 		uiHandler = new UIHandler(this);
+		collisionHandler = new CollisionHandler(this);
+
 
 		clearColor = new Color(Color.SKY);
 
@@ -71,15 +78,10 @@ public class PlatPlus extends ApplicationAdapter {
 
 		float delta = MathUtils.clamp(Gdx.graphics.getDeltaTime(),0,max);
 
-		if (world != null) {
+		if (currentState == GameState.GAME_RUNNING) {
 			world.update(delta);
-			if (world.gameOver()) {
-				setGameState(GameState.GAME_OVER);
-			}
-			if (!world.gameOver()) {
-				collisionHandler.update(delta);
-
-			}
+			
+			collisionHandler.update(delta);
 			world.getPlayer().applyToCam(renderer.camera);
 		}
 		uiHandler.update(delta);

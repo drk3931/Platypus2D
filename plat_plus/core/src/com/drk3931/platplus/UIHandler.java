@@ -46,6 +46,12 @@ public class UIHandler implements Updateable {
         healthNumber.setText("100");
     }
 
+    public void onGameWon() {
+        gameLabel.setText("You Won!");
+        mainButton.setText("Restart Game");
+        healthNumber.setText("100");
+    }
+
     enum UIEvent {
         PLAYER_DAMAGED
     }
@@ -154,7 +160,7 @@ public class UIHandler implements Updateable {
     @Override
     public void update(float delta) {
 
-        if (PlatPlus.getGameState() == GameState.GAME_OVER || PlatPlus.getGameState() == GameState.INITIAL) {
+        if (PlatPlus.getGameState() == GameState.GAME_WON || PlatPlus.getGameState() == GameState.GAME_OVER || PlatPlus.getGameState() == GameState.INITIAL) {
             uiStage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
             uiStage.act(Gdx.graphics.getDeltaTime());
         }
@@ -167,7 +173,7 @@ public class UIHandler implements Updateable {
     }
 
     public void draw() {
-        if (PlatPlus.getGameState() == GameState.GAME_OVER || PlatPlus.getGameState() == GameState.INITIAL) {
+        if (PlatPlus.getGameState() == GameState.GAME_WON || PlatPlus.getGameState() == GameState.GAME_OVER || PlatPlus.getGameState() == GameState.INITIAL) {
             uiStage.draw();
         }
         if (PlatPlus.getGameState() == GameState.GAME_RUNNING) {

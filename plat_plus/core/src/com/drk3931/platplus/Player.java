@@ -46,8 +46,10 @@ public class Player implements DrawableComponent, CameraController, Updateable {
         e.setGeoRep(new GeometricRepresentation(Color.ORANGE, new Rectangle(x, y, 64, 128)));
         gravEffect = new GravityEffect();
         cameraUnprojected = new Vector3();
-        animationHandler = new AnimationHandler(GameLoader.genAnimation("player_walk_animation.png", 6, 5, 0.025f),
-                true);
+        GameLoader.FLIP_TEXTURE_ON_GENERATE = true;
+        animationHandler = new AnimationHandler(GameLoader.genAnimation("playerWalk.png", 6,5, 0.025f),true);
+        GameLoader.FLIP_TEXTURE_ON_GENERATE = false;
+
         currentState = PlayerState.DEFAULT;
         playerTint = Color.WHITE;
 
@@ -122,13 +124,15 @@ public class Player implements DrawableComponent, CameraController, Updateable {
     @Override
     public void update(float delta) {
 
+        if (currentState == PlayerState.DEAD) {
+            return;
+        }
+
         playerTint = Color.WHITE;
 
         updateTimers(delta);
 
-        if (currentState == PlayerState.DEAD) {
-            return;
-        }
+     
 
         if (health <= 0) {
             currentState = PlayerState.DEAD;

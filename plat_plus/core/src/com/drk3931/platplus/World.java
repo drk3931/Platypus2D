@@ -20,6 +20,8 @@ class World implements DrawableComponent {
 
     private Player player;
 
+    private PlatPlus gameRef;
+
     private ArrayList<Character> characters;
     public static ArrayList<Projectile> projectileStore;
 
@@ -31,15 +33,21 @@ class World implements DrawableComponent {
         player = new Player(x, y);
     }
 
-    public World() {
+    public World(PlatPlus gameRef) {
 
         characters = new ArrayList<Character>();
         projectileStore = new ArrayList<Projectile>();
+        this.gameRef = gameRef;
 
     }
 
 
+
     public void update(float delta) {
+
+        if(gameOver()){
+            gameRef.setGameState(GameState.GAME_OVER);
+        }
 
 
         if (PlatPlus.getGameState() == GameState.INITIAL || PlatPlus.getGameState() == GameState.GAME_OVER) {
@@ -47,6 +55,7 @@ class World implements DrawableComponent {
         }
 
         player.update(delta);
+        
 
         Iterator<Character> iter = characters.iterator();
         while (iter.hasNext()) {
