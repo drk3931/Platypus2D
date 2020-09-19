@@ -10,10 +10,7 @@ public class GravityEffect implements Effect{
     public void apply(Entity e)
     {
 
-        if(e.getVelocityY() <= -30)
-        {
-            return;
-        }
+
 
         e.setVelocityY(e.getVelocityY() -  gravAcceleration * Gdx.graphics.getDeltaTime());
 

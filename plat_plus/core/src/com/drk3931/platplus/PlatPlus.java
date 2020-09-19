@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.MathUtils;
 
 public class PlatPlus extends ApplicationAdapter {
 
@@ -34,7 +35,7 @@ public class PlatPlus extends ApplicationAdapter {
 		return currentState;
 	}
 
-	public void loadWorld() throws Exception {
+	public void loadWorld() {
 		world = gameLoader.loadWorld(map);
 		collisionHandler.setWorld(world);
 		renderer.setWorld(world);
@@ -57,10 +58,12 @@ public class PlatPlus extends ApplicationAdapter {
 
 	}
 
+	float max = 1/30f;
+
 	@Override
 	public void render() {
 
-		float delta = Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f);
+		float delta = MathUtils.clamp(Gdx.graphics.getDeltaTime(),0,max);
 
 		if (world != null) {
 			world.update(delta);

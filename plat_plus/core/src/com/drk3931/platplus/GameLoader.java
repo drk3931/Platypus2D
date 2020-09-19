@@ -26,6 +26,12 @@ class GameLoader {
         return new TextureRegion(new Texture(Gdx.files.internal(fname)));
     }
 
+
+    public static TextureAtlas genAtlas(String path){
+        return new TextureAtlas(Gdx.files.internal(path));
+    }
+
+
     public Map loadMap()
     {
 
@@ -40,7 +46,7 @@ class GameLoader {
         
     }
 
-    public World loadWorld(Map map) throws Exception
+    public World loadWorld(Map map) 
     {
         World world = new World();
         map.parseCharactersLayer(world);

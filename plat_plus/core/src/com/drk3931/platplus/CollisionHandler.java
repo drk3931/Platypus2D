@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polyline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
+import com.drk3931.platplus.Player.DamageType;
 import com.drk3931.platplus.projectiles.PlayerProjectile;
 import com.drk3931.platplus.projectiles.Projectile;
 
@@ -61,8 +62,8 @@ class CollisionHandler {
         //handle 
         for(Character c:world.getCharacters()){
           Rectangle characterRect = (Rectangle)c.entityRep.getGeoRep().shapeRepresentation;
-          if(playerRect.overlaps(characterRect) && !player.isInvincible() && c.characterState.getCurrentState() != CharacterState.State.DEAD){
-              player.onKnockBack((int)Math.signum(c.entityRep.getVelocityX()), (int)Math.signum(c.entityRep.getVelocityY()), delta);
+          if(playerRect.overlaps(characterRect) && c.characterState.getCurrentState() != CharacterState.State.DEAD){
+              player.onDamage(DamageType.COLLISION, delta);
           }
         }
 

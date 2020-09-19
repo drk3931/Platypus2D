@@ -97,7 +97,7 @@ class Map implements DrawableComponent {
 
     }
 
-    public void parseCharactersLayer(World world) throws Exception{
+    public void parseCharactersLayer(World world) {
 
         MapLayer characterLayer = tiledMap.getLayers().get("Characters");
         JsonReader jsonReader = new JsonReader();
@@ -118,8 +118,8 @@ class Map implements DrawableComponent {
 
 
         // parsing all enemies
-        MapObjects chacaterObjects = characterLayer.getObjects();
-        Iterator<MapObject> characterObjectsIterator = chacaterObjects.iterator();
+        MapObjects characterObjects = characterLayer.getObjects();
+        Iterator<MapObject> characterObjectsIterator = characterObjects.iterator();
 
         while (characterObjectsIterator.hasNext()) {
 
@@ -140,7 +140,6 @@ class Map implements DrawableComponent {
 
                 if(jsonCharacterData == null){
                     Gdx.app.log("Error", "Unknown Character Data " + characterType);
-                    throw new Exception();
                 }
                 else{
                     Gdx.app.log("Info", "Adding character of type " + characterType + " Coordinates: " + characterX + ' ' + characterY + ' ' + characterW + ' ' + characterH);
