@@ -27,8 +27,14 @@ public class PlatPlus extends ApplicationAdapter {
 
 	private static GameState currentState = GameState.INITIAL;
 
-	public static void setGameState(GameState state) {
+	public void setGameState(GameState state) {
 		currentState = state;
+		if(state == GameState.GAME_RUNNING){
+			loadWorld();
+		}
+		if(state == GameState.GAME_OVER){
+			uiHandler.onGameOver();
+		}
 	}
 
 	public static GameState getGameState() {
@@ -37,7 +43,7 @@ public class PlatPlus extends ApplicationAdapter {
 
 	public void loadWorld() {
 		world = gameLoader.loadWorld(map);
-		collisionHandler.setWorld(world);
+		collisionHandler.setWorld(world,uiHandler);
 		renderer.setWorld(world);
 
 	}
@@ -68,7 +74,7 @@ public class PlatPlus extends ApplicationAdapter {
 		if (world != null) {
 			world.update(delta);
 			if (world.gameOver()) {
-				currentState = GameState.GAME_OVER;
+				setGameState(GameState.GAME_OVER);
 			}
 			if (!world.gameOver()) {
 				collisionHandler.update(delta);

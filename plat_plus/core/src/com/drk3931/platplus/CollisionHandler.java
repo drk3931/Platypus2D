@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Polyline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
 import com.drk3931.platplus.Player.DamageType;
+import com.drk3931.platplus.UIHandler.UIEvent;
 import com.drk3931.platplus.projectiles.PlayerProjectile;
 import com.drk3931.platplus.projectiles.Projectile;
 
@@ -19,10 +20,12 @@ class CollisionHandler {
     private Map map;
     private Player player;
     private Rectangle overlappingRectangle;
+    private UIHandler uiHandler;
 
-    public void setWorld(World world){
+    public void setWorld(World world,UIHandler uiHandler){
         this.world = world;
         this.player = world.getPlayer();
+        this.uiHandler = uiHandler;
     }
 
 
@@ -63,7 +66,10 @@ class CollisionHandler {
         for(Character c:world.getCharacters()){
           Rectangle characterRect = (Rectangle)c.entityRep.getGeoRep().shapeRepresentation;
           if(playerRect.overlaps(characterRect) && c.characterState.getCurrentState() != CharacterState.State.DEAD){
+              
+            
               player.onDamage(DamageType.COLLISION, delta);
+              uiHandler.onEvent(UIEvent.PLAYER_DAMAGED,world.getPlayer().health);
           }
         }
 

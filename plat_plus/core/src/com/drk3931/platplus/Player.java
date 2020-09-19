@@ -134,10 +134,6 @@ public class Player implements DrawableComponent, CameraController, Updateable {
             currentState = PlayerState.DEAD;
         }
 
-        if (health < lastHealth) {
-            currentState = PlayerState.DAMAGED;
-            lastDamaged = System.currentTimeMillis();
-        }
 
         if (currentState == PlayerState.DAMAGED) {
 
@@ -201,6 +197,7 @@ public class Player implements DrawableComponent, CameraController, Updateable {
         if (!(currentState == PlayerState.DAMAGED)) {
 
             if (dType == DamageType.COLLISION) {
+                this.health-=collisionDamage;
                 this.currentState = PlayerState.DAMAGED;
             }
 
