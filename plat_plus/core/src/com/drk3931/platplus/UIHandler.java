@@ -46,14 +46,15 @@ public class UIHandler implements Updateable {
         healthNumber.setText("100");
     }
 
-    enum UIEvent{
+    enum UIEvent {
         PLAYER_DAMAGED
     }
-    public void onEvent(UIEvent e, Object data){
-        if(e == UIEvent.PLAYER_DAMAGED){
 
-            Integer asNum = (Integer)data;
-            this.healthNumber.setText(asNum); 
+    public void onEvent(UIEvent e, Object data) {
+        if (e == UIEvent.PLAYER_DAMAGED) {
+
+            Integer asNum = (Integer) data;
+            this.healthNumber.setText(asNum);
         }
     }
 
@@ -102,20 +103,18 @@ public class UIHandler implements Updateable {
         table.top().left();
         table.pad(15);
 
-        //table.background(skin.getDrawable("textfield"));
+        // table.background(skin.getDrawable("textfield"));
 
-        healthLabel = new Label("Health: ", runningSkin,"title-plain");
+        healthLabel = new Label("Health: ", runningSkin, "title-plain");
         healthLabel.setFontScale(1.25f);
         healthLabel.setColor(Color.GREEN);
 
-      
-
-        healthNumber = new Label("100", runningSkin,"title-plain");
+        healthNumber = new Label("100", runningSkin, "title-plain");
         healthNumber.setFontScale(1.25f);
         healthNumber.setColor(Color.WHITE);
 
         table.row();
-    
+
         table.add(healthLabel);
         table.add(healthNumber);
         table.row();
@@ -126,11 +125,9 @@ public class UIHandler implements Updateable {
 
     public UIHandler(final PlatPlus gameRef) {
 
-        skin = new Skin(Gdx.files.internal("./freezing/skin/freezing-ui.json"),
-                GameLoader.genAtlas("./freezing/skin/freezing-ui.atlas"));
+        runningSkin = new Skin(Gdx.files.internal("shade/skin/uiskin.json"), GameLoader.genAtlas("shade/skin/uiskin.atlas/"));
 
-        runningSkin = new Skin(Gdx.files.internal("./shade/skin/uiskin.json"),
-                GameLoader.genAtlas("./shade/skin/uiskin.atlas"));
+        skin = new Skin(Gdx.files.internal("freezing/skin/freezing-ui.json"),GameLoader.genAtlas("freezing/skin/freezing-ui.atlas"));
 
         uiStage = new Stage(new ScreenViewport());
         runningStage = new Stage(new ScreenViewport());
