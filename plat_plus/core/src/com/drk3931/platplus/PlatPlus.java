@@ -35,7 +35,6 @@ public class PlatPlus extends ApplicationAdapter {
 		}
 		if(state == GameState.GAME_OVER){
 
-			Gdx.input.setInputProcessor(uiHandler.uiStage);
 			
 			uiHandler.onGameOver();
 		}

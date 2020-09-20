@@ -19,15 +19,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.drk3931.platplus.PlatPlus.GameState;
@@ -44,16 +47,22 @@ public class UIHandler implements Updateable {
 
     private PlatPlus gameRef;
 
+    private ProgressBar pb;
+
     public void onGameOver() {
         gameLabel.setText("Game Over");
         mainButton.setText("Restart Game");
         healthNumber.setText("100");
+        Gdx.input.setInputProcessor(uiStage);
+
     }
 
     public void onGameWon() {
         gameLabel.setText("You Won!");
         mainButton.setText("Restart Game");
         healthNumber.setText("100");
+        Gdx.input.setInputProcessor(uiStage);
+
     }
 
     enum UIEvent {
@@ -65,61 +74,10 @@ public class UIHandler implements Updateable {
 
             Integer asNum = (Integer) data;
             this.healthNumber.setText(asNum);
+            pb.setValue(asNum);
         }
     }
 
-    private void loadMessageWindow() {
-
-        float sw = Gdx.graphics.getWidth();
-        float sh = Gdx.graphics.getHeight();
-
-
-        final Window w = new Window("ALERT", skin){
-        
-
-            @Override
-            public float getPrefHeight() {
-                return 100f;
-            }
-            
-            @Override
-            public float getPrefWidth() {
-                return 400f;
-            }
-
-        };
-
-        w.getTitleLabel().setFontScale(1.2f);
-
-
-        Label message = new Label("Use the WASD keys to move. Press SHIFT to sprint. \n Click on an enemy to attack.",
-                runningSkin,"title-plain");
-        message.setFontScale(0.80f);
-        w.add(message).fill();
-
-      
-        
-
-        Container<Window> windowContainer = new Container<Window>();
-        windowContainer.setSize(sw, sh);
-        windowContainer.setActor(w);
-        windowContainer.align(Align.top).padTop(100);
-
-        TextButton okButton = new TextButton("Ok!", skin);
-        okButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-
-                w.remove();
-                
-            }
-        });
-        w.row();
-        w.add(okButton);
-
-        runningStage.addActor(windowContainer);
-
-    }
 
     private void setupMenuUI() {
 
@@ -155,41 +113,102 @@ public class UIHandler implements Updateable {
 
     }
 
-    private void setupRunningUI() {
+    private TextureRegionDrawable getSimpleDrawable() {
+        Pixmap bgPixmap = new Pixmap(1, 1, Pixmap.Format.RGB565);
+        bgPixmap.setColor(Color.CYAN);
+        bgPixmap.fill();
+        TextureRegionDrawable t = new TextureRegionDrawable(new TextureRegion(new Texture(bgPixmap)));
+        return t; 
+    }
+
+    
+    private Container<Window> getMessageWindow() {
 
         float sw = Gdx.graphics.getWidth();
         float sh = Gdx.graphics.getHeight();
 
+        final Window w = new Window("ALERT", skin);
+
+        w.getTitleLabel().setFontScale(1.2f);
+
+        Label message = new Label(
+                "• Use the WASD keys to move. \n• Press SHIFT and W at the same time to running jump. \n• Click on an enemy to attack.",
+                runningSkin);
+        w.add(message).fill();
+
+        Container<Window> windowContainer = new Container<Window>();
+        windowContainer.setSize(sw, sh);
+        windowContainer.setActor(w);
+        windowContainer.align(Align.top).padTop(50);
+
+        TextButton okButton = new TextButton("Ok!", skin);
+        okButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                w.remove();
+
+            }
+        });
+        w.row();
+        w.add(okButton);
+
+        return windowContainer;
+
+    }
+
+    private void setupRunningUI() {
+
+
+        this.runningStage.clear();
+
+        float sw = Gdx.graphics.getWidth();
+        float sh = Gdx.graphics.getHeight();
+
+  
+
         Table table = new Table();
-        table.setSize(sw, sh);
+        Container<Table> ct = new Container<Table>();
+        ct.setSize(sw, sh);
+        ct.setActor(table);
+        ct.top().left();
 
-        table.top().left();
 
-        // table.background(skin.getDrawable("textfield"));
 
-        healthLabel = new Label("Health: ", runningSkin, "title-plain");
-        healthLabel.setFontScale(1.25f);
-        healthLabel.setColor(Color.GREEN);
 
-        healthNumber = new Label("100", runningSkin, "title-plain");
-        healthNumber.setFontScale(1.25f);
-        healthNumber.setColor(Color.WHITE);
+        healthLabel = new Label("Health: ", runningSkin,"subtitle");
+        healthLabel.setColor(Color.BLUE);
+
+
+        healthNumber = new Label("100", runningSkin,"subtitle");
+        healthNumber.setColor(Color.GREEN);
+
+        healthLabel.setFontScale(0.80f);
+        healthNumber.setFontScale(0.80f);
+
+        ProgressBarStyle pbs = runningSkin.get("default-horizontal",ProgressBarStyle.class);
+        ProgressBar pb = new ProgressBar(0, 100, 1f, false,pbs);
+        pb.setValue(100);
+
+        this.pb = pb;
+        
+
 
         table.add(healthLabel);
-        table.add(healthNumber);
+        table.add(pb);
+        //Drawable d = getSimpleDrawable();
+        //table.background(d);
 
-        runningStage.addActor(table);
+        runningStage.addActor(ct);
 
-        loadMessageWindow();
-
-
+        runningStage.addActor(getMessageWindow());
 
     }
 
     public UIHandler(final PlatPlus gameRef) {
 
-        runningSkin = new Skin(Gdx.files.internal("shade/skin/uiskin.json"),
-                GameLoader.genAtlas("shade/skin/uiskin.atlas/"));
+        runningSkin = new Skin(Gdx.files.internal("pixthulhu/skin/pixthulhu-ui.json"),
+                GameLoader.genAtlas("pixthulhu/skin/pixthulhu-ui.atlas"));
 
         skin = new Skin(Gdx.files.internal("freezing/skin/freezing-ui.json"),
                 GameLoader.genAtlas("freezing/skin/freezing-ui.atlas"));
@@ -200,7 +219,6 @@ public class UIHandler implements Updateable {
         this.gameRef = gameRef;
 
         setupMenuUI();
-        setupRunningUI();
 
         mainButton.addListener(new ClickListener() {
             @Override
@@ -208,7 +226,7 @@ public class UIHandler implements Updateable {
 
                 gameRef.setGameState(GameState.GAME_RUNNING);
                 Gdx.input.setInputProcessor(runningStage);
-                loadMessageWindow();
+                setupRunningUI();
 
                 event.stop();
 
