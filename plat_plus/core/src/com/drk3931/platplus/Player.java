@@ -28,7 +28,7 @@ public class Player implements DrawableComponent, CameraController, Updateable {
     private Camera camRef;
     private Color playerTint;
 
-    int speedX = 333, jumpVelocity = 950, health = 100, lastHealth = 100, 
+    int speedX = 500, jumpVelocity = 2350, health = 100, lastHealth = 100, 
         collisionDamage = 10;
 
     float damageTime = 0.75f, lastDamaged = 0, lastFire = 0, fireRate = 0.50f, sprintRate = 1.5f;
@@ -44,7 +44,7 @@ public class Player implements DrawableComponent, CameraController, Updateable {
 
         e = new Entity();
         e.setGeoRep(new GeometricRepresentation(Color.ORANGE, new Rectangle(x, y, 64, 128)));
-        gravEffect = new GravityEffect();
+        gravEffect = new GravityEffect(e);
         cameraUnprojected = new Vector3();
         GameLoader.FLIP_TEXTURE_ON_GENERATE = true;
         animationHandler = new AnimationHandler(GameLoader.genAnimation("playerWalk.png", 6,5, 0.025f),true);
@@ -175,7 +175,7 @@ public class Player implements DrawableComponent, CameraController, Updateable {
         // this needs to be called before gravEffect is applied
         controlPlayer(delta);
 
-        gravEffect.apply(e);
+        gravEffect.apply(delta);
 
         lastHealth = health;
 

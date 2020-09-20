@@ -244,11 +244,11 @@ public class UIHandler implements Updateable {
         if (PlatPlus.getGameState() == GameState.GAME_WON || PlatPlus.getGameState() == GameState.GAME_OVER
                 || PlatPlus.getGameState() == GameState.INITIAL) {
             uiStage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
-            uiStage.act(Gdx.graphics.getDeltaTime());
+            uiStage.act(delta);
         }
         if (PlatPlus.getGameState() == GameState.GAME_RUNNING) {
             runningStage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
-            runningStage.act(Gdx.graphics.getDeltaTime());
+            runningStage.act(delta);
 
         }
 

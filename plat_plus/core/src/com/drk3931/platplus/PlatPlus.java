@@ -13,8 +13,6 @@ public class PlatPlus extends ApplicationAdapter {
 	GameLoader gameLoader;
 	Renderer renderer;
 
-
-
 	/*
 	 * GameLoader gameLoader;
 	 */
@@ -24,8 +22,7 @@ public class PlatPlus extends ApplicationAdapter {
 	UIHandler uiHandler;
 	Color clearColor;
 
-	
-	final float timeStep = 1/120f;
+	final float timeStep = 1 / 120f;
 
 	enum GameState {
 		INITIAL, GAME_RUNNING, GAME_OVER, GAME_WON
@@ -35,15 +32,14 @@ public class PlatPlus extends ApplicationAdapter {
 
 	public void setGameState(GameState state) {
 		currentState = state;
-		if(state == GameState.GAME_RUNNING){
+		if (state == GameState.GAME_RUNNING) {
 			loadWorld();
 		}
-		if(state == GameState.GAME_OVER){
+		if (state == GameState.GAME_OVER) {
 
-			
 			uiHandler.onGameOver();
 		}
-		if(state == GameState.GAME_WON){
+		if (state == GameState.GAME_WON) {
 			uiHandler.onGameWon();
 		}
 	}
@@ -54,9 +50,9 @@ public class PlatPlus extends ApplicationAdapter {
 
 	public void loadWorld() {
 		this.world = gameLoader.loadWorld(this);
-		
-        map.parseLevelsLayer(this);
-        map.parseCharactersLayer(this);
+
+		map.parseLevelsLayer(this);
+		map.parseCharactersLayer(this);
 		collisionHandler.setWorld(world);
 		renderer.setWorld(world);
 
@@ -73,33 +69,45 @@ public class PlatPlus extends ApplicationAdapter {
 		uiHandler = new UIHandler(this);
 		collisionHandler = new CollisionHandler(this);
 
-
 		clearColor = new Color(Color.SKY);
 
 	}
 
-	float max = 1/30f;
+
+	float buildup = 0;
 
 	@Override
 	public void render() {
 
-		//float delta = MathUtils.clamp(Gdx.graphics.getDeltaTime(),0,max);
-		float delta = timeStep;
-
-		if (currentState == GameState.GAME_RUNNING) {
-			world.update(delta);
-			
-			collisionHandler.update(delta);
-			world.getPlayer().applyToCam(renderer.camera);
-		}
-		uiHandler.update(delta);
+	
 
 		Gdx.gl.glClearColor(clearColor.r, clearColor.g, clearColor.b, 1.0f);
-		// gl.glClearColor(Math.random(), Math.random(), Math.random(), Math.random());
-		
 
 		renderer.draw();
 		uiHandler.draw();
+
+
+		if(buildup < timeStep){
+			
+			buildup+=Gdx.graphics.getDeltaTime();
+			return;
+
+		}
+		else{
+
+			if (currentState == GameState.GAME_RUNNING) {
+				world.update(timeStep);
+	
+				collisionHandler.update(timeStep);
+				world.getPlayer().applyToCam(renderer.camera);
+			}
+			uiHandler.update(timeStep);
+			buildup = 0; 
+			
+		}
+
+
+
 
 	}
 
