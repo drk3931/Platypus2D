@@ -1,0 +1,20 @@
+
+groundEnemy.png
+size: 1024,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+frame1
+  rotate: false
+  xy: 0, 0
+  size: 465, 387
+  orig: 492, 400
+  offset: 14, 0
+  index: -1
+frame2
+  rotate: false
+  xy: 465, 0
+  size: 465, 387
+  orig: 492, 400
+  offset: 14, 0
+  index: -1

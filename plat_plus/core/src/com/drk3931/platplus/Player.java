@@ -66,7 +66,7 @@ public class Player implements DrawableComponent, CameraController, Updateable {
      
         boolean sprinting = false;
 
-        if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT){
+        if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)){
             sprinting = true;
             animationHandler.setTimeScale(1.5f);
 
