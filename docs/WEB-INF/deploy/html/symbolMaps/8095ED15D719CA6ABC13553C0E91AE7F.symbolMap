@@ -15946,18 +15946,18 @@ N$d,com.drk3931.platplus.Map::Map(Ljava/lang/String;) <init>,com.drk3931.platplu
 c,com.drk3931.platplus.Map::mapPolies,com.drk3931.platplus.Map,mapPolies,com/drk3931/platplus/Map.java,38,-1
 d,com.drk3931.platplus.Map::tiledMap,com.drk3931.platplus.Map,tiledMap,com/drk3931/platplus/Map.java,39,-1
 PlatPlus,,com.drk3931.platplus.PlatPlus,,com/drk3931/platplus/PlatPlus.java,10,-1
-P$d,com.drk3931.platplus.PlatPlus::$create(Lcom/drk3931/platplus/PlatPlus;)V,com.drk3931.platplus.PlatPlus,$create,com/drk3931/platplus/PlatPlus.java,61,0
-Q$d,com.drk3931.platplus.PlatPlus::$render(Lcom/drk3931/platplus/PlatPlus;)V,com.drk3931.platplus.PlatPlus,$render,com/drk3931/platplus/PlatPlus.java,79,0
-R$d,com.drk3931.platplus.PlatPlus::$setGameState(Lcom/drk3931/platplus/PlatPlus;Lcom/drk3931/platplus/PlatPlus$GameState;)V,com.drk3931.platplus.PlatPlus,$setGameState,com/drk3931/platplus/PlatPlus.java,31,0
+P$d,com.drk3931.platplus.PlatPlus::$create(Lcom/drk3931/platplus/PlatPlus;)V,com.drk3931.platplus.PlatPlus,$create,com/drk3931/platplus/PlatPlus.java,66,0
+Q$d,com.drk3931.platplus.PlatPlus::$render(Lcom/drk3931/platplus/PlatPlus;)V,com.drk3931.platplus.PlatPlus,$render,com/drk3931/platplus/PlatPlus.java,84,0
+R$d,com.drk3931.platplus.PlatPlus::$setGameState(Lcom/drk3931/platplus/PlatPlus;Lcom/drk3931/platplus/PlatPlus$GameState;)V,com.drk3931.platplus.PlatPlus,$setGameState,com/drk3931/platplus/PlatPlus.java,36,0
 S$d,com.drk3931.platplus.PlatPlus::PlatPlus() <init>,com.drk3931.platplus.PlatPlus,PlatPlus,com/drk3931/platplus/PlatPlus.java,10,0
-a,com.drk3931.platplus.PlatPlus::clearColor,com.drk3931.platplus.PlatPlus,clearColor,com/drk3931/platplus/PlatPlus.java,23,-1
-b,com.drk3931.platplus.PlatPlus::collisionHandler,com.drk3931.platplus.PlatPlus,collisionHandler,com/drk3931/platplus/PlatPlus.java,21,-1
-O$d,com.drk3931.platplus.PlatPlus::currentState,com.drk3931.platplus.PlatPlus,currentState,com/drk3931/platplus/PlatPlus.java,29,-1
+a,com.drk3931.platplus.PlatPlus::clearColor,com.drk3931.platplus.PlatPlus,clearColor,com/drk3931/platplus/PlatPlus.java,25,-1
+b,com.drk3931.platplus.PlatPlus::collisionHandler,com.drk3931.platplus.PlatPlus,collisionHandler,com/drk3931/platplus/PlatPlus.java,23,-1
+O$d,com.drk3931.platplus.PlatPlus::currentState,com.drk3931.platplus.PlatPlus,currentState,com/drk3931/platplus/PlatPlus.java,34,-1
 c,com.drk3931.platplus.PlatPlus::gameLoader,com.drk3931.platplus.PlatPlus,gameLoader,com/drk3931/platplus/PlatPlus.java,13,-1
 d,com.drk3931.platplus.PlatPlus::map,com.drk3931.platplus.PlatPlus,map,com/drk3931/platplus/PlatPlus.java,12,-1
 e,com.drk3931.platplus.PlatPlus::renderer,com.drk3931.platplus.PlatPlus,renderer,com/drk3931/platplus/PlatPlus.java,14,-1
-f,com.drk3931.platplus.PlatPlus::uiHandler,com.drk3931.platplus.PlatPlus,uiHandler,com/drk3931/platplus/PlatPlus.java,22,-1
-g,com.drk3931.platplus.PlatPlus::world,com.drk3931.platplus.PlatPlus,world,com/drk3931/platplus/PlatPlus.java,20,-1
+f,com.drk3931.platplus.PlatPlus::uiHandler,com.drk3931.platplus.PlatPlus,uiHandler,com/drk3931/platplus/PlatPlus.java,24,-1
+g,com.drk3931.platplus.PlatPlus::world,com.drk3931.platplus.PlatPlus,world,com/drk3931/platplus/PlatPlus.java,22,-1
 Player,,com.drk3931.platplus.Player,,com/drk3931/platplus/Player.java,19,-1
 T$d,com.drk3931.platplus.Player::$applyToCam(Lcom/drk3931/platplus/Player;Lcom/badlogic/gdx/graphics/Camera;)V,com.drk3931.platplus.Player,$applyToCam,com/drk3931/platplus/Player.java,199,0
 U$d,com.drk3931.platplus.Player::$controlPlayer(Lcom/drk3931/platplus/Player;F)V,com.drk3931.platplus.Player,$controlPlayer,com/drk3931/platplus/Player.java,58,0
@@ -16028,8 +16028,8 @@ s_d,com.drk3931.platplus.UIHandler$2::clicked(Lcom/badlogic/gdx/scenes/scene2d/I
 a,com.drk3931.platplus.UIHandler$2::this$01,com.drk3931.platplus.UIHandler$2,this$01,com/drk3931/platplus/UIHandler.java,223,-1
 b,com.drk3931.platplus.UIHandler$2::val$gameRef2,com.drk3931.platplus.UIHandler$2,val$gameRef2,com/drk3931/platplus/UIHandler.java,223,-1
 World,,com.drk3931.platplus.World,,com/drk3931/platplus/World.java,17,-1
-u_d,com.drk3931.platplus.World::$drawShapeRenderer(Lcom/drk3931/platplus/World;Lcom/badlogic/gdx/graphics/glutils/ShapeRenderer;)V,com.drk3931.platplus.World,$drawShapeRenderer,com/drk3931/platplus/World.java,81,0
-v_d,com.drk3931.platplus.World::$drawSpriteBatch(Lcom/drk3931/platplus/World;Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V,com.drk3931.platplus.World,$drawSpriteBatch,com/drk3931/platplus/World.java,94,0
+u_d,com.drk3931.platplus.World::$drawShapeRenderer(Lcom/drk3931/platplus/World;Lcom/badlogic/gdx/graphics/glutils/ShapeRenderer;)V,com.drk3931.platplus.World,$drawShapeRenderer,com/drk3931/platplus/World.java,83,0
+v_d,com.drk3931.platplus.World::$drawSpriteBatch(Lcom/drk3931/platplus/World;Lcom/badlogic/gdx/graphics/g2d/SpriteBatch;)V,com.drk3931.platplus.World,$drawSpriteBatch,com/drk3931/platplus/World.java,96,0
 w_d,com.drk3931.platplus.World::$update(Lcom/drk3931/platplus/World;F)V,com.drk3931.platplus.World,$update,com/drk3931/platplus/World.java,46,0
 x_d,com.drk3931.platplus.World::World(Lcom/drk3931/platplus/PlatPlus;) <init>,com.drk3931.platplus.World,World,com/drk3931/platplus/World.java,36,0
 a,com.drk3931.platplus.World::characters,com.drk3931.platplus.World,characters,com/drk3931/platplus/World.java,25,-1
