@@ -28,10 +28,10 @@ public class Player implements DrawableComponent, CameraController, Updateable {
     private Camera camRef;
     private Color playerTint;
 
-    int speedX = 333, jumpVelocity = 1400, health = 100, lastHealth = 100, 
+    int speedX = 333, jumpVelocity = 1000, health = 100, lastHealth = 100, 
         collisionDamage = 10;
 
-    float damageTime = 0.75f, lastDamaged = 0, lastFire = 0, fireRate = 0.50f;
+    float damageTime = 0.75f, lastDamaged = 0, lastFire = 0, fireRate = 0.50f, sprintRate = 1.5f;
     boolean controlLocked = false, canFire = true;
 
     public Entity e;
@@ -63,18 +63,40 @@ public class Player implements DrawableComponent, CameraController, Updateable {
 
         e.setVelocityX(0);
 
-        if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-            e.setVelocityX(delta * speedX * -1);
-            animationHandler.incrementTime(delta);
+     
+        boolean sprinting = false;
+
+        if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT){
+            sprinting = true;
+            animationHandler.setTimeScale(1.5f);
+
+        }
+        else{
+            e.setVelocityX(e.getVelocityX());
+            animationHandler.setTimeScale(1.0f);
         }
 
-        if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+
+        if (Gdx.input.isKeyPressed(Keys.A)) {
+            e.setVelocityX(delta * speedX * -1);
+            animationHandler.incrementTime(delta);
+
+        }
+        else if (Gdx.input.isKeyPressed(Keys.D)) {
             e.setVelocityX(delta * speedX);
             animationHandler.incrementTime(delta);
 
+
         }
 
-        if (Gdx.input.isKeyPressed(Keys.UP) && canJump()) {
+        if(sprinting){
+            e.setVelocityX(e.getVelocityX() * sprintRate);
+        }
+      
+
+
+
+        if (Gdx.input.isKeyPressed(Keys.W) && canJump()) {
             e.setVelocityY(delta * jumpVelocity);
         }
 

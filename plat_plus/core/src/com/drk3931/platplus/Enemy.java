@@ -15,6 +15,8 @@ public class Enemy extends Character {
     }
 
     public void onPlayerHit(Projectile p){
+
+        
         
     }
 
