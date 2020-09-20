@@ -45,6 +45,8 @@ class World implements DrawableComponent {
 
     public void update(float delta) {
 
+        delta *=2;
+
         if(gameOver()){
             gameRef.setGameState(GameState.GAME_OVER);
         }

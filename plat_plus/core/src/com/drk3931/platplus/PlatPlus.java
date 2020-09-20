@@ -13,6 +13,8 @@ public class PlatPlus extends ApplicationAdapter {
 	GameLoader gameLoader;
 	Renderer renderer;
 
+
+
 	/*
 	 * GameLoader gameLoader;
 	 */
@@ -21,6 +23,9 @@ public class PlatPlus extends ApplicationAdapter {
 	CollisionHandler collisionHandler;
 	UIHandler uiHandler;
 	Color clearColor;
+
+	
+	final float timeStep = 1/120f;
 
 	enum GameState {
 		INITIAL, GAME_RUNNING, GAME_OVER, GAME_WON
@@ -78,7 +83,8 @@ public class PlatPlus extends ApplicationAdapter {
 	@Override
 	public void render() {
 
-		float delta = MathUtils.clamp(Gdx.graphics.getDeltaTime(),0,max);
+		//float delta = MathUtils.clamp(Gdx.graphics.getDeltaTime(),0,max);
+		float delta = timeStep;
 
 		if (currentState == GameState.GAME_RUNNING) {
 			world.update(delta);

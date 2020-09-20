@@ -28,7 +28,7 @@ public class Player implements DrawableComponent, CameraController, Updateable {
     private Camera camRef;
     private Color playerTint;
 
-    int speedX = 333, jumpVelocity = 1000, health = 100, lastHealth = 100, 
+    int speedX = 333, jumpVelocity = 950, health = 100, lastHealth = 100, 
         collisionDamage = 10;
 
     float damageTime = 0.75f, lastDamaged = 0, lastFire = 0, fireRate = 0.50f, sprintRate = 1.5f;
