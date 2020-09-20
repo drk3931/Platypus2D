@@ -6,7 +6,7 @@ canvas {
 html,body{
     
     min-width: 1024px;
-    min-height: 900px;
+    min-height: 800px;
 
     margin: 0;
     overflow-y: hidden;
@@ -16,29 +16,13 @@ html,body{
 
 }
 
-
-#embed-html{
-    margin: auto !important;
-}
-
-
 #embed-html table{
-    padding-top: 150px;
     max-height: 100vh !important;
     margin-left: auto !important;
     margin-right: auto !important;
 
 }
-
-.logo{
-    display: none !important;
-}
-
-
 #gameTitle{
+    color: white;
     text-align: center;
-    text-decoration: underline;
-    -moz-text-decoration-color: red;
-    color:white;
-    max-height: 10vh !important;
 }

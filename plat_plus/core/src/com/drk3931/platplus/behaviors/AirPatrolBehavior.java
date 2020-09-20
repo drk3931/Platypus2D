@@ -14,7 +14,7 @@ public class AirPatrolBehavior extends Behavior {
 
     Vector2 currentTarget;
     Vector2 vectorToTarget;
-    int dartVelocity = 100;
+    int dartVelocity = 250;
 
     public AirPatrolBehavior(Character controllingCharacter) {
         super(controllingCharacter);

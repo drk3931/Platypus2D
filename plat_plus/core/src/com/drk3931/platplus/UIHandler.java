@@ -15,11 +15,15 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -31,7 +35,7 @@ import com.drk3931.platplus.PlatPlus.GameState;
 public class UIHandler implements Updateable {
 
     private Skin skin, runningSkin;
-    private Stage uiStage, runningStage;
+    public Stage uiStage, runningStage;
 
     private Table table;
     private TextButton mainButton;
@@ -64,6 +68,59 @@ public class UIHandler implements Updateable {
         }
     }
 
+    private void loadMessageWindow() {
+
+        float sw = Gdx.graphics.getWidth();
+        float sh = Gdx.graphics.getHeight();
+
+
+        final Window w = new Window("ALERT", skin){
+        
+
+            @Override
+            public float getPrefHeight() {
+                return 100f;
+            }
+            
+            @Override
+            public float getPrefWidth() {
+                return 400f;
+            }
+
+        };
+
+        w.getTitleLabel().setFontScale(1.2f);
+
+
+        Label message = new Label("Use the WASD keys to move. Press SHIFT to sprint. \n Click on an enemy to attack.",
+                runningSkin,"title-plain");
+        message.setFontScale(0.80f);
+        w.add(message).fill();
+
+      
+        
+
+        Container<Window> windowContainer = new Container<Window>();
+        windowContainer.setSize(sw, sh);
+        windowContainer.setActor(w);
+        windowContainer.align(Align.top).padTop(100);
+
+        TextButton okButton = new TextButton("Ok!", skin);
+        okButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                w.remove();
+                
+            }
+        });
+        w.row();
+        w.add(okButton);
+
+        runningStage.addActor(windowContainer);
+
+    }
+
     private void setupMenuUI() {
 
         Container<Table> tableContainer = new Container<Table>();
@@ -73,7 +130,6 @@ public class UIHandler implements Updateable {
         float ch = sh * 0.5f;
 
         table = new Table(skin);
-        // table.debug();
 
         tableContainer.setSize(cw, ch);
         tableContainer.setPosition((sw - cw) / 2.0f, (sh - ch) / 2.0f);
@@ -89,9 +145,9 @@ public class UIHandler implements Updateable {
         // The fill method causes a widget to be sized to the cell.
         // expand makes the logical table take up
 
-        table.row().expandX();
-        table.add(gameLabel).fillX();
-        table.row().expandX();
+        table.row();
+        table.add(gameLabel);
+        table.row();
         table.add(mainButton);
 
         tableContainer.setActor(table);
@@ -104,10 +160,10 @@ public class UIHandler implements Updateable {
         float sw = Gdx.graphics.getWidth();
         float sh = Gdx.graphics.getHeight();
 
-        Table table = new Table(runningSkin);
+        Table table = new Table();
         table.setSize(sw, sh);
+
         table.top().left();
-        table.pad(15);
 
         // table.background(skin.getDrawable("textfield"));
 
@@ -119,21 +175,24 @@ public class UIHandler implements Updateable {
         healthNumber.setFontScale(1.25f);
         healthNumber.setColor(Color.WHITE);
 
-        table.row();
-
         table.add(healthLabel);
         table.add(healthNumber);
-        table.row();
 
         runningStage.addActor(table);
+
+        loadMessageWindow();
+
+
 
     }
 
     public UIHandler(final PlatPlus gameRef) {
 
-        runningSkin = new Skin(Gdx.files.internal("shade/skin/uiskin.json"), GameLoader.genAtlas("shade/skin/uiskin.atlas/"));
+        runningSkin = new Skin(Gdx.files.internal("shade/skin/uiskin.json"),
+                GameLoader.genAtlas("shade/skin/uiskin.atlas/"));
 
-        skin = new Skin(Gdx.files.internal("freezing/skin/freezing-ui.json"),GameLoader.genAtlas("freezing/skin/freezing-ui.atlas"));
+        skin = new Skin(Gdx.files.internal("freezing/skin/freezing-ui.json"),
+                GameLoader.genAtlas("freezing/skin/freezing-ui.atlas"));
 
         uiStage = new Stage(new ScreenViewport());
         runningStage = new Stage(new ScreenViewport());
@@ -148,9 +207,13 @@ public class UIHandler implements Updateable {
             public void clicked(InputEvent event, float x, float y) {
 
                 gameRef.setGameState(GameState.GAME_RUNNING);
+                Gdx.input.setInputProcessor(runningStage);
+                loadMessageWindow();
+
                 event.stop();
 
             }
+
         });
 
         Gdx.input.setInputProcessor(uiStage);
@@ -160,7 +223,8 @@ public class UIHandler implements Updateable {
     @Override
     public void update(float delta) {
 
-        if (PlatPlus.getGameState() == GameState.GAME_WON || PlatPlus.getGameState() == GameState.GAME_OVER || PlatPlus.getGameState() == GameState.INITIAL) {
+        if (PlatPlus.getGameState() == GameState.GAME_WON || PlatPlus.getGameState() == GameState.GAME_OVER
+                || PlatPlus.getGameState() == GameState.INITIAL) {
             uiStage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
             uiStage.act(Gdx.graphics.getDeltaTime());
         }
@@ -173,7 +237,8 @@ public class UIHandler implements Updateable {
     }
 
     public void draw() {
-        if (PlatPlus.getGameState() == GameState.GAME_WON || PlatPlus.getGameState() == GameState.GAME_OVER || PlatPlus.getGameState() == GameState.INITIAL) {
+        if (PlatPlus.getGameState() == GameState.GAME_WON || PlatPlus.getGameState() == GameState.GAME_OVER
+                || PlatPlus.getGameState() == GameState.INITIAL) {
             uiStage.draw();
         }
         if (PlatPlus.getGameState() == GameState.GAME_RUNNING) {
