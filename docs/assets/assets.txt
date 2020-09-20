@@ -24,6 +24,14 @@ i:groundEnemy.png:49290:image/png
 t:items.json:391:application/unknown
 i:landscape.png:164426:image/png
 i:mainCharacter.png:63654:image/png
+d:pixthulhu:0:application/unknown
+d:pixthulhu/skin:0:application/unknown
+t:pixthulhu/skin/font-export.fnt:9878:application/unknown
+t:pixthulhu/skin/font-subtitle-export.fnt:10058:application/unknown
+t:pixthulhu/skin/font-title-export.fnt:10085:application/unknown
+t:pixthulhu/skin/pixthulhu-ui.atlas:4976:application/unknown
+t:pixthulhu/skin/pixthulhu-ui.json:4315:application/unknown
+i:pixthulhu/skin/pixthulhu-ui.png:74660:image/png
 b:plat_plus_l1.tmx:23473:application/unknown
 b:plat_set.tsx:13527:application/unknown
 i:playerWalk.png:63643:image/png
