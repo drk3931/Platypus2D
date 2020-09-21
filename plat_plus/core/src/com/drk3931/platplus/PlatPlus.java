@@ -22,7 +22,6 @@ public class PlatPlus extends ApplicationAdapter {
 	UIHandler uiHandler;
 	Color clearColor;
 
-	final float timeStep = 1 / 120f;
 
 	enum GameState {
 		INITIAL, GAME_RUNNING, GAME_OVER, GAME_WON
@@ -74,11 +73,14 @@ public class PlatPlus extends ApplicationAdapter {
 	}
 
 
-	float buildup = 0;
-
+	float time = 0;
+	final float tick = 1 / 60f,max=1/300f;
+	int maxUpdatesPerFrame = 5;
+	
 	@Override
 	public void render() {
 
+		float delta = Gdx.graphics.getDeltaTime();
 	
 
 		Gdx.gl.glClearColor(clearColor.r, clearColor.g, clearColor.b, 1.0f);
@@ -86,25 +88,29 @@ public class PlatPlus extends ApplicationAdapter {
 		renderer.draw();
 		uiHandler.draw();
 
+		time += delta;
+		int updatesThisFrame = 0;
 
-		if(buildup < timeStep){
-			
-			buildup+=Gdx.graphics.getDeltaTime();
-			return;
-
-		}
-		else{
+		while (time >= tick && updatesThisFrame < maxUpdatesPerFrame) {
 
 			if (currentState == GameState.GAME_RUNNING) {
-				world.update(timeStep);
-	
-				collisionHandler.update(timeStep);
+				world.update(tick);
+				collisionHandler.update();
 				world.getPlayer().applyToCam(renderer.camera);
 			}
-			uiHandler.update(timeStep);
-			buildup = 0; 
+			uiHandler.update(tick);
 			
+	
+			updatesThisFrame++;
+			time -= tick;
+
+
 		}
+
+		
+
+
+		
 
 
 

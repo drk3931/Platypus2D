@@ -43,9 +43,8 @@ class World implements DrawableComponent {
 
 
 
-    public void update(float delta) {
+    public void update(float tick) {
 
-        delta *=2;
 
         if(gameOver()){
             gameRef.setGameState(GameState.GAME_OVER);
@@ -56,7 +55,7 @@ class World implements DrawableComponent {
             return;
         }
 
-        player.update(delta);
+        player.update(tick);
         
 
         Iterator<Character> iter = characters.iterator();
@@ -65,14 +64,14 @@ class World implements DrawableComponent {
             if (c.characterState.isMarkedForRemoval()) {
                 iter.remove();
             } else {
-                c.update(delta);
+                c.update(tick);
             }
         }
 
 
 
         for (Projectile p : projectileStore) {
-            p.update(delta);
+            p.update(tick);
         }
 
         // geoRep.translate(lastChangeX, lastChangeY);

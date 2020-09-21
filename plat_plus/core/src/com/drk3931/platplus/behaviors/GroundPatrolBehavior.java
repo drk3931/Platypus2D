@@ -5,7 +5,7 @@ import com.drk3931.platplus.GeometricRepresentation;
 
 public class GroundPatrolBehavior extends Behavior {
 
-    final int PATROL_LEFT_LIMIT = 200, PATROL_RIGHT_LIMIT = 200, PATROL_SPEED = 100; 
+    final int PATROL_LEFT_LIMIT = 200, PATROL_RIGHT_LIMIT = 200, PATROL_SPEED = 75; 
 
     public GroundPatrolBehavior(Character controllingCharacter) {
         super(controllingCharacter);

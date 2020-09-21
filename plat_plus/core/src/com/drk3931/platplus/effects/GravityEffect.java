@@ -5,7 +5,7 @@ import com.drk3931.platplus.Entity;
 
 public class GravityEffect {
 
-    final int gravAcceleration = 220;
+    final float gravAcceleration = 100;
     Entity e; 
 
     public GravityEffect(Entity e){

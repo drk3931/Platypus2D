@@ -30,7 +30,7 @@ public class AnimationHandler {
 
 
     public void incrementTime(float delta){
-        animationTime+=delta*timeScale*2.1f;
+        animationTime+=delta*timeScale;
         
     }
 

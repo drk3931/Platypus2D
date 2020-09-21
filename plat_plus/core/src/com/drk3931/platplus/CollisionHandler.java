@@ -44,7 +44,7 @@ class CollisionHandler {
     }
 
 
-    public void update(float delta) {
+    public void update() {
         
 
         GeometricRepresentation playerGeo = player.e.getGeoRep();
@@ -84,7 +84,7 @@ class CollisionHandler {
           if(playerRect.overlaps(characterRect) && c.characterState.getCurrentState() != CharacterState.State.DEAD){
               
             
-              player.onDamage(DamageType.COLLISION, delta);
+              player.onDamage(DamageType.COLLISION);
               uiHandler.onEvent(UIEvent.PLAYER_DAMAGED,world.getPlayer().health);
           }
         }
