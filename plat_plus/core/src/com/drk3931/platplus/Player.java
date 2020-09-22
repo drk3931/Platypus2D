@@ -107,7 +107,7 @@ public class Player implements DrawableComponent, Updateable {
             if (canFire) {
 
                 cameraUnprojected.set(xPos, yPos, 0);
-                cameraUnprojected.set(Renderer.getMousePosInGameWorld(cameraUnprojected, camRef));
+                cameraUnprojected.set(camRef.unproject(cameraUnprojected));
 
                 lastFire = 0;
                 canFire = false;

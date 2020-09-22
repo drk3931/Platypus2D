@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 
 class Renderer {
@@ -33,9 +34,12 @@ class Renderer {
         shapeRenderer.setAutoShapeType(true);
         spriteBatch = new SpriteBatch();
 
-        camera = new OrthographicCamera();
+        camera = new OrthographicCamera(PlatPlus.VIRTUAL_WIDTH,PlatPlus.VIRTUAL_HEIGHT);
+        camera.setToOrtho(false);
+        
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap());
 
+        
 
         backdropRef = GameLoader.getTexRegion("landscape.png");
 
@@ -84,7 +88,6 @@ class Renderer {
         camera.update();
         
 
-        // set render views
         spriteBatch.setProjectionMatrix(camera.combined);
         shapeRenderer.setProjectionMatrix(camera.combined);
 
@@ -150,10 +153,7 @@ class Renderer {
 
     }
 
-    static Vector3 getMousePosInGameWorld(Vector3 vec, Camera camera) {
-        return camera.unproject(vec);
-    }
-
+ 
     public void resize(int w, int h){
 
         camera.setToOrtho(false, PlatPlus.VIRTUAL_HEIGHT * w/(float)(PlatPlus.VIRTUAL_WIDTH), h);

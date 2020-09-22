@@ -89,9 +89,19 @@ public class PlatPlus extends ApplicationAdapter {
 	int maxUpdatesPerFrame = 5;
 	
 	@Override
+	public void pause(){
+		
+	}
+
+
+	@Override
 	public void render() {
 
 		float delta = Gdx.graphics.getDeltaTime();
+
+		if(delta > 1.0f){
+			return;
+		}
 	
 
 		Gdx.gl.glClearColor(clearColor.r, clearColor.g, clearColor.b, 1.0f);
@@ -130,9 +140,9 @@ public class PlatPlus extends ApplicationAdapter {
 
 	@Override
 	public void resize(int width, int height) {
-		svp.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
-		uiHandler.runningStage.getViewport().update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
-		uiHandler.runningStage.getViewport().update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+		svp.update(width, height);
+		uiHandler.runningStage.getViewport().update(width, height);
+		uiHandler.runningStage.getViewport().update(width, height);
 
 	}
 
