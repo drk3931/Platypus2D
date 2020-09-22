@@ -16,7 +16,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
-public class Player implements DrawableComponent, CameraController, Updateable {
+public class Player implements DrawableComponent, Updateable {
 
     private PlayerState currentState;
     private GravityEffect gravEffect;
@@ -196,22 +196,27 @@ public class Player implements DrawableComponent, CameraController, Updateable {
 
     }
 
-    @Override
     public void applyToCam(Camera c) {
 
-        this.camRef = c;
 
-        if (e.getGeoRep().getX() > Gdx.graphics.getWidth() / 2) {
+
+        //System.out.println(c.position.x);
+
+        /*
+
+        if (e.getGeoRep().getX() > PlatPlus.VIRTUAL_WIDTH / 2) {
             c.position.x = e.getGeoRep().getX();
         } else {
-            c.position.x = Gdx.graphics.getWidth() / 2;
+            c.position.x =PlatPlus.VIRTUAL_WIDTH / 2;
         }
 
-        if (e.getGeoRep().getY() > Gdx.graphics.getHeight() / 2) {
+        if (e.getGeoRep().getY() > PlatPlus.VIRTUAL_HEIGHT / 2) {
             c.position.y = e.getGeoRep().getY();
         } else {
-            c.position.y = Gdx.graphics.getHeight() / 2;
+            c.position.y = PlatPlus.VIRTUAL_HEIGHT/ 2;
         }
+
+        */
 
     }
 
@@ -243,6 +248,10 @@ public class Player implements DrawableComponent, CameraController, Updateable {
     private boolean canJump() {
 
         return e.getVelocityY() == 0;
+    }
+
+    public void setCamRef(Camera c){
+        this.camRef = c;
     }
 
 }

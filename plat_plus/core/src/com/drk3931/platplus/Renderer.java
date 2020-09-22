@@ -35,7 +35,6 @@ class Renderer {
 
         camera = new OrthographicCamera();
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap());
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 
         backdropRef = GameLoader.getTexRegion("landscape.png");
@@ -63,9 +62,27 @@ class Renderer {
     public void draw() {
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+
+        if(world != null){
+            Entity e = world.getPlayer().e;
+            if (e.getGeoRep().getX() > PlatPlus.VIRTUAL_WIDTH / 2) {
+                camera.position.x = e.getGeoRep().getX();
+            } else {
+                camera.position.x =PlatPlus.VIRTUAL_WIDTH / 2;
+            }
+    
+            if (e.getGeoRep().getY() > PlatPlus.VIRTUAL_HEIGHT / 2) {
+                camera.position.y = e.getGeoRep().getY();
+            } else {
+                camera.position.y = PlatPlus.VIRTUAL_HEIGHT/ 2;
+            }
+        }
+     
   
 
         camera.update();
+        
 
         // set render views
         spriteBatch.setProjectionMatrix(camera.combined);
@@ -81,7 +98,7 @@ class Renderer {
         for(int i = 0; i < 10; i++){
 
             
-            spriteBatch.draw(backdropRef,i * Gdx.graphics.getWidth(), 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()*2); 
+            spriteBatch.draw(backdropRef,i * PlatPlus.VIRTUAL_WIDTH, 0, PlatPlus.VIRTUAL_WIDTH,PlatPlus.VIRTUAL_HEIGHT*2); 
 
         }
         
@@ -116,7 +133,9 @@ class Renderer {
 
         this.map.drawSpriteBatch(spriteBatch);
         
-        if(this.world != null){
+        if(this.world != null){   
+            
+           
             this.world.drawSpriteBatch(spriteBatch);
 
         
@@ -133,6 +152,12 @@ class Renderer {
 
     static Vector3 getMousePosInGameWorld(Vector3 vec, Camera camera) {
         return camera.unproject(vec);
+    }
+
+    public void resize(int w, int h){
+
+        camera.setToOrtho(false, PlatPlus.VIRTUAL_HEIGHT * w/(float)(PlatPlus.VIRTUAL_WIDTH), h);
+
     }
 
 }

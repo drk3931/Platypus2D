@@ -33,6 +33,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.drk3931.platplus.PlatPlus.GameState;
 
 public class UIHandler implements Updateable {
@@ -82,8 +83,8 @@ public class UIHandler implements Updateable {
     private void setupMenuUI() {
 
         Container<Table> tableContainer = new Container<Table>();
-        float sw = Gdx.graphics.getWidth();
-        float sh = Gdx.graphics.getHeight();
+        float sw = gameRef.svp.getWorldWidth();
+        float sh = gameRef.svp.getWorldHeight();
         float cw = sw * 0.7f;
         float ch = sh * 0.5f;
 
@@ -123,9 +124,8 @@ public class UIHandler implements Updateable {
 
     
     private Container<Window> getMessageWindow() {
-
-        float sw = Gdx.graphics.getWidth();
-        float sh = Gdx.graphics.getHeight();
+        float sw = gameRef.svp.getWorldWidth();
+        float sh = gameRef.svp.getWorldHeight();
 
         final Window w = new Window("ALERT", skin);
 
@@ -162,8 +162,8 @@ public class UIHandler implements Updateable {
 
         this.runningStage.clear();
 
-        float sw = Gdx.graphics.getWidth();
-        float sh = Gdx.graphics.getHeight();
+        float sw = gameRef.svp.getWorldWidth();
+        float sh = gameRef.svp.getWorldHeight();
 
   
 
@@ -207,14 +207,16 @@ public class UIHandler implements Updateable {
 
     public UIHandler(final PlatPlus gameRef) {
 
+        StretchViewport svp = new StretchViewport(PlatPlus.VIRTUAL_WIDTH, PlatPlus.VIRTUAL_HEIGHT);
+
         runningSkin = new Skin(Gdx.files.internal("pixthulhu/skin/pixthulhu-ui.json"),
                 GameLoader.genAtlas("pixthulhu/skin/pixthulhu-ui.atlas"));
 
         skin = new Skin(Gdx.files.internal("freezing/skin/freezing-ui.json"),
                 GameLoader.genAtlas("freezing/skin/freezing-ui.atlas"));
 
-        uiStage = new Stage(new ScreenViewport());
-        runningStage = new Stage(new ScreenViewport());
+        uiStage = new Stage(svp);
+        runningStage = new Stage(svp);
 
         this.gameRef = gameRef;
 
@@ -243,11 +245,9 @@ public class UIHandler implements Updateable {
 
         if (PlatPlus.getGameState() == GameState.GAME_WON || PlatPlus.getGameState() == GameState.GAME_OVER
                 || PlatPlus.getGameState() == GameState.INITIAL) {
-            uiStage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
             uiStage.act(delta);
         }
         if (PlatPlus.getGameState() == GameState.GAME_RUNNING) {
-            runningStage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
             runningStage.act(delta);
 
         }
@@ -257,6 +257,7 @@ public class UIHandler implements Updateable {
     public void draw() {
         if (PlatPlus.getGameState() == GameState.GAME_WON || PlatPlus.getGameState() == GameState.GAME_OVER
                 || PlatPlus.getGameState() == GameState.INITIAL) {
+            
             uiStage.draw();
         }
         if (PlatPlus.getGameState() == GameState.GAME_RUNNING) {

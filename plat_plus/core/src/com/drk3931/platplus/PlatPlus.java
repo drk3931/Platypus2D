@@ -5,7 +5,9 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 public class PlatPlus extends ApplicationAdapter {
 
@@ -21,6 +23,10 @@ public class PlatPlus extends ApplicationAdapter {
 	CollisionHandler collisionHandler;
 	UIHandler uiHandler;
 	Color clearColor;
+	StretchViewport svp;
+
+	final static int VIRTUAL_HEIGHT = 600;
+	final static int VIRTUAL_WIDTH = 1024; 
 
 
 	enum GameState {
@@ -48,6 +54,8 @@ public class PlatPlus extends ApplicationAdapter {
 	}
 
 	public void loadWorld() {
+
+
 		this.world = gameLoader.loadWorld(this);
 
 		map.parseLevelsLayer(this);
@@ -64,6 +72,9 @@ public class PlatPlus extends ApplicationAdapter {
 		map = gameLoader.loadMap();
 
 		renderer = new Renderer(map);
+
+		svp = new StretchViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT,renderer.camera);
+
 
 		uiHandler = new UIHandler(this);
 		collisionHandler = new CollisionHandler(this);
@@ -114,6 +125,14 @@ public class PlatPlus extends ApplicationAdapter {
 
 
 
+
+	}
+
+	@Override
+	public void resize(int width, int height) {
+		svp.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+		uiHandler.runningStage.getViewport().update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+		uiHandler.runningStage.getViewport().update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 
 	}
 

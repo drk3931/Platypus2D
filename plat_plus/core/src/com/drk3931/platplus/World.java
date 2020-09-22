@@ -31,6 +31,7 @@ class World implements DrawableComponent {
 
     public void spawnPlayer(float x, float y) {
         player = new Player(x, y);
+        player.setCamRef(gameRef.renderer.camera);
     }
 
     public World(PlatPlus gameRef) {
@@ -38,6 +39,8 @@ class World implements DrawableComponent {
         characters = new ArrayList<Character>();
         projectileStore = new ArrayList<Projectile>();
         this.gameRef = gameRef;
+
+        
 
     }
 
