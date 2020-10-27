@@ -5,7 +5,7 @@ rm -rf ./*
 popd
 
 pushd plat_plus
-./gradlew html:dist
+./gradlew html:dist --console=plain
 popd 
 cp -r ./plat_plus/html/build/dist/* ./docs
 git add .
