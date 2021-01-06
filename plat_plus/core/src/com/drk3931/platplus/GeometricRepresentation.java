@@ -86,12 +86,12 @@ public class GeometricRepresentation  {
     }
 
     public int getCenterX(){
-        return (int) (((Rectangle) shapeRepresentation).getX() + ((Rectangle) shapeRepresentation).getWidth());
+        return (int) (((Rectangle) shapeRepresentation).getX() + ((Rectangle) shapeRepresentation).getWidth()/2);
 
     }
 
     public int getCenterY(){
-        return (int) (((Rectangle) shapeRepresentation).getY() + ((Rectangle) shapeRepresentation).getHeight());
+        return (int) (((Rectangle) shapeRepresentation).getY() + ((Rectangle) shapeRepresentation).getHeight()/2);
 
     }
 

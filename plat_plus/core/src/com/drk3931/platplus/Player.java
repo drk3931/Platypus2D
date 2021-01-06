@@ -20,7 +20,9 @@ public class Player implements DrawableComponent, Updateable {
 
     private PlayerState currentState;
     private GravityEffect gravEffect;
-    private AnimationHandler animationHandler;
+    private AnimationHandler walkAnimation;
+    private AnimationHandler stillAnimation;
+    private AnimationHandler currentAnimation;
 
     // these allow us to control the camera and get world coordinates of where the
     // user clicks for projectile firing
@@ -47,7 +49,12 @@ public class Player implements DrawableComponent, Updateable {
         gravEffect = new GravityEffect(e);
         cameraUnprojected = new Vector3();
         GameLoader.FLIP_TEXTURE_ON_GENERATE = true;
-        animationHandler = new AnimationHandler(GameLoader.genAnimation("playerWalk.png", 6,5, 0.025f),true);
+
+
+        stillAnimation = new AnimationHandler(GameLoader.genAnimationRange("player.png", 7,4, 0.50f,1,4),true);
+        walkAnimation = new AnimationHandler(GameLoader.genAnimationRange("player.png", 7,4, 0.0650f,2,4),true);
+        currentAnimation = stillAnimation;
+        
         GameLoader.FLIP_TEXTURE_ON_GENERATE = false;
 
         currentState = PlayerState.DEFAULT;
@@ -55,45 +62,50 @@ public class Player implements DrawableComponent, Updateable {
 
     }
 
+    public boolean LR = false; 
+
     private void controlPlayer(float delta) {
 
+
+        
         if (isControlLocked()) {
             return;
         }
 
+
+        LR = true; 
+
+        if (!Gdx.input.isKeyPressed(Keys.A) && !Gdx.input.isKeyPressed(Keys.D)) {
+
+            LR = false; 
+
+        }
+       
+
         e.setVelocityX(0);
 
-     
-        boolean sprinting = false;
 
-        if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) && !canJump()){
-            sprinting = true;
-            animationHandler.setTimeScale(1.5f);
+        if (Gdx.input.isKeyPressed(Keys.A) && LR) {
+            
+            e.setVelocityX(delta * speedX * -1);
+            walkAnimation.incrementTime(delta);
+            currentAnimation = walkAnimation;
+
+        }
+        else if (Gdx.input.isKeyPressed(Keys.D) && LR) {
+
+            e.setVelocityX(delta * speedX);
+            walkAnimation.incrementTime(delta);
+            currentAnimation = walkAnimation;
+
 
         }
         else{
-            e.setVelocityX(e.getVelocityX());
-            animationHandler.setTimeScale(1.0f);
+            stillAnimation.incrementTime(delta);
+            currentAnimation = stillAnimation;
         }
-
-
-        if (Gdx.input.isKeyPressed(Keys.A)) {
-            e.setVelocityX(delta * speedX * -1);
-            animationHandler.incrementTime(delta);
-
-        }
-        else if (Gdx.input.isKeyPressed(Keys.D)) {
-            e.setVelocityX(delta * speedX);
-            animationHandler.incrementTime(delta);
-
-
-        }
-
-        if(sprinting){
-            e.setVelocityX(e.getVelocityX() * sprintRate);
-        }
-      
-
+        
+  
 
 
         if (Gdx.input.isKeyPressed(Keys.W) && canJump()) {
@@ -171,7 +183,7 @@ public class Player implements DrawableComponent, Updateable {
 
         }
 
-        e.setCurrentTextureRegion(animationHandler.getCurrentRegion());
+        e.setCurrentTextureRegion(currentAnimation.getCurrentRegion());
 
         // this needs to be called before gravEffect is applied
         controlPlayer(delta);
@@ -196,29 +208,7 @@ public class Player implements DrawableComponent, Updateable {
 
     }
 
-    public void applyToCam(Camera c) {
-
-
-
-        //System.out.println(c.position.x);
-
-        /*
-
-        if (e.getGeoRep().getX() > PlatPlus.VIRTUAL_WIDTH / 2) {
-            c.position.x = e.getGeoRep().getX();
-        } else {
-            c.position.x =PlatPlus.VIRTUAL_WIDTH / 2;
-        }
-
-        if (e.getGeoRep().getY() > PlatPlus.VIRTUAL_HEIGHT / 2) {
-            c.position.y = e.getGeoRep().getY();
-        } else {
-            c.position.y = PlatPlus.VIRTUAL_HEIGHT/ 2;
-        }
-
-        */
-
-    }
+  
 
     enum DamageType {
         COLLISION, PROJECTILE

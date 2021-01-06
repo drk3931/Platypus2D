@@ -89,7 +89,7 @@ class World implements DrawableComponent {
             c.drawShapeRenderer(shapeRenderer);
         }
         for (Projectile p : projectileStore) {
-            p.drawShapeRenderer(shapeRenderer);
+            //p.drawShapeRenderer(shapeRenderer);
         }
 
     }
@@ -99,6 +99,9 @@ class World implements DrawableComponent {
 
         for (Character c : characters) {
             c.drawSpriteBatch(b);
+        }
+        for (Projectile p : projectileStore) {
+            p.drawSpriteBatch(b);
         }
 
         player.drawSpriteBatch(b);

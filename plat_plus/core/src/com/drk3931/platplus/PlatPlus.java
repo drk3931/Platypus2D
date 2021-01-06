@@ -117,7 +117,7 @@ public class PlatPlus extends ApplicationAdapter {
 			if (currentState == GameState.GAME_RUNNING) {
 				world.update(tick);
 				collisionHandler.update();
-				world.getPlayer().applyToCam(renderer.camera);
+				//world.getPlayer().applyToCam(renderer.camera);
 			}
 			uiHandler.update(tick);
 			

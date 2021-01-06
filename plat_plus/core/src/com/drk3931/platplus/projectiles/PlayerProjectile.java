@@ -19,7 +19,7 @@ public class PlayerProjectile extends Projectile {
     private static int damage;
 
     public PlayerProjectile(Player p, float x, float y) {
-        super(p.e, Color.BLUE, x,y);
+        super(p.e, x,y);
     }
 
     @Override

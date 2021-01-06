@@ -43,6 +43,10 @@ public class AnimationHandler {
         this.animation = newAnimation;
     }
 
+    public void reset(){
+        animationTime = 0; 
+    }
+
     
 
 

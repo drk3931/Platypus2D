@@ -1,6 +1,7 @@
 package com.drk3931.platplus;
 import com.drk3931.platplus.Map;
 
+import java.util.Arrays;
 import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
@@ -12,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 
 
 
-class GameLoader {
+public class GameLoader {
 
     private Map gameMap;
 
@@ -78,6 +79,36 @@ class GameLoader {
         return new Animation<TextureRegion>(timing, frames);
 
     }
+
+
+
+    public static Animation<TextureRegion> genAnimationRange(String fileName, int FRAME_COLS,int FRAME_ROWS,float timing, int row, int numFrames){
+
+
+        Texture animationSheet = new Texture(Gdx.files.internal(fileName));
+
+        TextureRegion[][] tmp = TextureRegion.split(animationSheet, 
+        animationSheet.getWidth() / FRAME_COLS,
+        animationSheet.getHeight() / FRAME_ROWS);
+
+        TextureRegion[] frames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+        int index = 0;
+        
+		for (int i = 0; i < FRAME_ROWS; i++) {
+			for (int j = 0; j < FRAME_COLS; j++) {
+
+				frames[index++] = tmp[i][j];
+			}
+        }
+
+        int start = row *FRAME_COLS;
+        frames = Arrays.copyOfRange(frames, start, start + numFrames );
+        
+        return new Animation<TextureRegion>(timing, frames);
+
+    }
+
+
 
     public static boolean FLIP_TEXTURE_ON_GENERATE = false;
 
