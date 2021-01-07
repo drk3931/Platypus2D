@@ -264,7 +264,7 @@ i:PNG/Retina/platformIndustrial_109.png:2713:image/png
 i:PNG/Retina/platformIndustrial_110.png:1822:image/png
 i:PNG/Retina/platformIndustrial_111.png:2695:image/png
 i:PNG/Retina/platformIndustrial_112.png:2367:image/png
-i:Poof.png:286601:image/png
+i:poof.png:286601:image/png
 d:shade:0:application/unknown
 d:shade/skin:0:application/unknown
 t:shade/skin/font-button.fnt:9436:application/unknown
