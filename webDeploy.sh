@@ -1,8 +1,6 @@
 #!/bin/bash
 
-pushd docs
-rm -rf ./*
-popd
+rm -rf ./docs/*
 
 pushd plat_plus
 ./gradlew html:dist --console=plain
